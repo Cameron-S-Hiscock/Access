@@ -1,0 +1,4 @@
+package sharedKernel
+
+interface Id {
+}
