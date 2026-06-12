@@ -1,5 +1,0 @@
-package bootstrap
-
-object DependencyContainer {
-
-}
