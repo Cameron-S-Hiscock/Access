@@ -1,4 +1,0 @@
-package sharedKernel
-
-interface Id {
-}
