@@ -1,4 +1,4 @@
-# Access
+# Access for Highly Regarded Individuals
 
 Access is a colletion of actions and silly programs meant to demonstrate my current and growing abilities as a programmer. This repository contains the files showing the evolution of both Access and myself over time as I learn more about comupter science, programming, and software design. This is project is VERY ambitious, but it's fun to dream.
 
