@@ -1,14 +1,11 @@
-package org.access.ui.assets
+package org.access.ui.assets.btns
 
 import kotlin.system.exitProcess
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.window.*
-import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.ui.graphics.*
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment

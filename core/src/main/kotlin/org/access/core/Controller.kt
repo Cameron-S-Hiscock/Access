@@ -1,4 +1,4 @@
-package org.access.ui
+package org.access.core
 
 import org.access.utils.Id
 

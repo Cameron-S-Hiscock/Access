@@ -5,6 +5,26 @@
  * For more detailed information on multi-project builds, please refer to https://docs.gradle.org/9.5.1/userguide/multi_project_builds.html in the Gradle documentation.
  */
 
+pluginManagement {
+    plugins {
+        kotlin("jvm") version "2.4.0"
+        kotlin("plugin.compose") version "2.4.0"
+        id("org.jetbrains.compose") version "1.11.1"
+    }
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
 rootProject.name = "Access"
 
 include("app")
