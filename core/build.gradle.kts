@@ -1,16 +1,15 @@
 plugins {
-    kotlin("jvm") version "2.3.21"
+    kotlin("jvm")
 }
 
 group = "org.access"
 version = "unspecified"
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     testImplementation(kotlin("test"))
+    implementation(project(":utils"))
+    implementation(project(":ui"))
+    implementation(project(":systems"))
 }
 
 kotlin {
