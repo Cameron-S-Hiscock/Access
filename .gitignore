@@ -12,3 +12,6 @@ build
 
 # Ignore rust target directory
 target/
+
+# Ignore JetBrains IDE config
+.idea

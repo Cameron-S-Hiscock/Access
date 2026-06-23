@@ -4,7 +4,7 @@ plugins {
     kotlin("plugin.compose")
 }
 
-group = "org.access"
+group = "net.accesstechnologies"
 version = "unspecified"
 
 dependencies {

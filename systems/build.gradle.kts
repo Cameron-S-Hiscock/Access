@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm")
 }
 
-group = "org.access"
+group = "net.accesstechnologies"
 version = "unspecified"
 
 dependencies {

@@ -1,4 +1,4 @@
-package org.access.ui
+package net.accesstechnologies.ui
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.graphics.*
 
-import org.access.ui.assets.btns.ExitBtn
+import net.accesstechnologies.ui.assets.btns.ExitBtn
 
 @Composable
 fun App() {

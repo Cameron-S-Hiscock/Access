@@ -7,7 +7,7 @@ plugins {
     application
 }
 
-group = "org.access"
+group = "net.accesstechnologies"
 version = "unspecified"
 
 dependencies {
@@ -28,7 +28,7 @@ tasks.test {
 }
 
 application {
-    mainClass.set("org.access.app.AppKt")
+    mainClass.set("net.accesstechnologies.app.AppKt")
 }
 
 println("APP : CONFIGURATION")

@@ -1,4 +1,4 @@
-package org.access.ui.assets.btns
+package net.accesstechnologies.ui.assets.btns
 
 import kotlin.system.exitProcess
 

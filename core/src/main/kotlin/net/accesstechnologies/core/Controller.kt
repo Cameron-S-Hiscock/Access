@@ -1,6 +1,6 @@
-package org.access.core
+package net.accesstechnologies.core
 
-import org.access.utils.Id
+import net.accesstechnologies.utils.Id
 
 object Controller {
     fun start() {

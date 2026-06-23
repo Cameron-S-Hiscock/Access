@@ -1,4 +1,4 @@
-package org.access.utils
+package net.accesstechnologies.utils
 
 object Id {
     var idIndex: Int = 0
