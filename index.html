@@ -2,13 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Access Technologies</title>
-    <link rel="stylesheet" href="web/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kotlin webAccess Terminal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Access</h1>
-    <h2>Developed by Access Technologies</h2>
+<div id="welcome">
+    <h1>Kotlin webAccessTerminal</h1>
+    <h2>Based on Kotlin Access Terminal <br> Made by KATWare</h2>
+</div>
+<div id="contentBoxes" class="contentBox">
 
-    <script src="web/main.ts"></script>
+    <div id="description" class="infoBox" style="margin-left: 30vw;">
+        <p>
+            Kotlin Access Terminal, developed by KATWare, is an app framework designed to seamlessly adapt to your needs and support your workflow. <br>
+            Kotlin webAccess Terminal is a web-based version of the original Kotlin Access Terminal.
+        </p>
+    </div>
+
+    <div id="download" class="infoBox">
+        <p><a href="https://github.com/Cameron-S-Hiscock/Kotlin-Access-Terminal">Download the full version of Kotlin Access Terminal on GitHub</a></p>
+    </div>
+
+    <div id="contact" class="infoBox" style="margin-left: 60vw; margin-top: 2vh;">
+        <p>Contact Information</p>
+        <ul class="contact">
+            <li id="email">Email: <a href="mailto:kotlin.access.terminal@gmail.com">kotlin.access.terminal@gmail.com</a></li>
+        </ul>
+    </div>
+
+    <div id="newsletter" class="infoBox" style="margin-left: 20vw; margin-bottom: 4vh;">
+        <p>Sign up for the monthly update newsletter <br>
+            to get notifyed Kotlin Access Terminal's development progesss!</p>
+        <form id="newsEmailForm" action="main.ts">
+            <label for="email">Email</label><br>
+            <input id="newsEmailInput" type="text" placeholder="Enter your email" name="email" required>
+            <input id="newsEmailSub" type="submit" value="Submit Email">
+        </form>
+    </div>
+
+    <div id="devs" class="infoBox" style="margin-left: 50vw; margin-top: 2vh;">
+        <h3>Developed by</h3>
+        <ul>
+            <li>KATWare</li>
+            <li>Cameron Hiscock</li>
+        </ul>
+    </div>
+
+</div>
+<script src="./dist/main.js"></script>
 </body>
 </html>
