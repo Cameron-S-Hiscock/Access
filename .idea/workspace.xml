@@ -5,23 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c53c59c-6107-41a1-ad4f-e40b3862161b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Access.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Access.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/org/access/app/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/org/access/app/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/kotlin/org/access/core/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/kotlin/org/access/core/Controller.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/systems/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/systems/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/systems/rust/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/systems/rust/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/main/kotlin/org/access/ui/ComposeApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/kotlin/org/access/ui/ComposeApp.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/main/kotlin/org/access/ui/assets/btns/ExitBtn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/kotlin/org/access/ui/assets/btns/ExitBtn.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/src/main/kotlin/org/access/utils/Contants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/src/main/kotlin/org/access/utils/Contants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +97,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ui" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
       <recent name="org.access.ui.assets.btns" />
