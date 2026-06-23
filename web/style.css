@@ -1,10 +1,9 @@
 body {
-    background: radial-gradient(
-        140deg,
-        #000000 15%,
-        #0b0366 40%,
-        #0e0583 60%,
-        #1106a1 85%,
-        #ffffff 100%
+    background: linear-gradient(
+            45deg,
+            #0f0f0f 20%,
+            #0d6efd 85%,
+            #4682b4 100%
     );
+    min-height: 100vh;
 }
