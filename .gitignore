@@ -12,3 +12,9 @@ build
 
 # Ignore rust target directory
 target/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
