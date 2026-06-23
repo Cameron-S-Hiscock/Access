@@ -1,6 +1,7 @@
 # Access
 
 Access is a showcase of my skills as a programmer and engineer.<br>
+Access provides
 
 
 I am programming this mainly in VSCode and JetBrains' IDEs.
