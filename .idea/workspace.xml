@@ -5,26 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c53c59c-6107-41a1-ad4f-e40b3862161b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/net/accesstechnologies/app/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/net/accesstechnologies/app/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/core/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/kotlin/net/accesstechnologies/core/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/kotlin/net/accesstechnologies/core/Controller.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/systems/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/systems/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/systems/src/main/kotlin/net/accesstechnologies/systems/RustBridge.kt" beforeDir="false" afterPath="$PROJECT_DIR$/systems/src/main/kotlin/net/accesstechnologies/systems/RustBridge.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/ui/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/main/kotlin/net/accesstechnologies/ui/ComposeApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/kotlin/net/accesstechnologies/ui/ComposeApp.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/main/kotlin/net/accesstechnologies/ui/assets/btns/ExitBtn.kt" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/kotlin/net/accesstechnologies/ui/assets/btns/ExitBtn.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/src/main/kotlin/net/accesstechnologies/utils/Contants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/src/main/kotlin/net/accesstechnologies/utils/Contants.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/src/main/kotlin/net/accesstechnologies/utils/Id.kt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/src/main/kotlin/net/accesstechnologies/utils/Id.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/main.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/tsconfig.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
