@@ -19,7 +19,7 @@ fun App() {
 }
 
 @Composable
-fun ApplicationScope.createWindow() {
+fun ApplicationScope.Composer() {
     Window(
         onCloseRequest = ::exitApplication,
         title = "Access",

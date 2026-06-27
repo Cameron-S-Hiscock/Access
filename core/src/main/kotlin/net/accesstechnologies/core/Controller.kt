@@ -3,18 +3,13 @@ package net.accesstechnologies.core
 import net.accesstechnologies.utils.Id
 
 object Controller {
-    fun start() {
-        println("CONTROLLER : START : EXECUTION")
+    fun initialize() {
+        println("CONTROLLER : INITIALIZE : EXECUTION")
         val Id = Id.genId()
-        loop()
+        shutdown()
     }
 
-    fun loop() {
-        println("CONTROLLER : LOOP : EXECUTION")
-        end()
-    }
-
-    fun end() {
-        println("CONTROLLER : END : EXECUTION")
+    fun shutdown() {
+        println("CONTROLLER : SHUTDOWN : EXECUTION")
     }
 }
