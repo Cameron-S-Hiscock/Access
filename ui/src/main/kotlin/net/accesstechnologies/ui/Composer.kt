@@ -1,5 +1,7 @@
 package net.accesstechnologies.ui
 
+import net.accesstechnologies.utils.Id
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.window.*
@@ -12,23 +14,28 @@ import net.accesstechnologies.ui.components.btns.BaseBtn
 import net.accesstechnologies.ui.components.btns.ExitBtn
 import net.accesstechnologies.ui.components.btns.RestartBtn
 
-@Composable
-fun App() {
-    Box( modifier = Modifier.background(Color.Black).fillMaxSize()) {
-        BaseBtn({ println("Hello World!")}) { Text("Hello World!") }
-        Box(modifier = Modifier.align(Alignment.TopEnd)) { ExitBtn() }
-        Box(modifier = Modifier.align(Alignment.BottomEnd)) { RestartBtn() }
-    }
-}
+object Composer {
+    val id: Int = Id.genId()
 
-@Composable
-fun ApplicationScope.Composer() {
-    Window(
-        onCloseRequest = ::exitApplication,
-        title = "Access",
-        state = rememberWindowState(placement = WindowPlacement.Maximized),
-        alwaysOnTop = false
-    ) {
-        App()
+    @Composable
+    fun App() {
+        Box( modifier = Modifier.background(Color.Black).fillMaxSize()) {
+            BaseBtn( { println("Hello World!") } ) { Text("Hello World!") }
+            Box(modifier = Modifier.align(Alignment.TopEnd)) { ExitBtn() }
+            Box(modifier = Modifier.align(Alignment.BottomEnd)) { RestartBtn() }
+        }
+    }
+
+    @Composable
+    fun ApplicationScope.Compose() {
+        println("COMPOSER: COMPOSE: EXECUTION")
+        Window(
+            onCloseRequest = ::exitApplication,
+            title = "Access",
+            state = rememberWindowState(placement = WindowPlacement.Maximized),
+            alwaysOnTop = false
+        ) {
+            App()
+        }
     }
 }
