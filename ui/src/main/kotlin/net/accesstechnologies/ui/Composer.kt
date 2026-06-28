@@ -8,13 +8,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.graphics.*
 
-import net.accesstechnologies.ui.assets.btns.ExitBtn
+import net.accesstechnologies.ui.components.btns.BaseBtn
+import net.accesstechnologies.ui.components.btns.ExitBtn
+import net.accesstechnologies.ui.components.btns.RestartBtn
 
 @Composable
 fun App() {
     Box( modifier = Modifier.background(Color.Black).fillMaxSize()) {
-        Button(onClick = { println("Hello World!") }) { Text("Hello World!") }
-        ExitBtn()
+        BaseBtn({ println("Hello World!")}) { Text("Hello World!") }
+        Box(modifier = Modifier.align(Alignment.TopEnd)) { ExitBtn() }
+        Box(modifier = Modifier.align(Alignment.BottomEnd)) { RestartBtn() }
     }
 }
 

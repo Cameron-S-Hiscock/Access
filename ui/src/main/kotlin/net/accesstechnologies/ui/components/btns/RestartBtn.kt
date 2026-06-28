@@ -1,17 +1,15 @@
 package net.accesstechnologies.ui.components.btns
 
-import kotlin.system.exitProcess
-
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 import net.accesstechnologies.ui.components.btns.BaseBtn
 
 @Composable
-fun ExitBtn() {
+fun RestartBtn() {
     BaseBtn(
-        { exitProcess(0) }
+        { println("Restarting Access") }
     ) {
-        Text("Exit")
+        Text("Restart")
     }
 }
