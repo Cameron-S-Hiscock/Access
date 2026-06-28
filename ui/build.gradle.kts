@@ -9,7 +9,9 @@ version = "unspecified"
 
 dependencies {
     implementation(compose.desktop.currentOs)
-    implementation(compose.material)
+    implementation(compose.material3)
+    implementation(compose.foundation)
+    implementation(compose.ui)
     implementation(compose.runtime)
     testImplementation(kotlin("test"))
 }
