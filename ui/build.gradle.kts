@@ -14,6 +14,7 @@ dependencies {
     implementation(compose.ui)
     implementation(compose.runtime)
     testImplementation(kotlin("test"))
+    implementation(project(":core"))
     implementation(project(":utils"))
 }
 

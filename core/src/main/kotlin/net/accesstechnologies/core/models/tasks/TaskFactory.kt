@@ -1,6 +1,7 @@
 package net.accesstechnologies.core.models.tasks
 
 import net.accesstechnologies.core.models.tasks.*
+import net.accesstechnologies.core.registry.RegistryService
 
 object TaskFactory {
     fun create(

@@ -4,8 +4,7 @@ import net.accesstechnologies.utils.Id
 
 import net.accesstechnologies.core.registry.RegistryRepository
 
-class RegistryService(
-    val RegistryRepositroy: RegistryRepository
-) {
+object RegistryService {
+    private val RegistryRepositroy: RegistryRepository = RegistryRepository(100)
     val id: String = Id.genId()
 }

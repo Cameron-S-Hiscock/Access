@@ -8,7 +8,6 @@ version = "unspecified"
 dependencies {
     testImplementation(kotlin("test"))
     implementation(project(":utils"))
-    implementation(project(":ui"))
     implementation(project(":systems"))
 }
 
