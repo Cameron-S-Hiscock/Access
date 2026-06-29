@@ -15,7 +15,7 @@ import net.accesstechnologies.ui.components.btns.ExitBtn
 import net.accesstechnologies.ui.components.btns.RestartBtn
 
 object Composer {
-    val id: Int = Id.genId()
+    val id: String = Id.genId()
 
     @Composable
     fun App() {

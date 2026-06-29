@@ -1,9 +1,7 @@
 package net.accesstechnologies.utils
 
+import java.util.UUID
+
 object Id {
-    var idIndex: Int = 0
-    fun genId(): Int {
-        idIndex++
-        return idIndex
-    }
+    fun genId(): String = java.util.UUID.randomUUID().toString()
 }

@@ -3,7 +3,7 @@ package net.accesstechnologies.core
 import net.accesstechnologies.utils.Id
 
 object Controller {
-    val id: Int = Id.genId()
+    val id: String = Id.genId()
 
     fun initialize() {
         println("CONTROLLER : INITIALIZE : EXECUTION")
