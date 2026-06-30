@@ -1,11 +1,8 @@
 plugins {
-    kotlin("jvm")
+    id("conventions")
     id("org.jetbrains.compose")
     kotlin("plugin.compose")
 }
-
-group = "net.accesstechnologies"
-version = "unspecified"
 
 dependencies {
     implementation(compose.desktop.currentOs)
@@ -13,17 +10,8 @@ dependencies {
     implementation(compose.foundation)
     implementation(compose.ui)
     implementation(compose.runtime)
-    testImplementation(kotlin("test"))
     implementation(project(":core"))
     implementation(project(":utils"))
-}
-
-kotlin {
-    jvmToolchain(25)
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 println("UI : CONFIGURATION")

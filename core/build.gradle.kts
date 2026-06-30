@@ -1,22 +1,10 @@
 plugins {
-    kotlin("jvm")
+   id("conventions") 
 }
-
-group = "net.accesstechnologies"
-version = "unspecified"
 
 dependencies {
-    testImplementation(kotlin("test"))
     implementation(project(":utils"))
     implementation(project(":systems"))
-}
-
-kotlin {
-    jvmToolchain(25)
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 println("CORE : CONFIGURATION")
