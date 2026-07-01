@@ -32,7 +32,6 @@ object Composer {
 
     @Composable
     fun ApplicationScope.Compose() {
-        println("COMPOSER: COMPOSE: EXECUTION")
         Window(
             onCloseRequest = ::exitApplication,
             title = "Access",

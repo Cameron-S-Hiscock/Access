@@ -11,6 +11,7 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material)
     implementation(compose.runtime)
+    implementation(project(":utils"))
     implementation(project(":core"))
     implementation(project(":ui"))
 }
