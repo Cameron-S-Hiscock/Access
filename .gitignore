@@ -14,4 +14,7 @@ build
 target/
 
 # Ignore JetBrains IDE config
-.idea
+.idea/
+
+# Ignore VSCode config
+.vscode/
