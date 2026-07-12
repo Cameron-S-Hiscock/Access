@@ -17,7 +17,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("net.accesstechnologies.app.AppKt")
+    mainClass.set("com.cameronsh.app.AppKt")
 }
 
 println("APP : CONFIGURATION")

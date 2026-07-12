@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm")
 }
 
-group = "net.accesstechnologies"
+group = "com.cameronsh"
 version = "unspecified"
 
 dependencies {
