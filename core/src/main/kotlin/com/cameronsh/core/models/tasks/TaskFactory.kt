@@ -1,9 +1,12 @@
 package com.cameronsh.core.models.tasks
 
+import com.cameronsh.utils.Id
+
 import com.cameronsh.core.models.tasks.*
 import com.cameronsh.core.registry.RegistryService
 
 object TaskFactory {
+    val id: String = Id.genId()
     fun create(
         name: String,
         priority: TaskPriority = TaskPriority.NORMAL,
