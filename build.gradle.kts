@@ -4,3 +4,5 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/9.5.1/samples
  */
+
+println("ROOT : CONFIGURATION")

@@ -16,3 +16,5 @@ kotlin {
 tasks.test {
     useJUnitPlatform()
 }
+
+println("CONVENTION : CONFIGURATION")

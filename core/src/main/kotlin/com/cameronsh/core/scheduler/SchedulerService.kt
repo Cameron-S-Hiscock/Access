@@ -4,6 +4,7 @@ import com.cameronsh.utils.Id
 
 import com.cameronsh.core.scheduler.SchedulerRepository
 import com.cameronsh.core.models.tasks.Task
+import com.cameronsh.core.models.tasks.TaskPriority
 import com.cameronsh.core.registry.RegistryService
 
 object SchedulerService {
@@ -11,10 +12,10 @@ object SchedulerService {
     val id: String = Id.genId()
     
     fun scheduleTask(task: Task): Boolean {
-        if(task.priority == CRITICAL) {
+        if(task.priority == TaskPriority.CRITICAL) {
             val idx = schedulerRepository.critical.indexOfFirst { it == null }
             if(idx != -1) {
-                schedulerRepositroy.critical[idx]
+                schedulerRepository.critical[idx]
                 return true
             }
             return false

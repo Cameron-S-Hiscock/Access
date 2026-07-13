@@ -10,7 +10,7 @@ class Launcher(
 ) {
     val id: String = Id.genId()
 
-    fun runTask(task: Task): Boolean {
+    fun executeTask(task: Task): Boolean {
         if(task.state == TaskState.SCHEDULED || task.state == TaskState.PAUSED) {
             task.state = TaskState.RUNNING
             return true

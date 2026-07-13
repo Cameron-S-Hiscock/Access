@@ -3,9 +3,10 @@ package com.cameronsh.core.registry
 import com.cameronsh.utils.Id
 
 import com.cameronsh.core.registry.RegistryRepository
+import com.cameronsh.core.models.tasks.Task
 
 object RegistryService {
-    private val registryRepository: RegistryRepository = RegistryRepository(100)
+    private val registryRepository = RegistryRepository(100)
     val id: String = Id.genId()
     
     fun registerTask(task: Task): Boolean {

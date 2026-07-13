@@ -9,8 +9,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.*
 
 fun main(args: Array<String>) = application {
-    val argc: Int = args.size
-    println("${argc}")
+    println("${args.size}")
     for(arg in args) {println(arg)}
 
     val id: String = Id.genId()
