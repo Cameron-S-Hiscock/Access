@@ -8,5 +8,5 @@ class RegistryRepository(
     val tasksCap: Int
 ) {
     val id: String = Id.genId()
-    val tasks: Array<Task> = arrayOf<Task>()
+    val tasks: Array<Task?> = arrayOfNulls(taskCap)
 }
