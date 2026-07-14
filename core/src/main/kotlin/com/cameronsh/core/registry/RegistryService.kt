@@ -4,6 +4,7 @@ import com.cameronsh.utils.Id
 
 import com.cameronsh.core.registry.RegistryRepository
 import com.cameronsh.core.models.tasks.Task
+import com.cameronsh.core.scheduler.SchedulerService
 
 object RegistryService {
     private val registryRepository = RegistryRepository(100)
@@ -13,6 +14,7 @@ object RegistryService {
         val idx = registryRepository.tasks.indexOfFirst { it == null }
         if(idx != -1) {
             registryRepository.tasks[idx] = task
+            SchedulerService.scheduleTask(task)
             return true
         } else {
             return false

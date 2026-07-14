@@ -5,12 +5,15 @@ import com.cameronsh.utils.Id
 import com.cameronsh.core.models.data.*
 
 object DataFactory {
-    val id: String = genId()
+    val id: String = Id.genId()
     fun create(
-        nam: String = "data"
+        name: String = "data",
         type: String = "json"
-    ): Data = Data(
-        name = name
-        type = type
-    )
+    ): Data {
+        val data = Data(
+            name = name,
+            type = type
+        )
+        return data
+    }
 }

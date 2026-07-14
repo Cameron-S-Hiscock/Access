@@ -11,9 +11,13 @@ object TaskFactory {
         name: String = "task",
         priority: TaskPriority = TaskPriority.NORMAL,
         action: () -> Unit
-    ): Task = Task(
-        name = name,
-        priority = priority,
-        action = action
-    )
+    ): Task {
+        val task = Task(
+            name = name,
+            priority = priority,
+            action = action
+        )
+        RegistryService.registerTask(task)
+        return task
+    }
 }
