@@ -7,8 +7,10 @@ import com.cameronsh.core.models.data.*
 object DataFactory {
     val id: String = genId()
     fun create(
-        type: String = "array"
+        nam: String = "data"
+        type: String = "json"
     ): Data = Data(
+        name = name
         type = type
     )
 }

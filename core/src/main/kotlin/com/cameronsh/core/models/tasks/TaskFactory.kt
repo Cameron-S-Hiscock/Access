@@ -8,7 +8,7 @@ import com.cameronsh.core.registry.RegistryService
 object TaskFactory {
     val id: String = Id.genId()
     fun create(
-        name: String,
+        name: String = "task",
         priority: TaskPriority = TaskPriority.NORMAL,
         action: () -> Unit
     ): Task = Task(
