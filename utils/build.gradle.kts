@@ -1,6 +1,5 @@
 plugins {
     id("conventions")
-    kotlin("plugin.serialization")
 }
 
 dependencies {
