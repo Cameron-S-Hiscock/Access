@@ -33,6 +33,7 @@ include("core")
 include("ui")
 include("utils")
 include("systems")
+include("api")
 
 println("SETTINGS : INITIALIZATION")
 
