@@ -5,12 +5,11 @@ import com.cameronsh.utils.Id
 import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
 import com.cameronsh.systems.SystemsBridge
+import com.cameronsh.web.WebBridge
 
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.*
 
-import org.graalvm.polyglot.Context
-import org.graalvm.polyglot.Source
 import java.io.File
 
 fun main(args: Array<String>) = application {
@@ -23,11 +22,7 @@ fun main(args: Array<String>) = application {
 
     println(SystemsBridge.systems_log("Rust"))
 
-    // TODO Change to use a Node subprocess
-    Context.create("js").use { context ->
-        context.eval(Source.newBuilder("js", File("web/js/src/lib.js")).build())
-        val result = context.getBindings("js").getMember("weblog").execute("JavaScript")
-    }
+    println(WebBridge.runNodeScript("main.js", "JavaScript"))
 
     with(Composer) { Compose() }
 }

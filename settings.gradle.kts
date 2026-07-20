@@ -34,6 +34,7 @@ include("ui")
 include("utils")
 include("systems")
 include("api")
+include("web")
 
 println("SETTINGS : INITIALIZATION")
 
