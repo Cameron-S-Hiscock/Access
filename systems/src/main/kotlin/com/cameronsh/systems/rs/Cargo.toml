@@ -3,4 +3,9 @@ name = "systems"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "systems"
+crate-type = ["cdylib"]
+
 [dependencies]
+jni = "0.22.4"
