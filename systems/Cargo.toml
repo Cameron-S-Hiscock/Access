@@ -8,4 +8,3 @@ name = "systems"
 crate-type = ["cdylib"]
 
 [dependencies]
-jni = "0.22.4"

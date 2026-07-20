@@ -21,9 +21,9 @@ fun main(args: Array<String>) = application {
 
     println("Kotlin")
 
-    val result = SystemsBridge.systemsTask("Rust")
-    println(result)
+    println(SystemsBridge.systems_log("Rust"))
 
+    // TODO Change to use a Node subprocess
     Context.create("js").use { context ->
         context.eval(Source.newBuilder("js", File("web/js/src/lib.js")).build())
         val result = context.getBindings("js").getMember("weblog").execute("JavaScript")

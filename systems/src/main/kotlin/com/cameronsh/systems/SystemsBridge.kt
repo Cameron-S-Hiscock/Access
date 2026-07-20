@@ -1,31 +1,43 @@
 package com.cameronsh.systems
 
 import java.io.File
+import java.lang.foreign.*
+import java.lang.invoke.MethodHandle
 
 object SystemsBridge {
-    init {
-        loadLibrary()
+
+    val linker = Linker.nativeLinker()
+    val arena = Arena.ofShared()
+    val lookup = SymbolLookup.libraryLookup(NativeLoader.resolveLibraryPath(), arena)
+
+    private fun handle(name: String, desc: FunctionDescriptor): MethodHandle = 
+        linker.downcallHandle(
+            lookup.find(name).orElseThrow { UnsatisfiedLinkError("symbol '$name' not found") },
+            desc
+        )
+
+    private val addHandle = handle(
+        "systems_add", FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
+    )
+
+    fun systems_add(a: Int, b: Int): Int = 
+        addHandle.invoke(a, b) as Int
+
+    private val logHandle = handle(
+        "systems_log", FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.ADDRESS)
+    )
+
+    fun systems_log(message: String): String {
+        Arena.ofConfined().use { callArena ->
+            val msgSeg = callArena.allocateFrom(message)
+            val resultPtr = logHandle.invoke(msgSeg) as MemorySegment
+            val result = resultPtr.reinterpret(Long.MAX_VALUE).getString(0)
+            freeStrHandle.invoke(resultPtr)
+        return result
+        }
     }
 
-    private fun loadLibrary() {
-        val libName = when {
-            System.getProperty("os.name").contains("Mac") -> "libsystems.dylib"
-            System.getProperty("os.name").contains("Windows") -> "systems.dll"
-            else -> "libsystems.so"
-        }
-        val resourcePath = "/native/$libName"
-
-        val resourceStream = SystemsBridge::class.java.getResourceAsStream(resourcePath)?: error("Native library not found at $resourcePath")
-
-        val tempFile = File.createTempFile(libName, null)
-        tempFile.deleteOnExit()
-
-        resourceStream.use { input -> 
-            tempFile.outputStream().use { output -> input.copyTo(output) }
-        }
-
-        System.load(tempFile.absolutePath)
-    }
-
-    external fun systemsTask(input: String): String
+    private val freeStrHandle = handle(
+        "free_str", FunctionDescriptor.ofVoid(ValueLayout.ADDRESS)
+    )
 }

@@ -2,24 +2,25 @@ plugins {
     id("conventions")
 }
 
-tasks.register<Exec>("cargoBuild") {
-    workingDir = file("$projectDir/src/main/kotlin/com/cameronsh/systems/rs")
+tasks.register<Exec>("buildRust") {
+    workingDir = file("../systems")
     commandLine("cargo", "build", "--release")
 }
 
-tasks.register<Copy>("copyNativeLib") {
-    dependsOn("cargoBuild")
-    val libName = when {
-        org.gradle.internal.os.OperatingSystem.current().isMacOsX -> "libsystems.dylib"
-        org.gradle.internal.os.OperatingSystem.current().isWindows -> "systems.dll"
-        else -> "libsystems.so"
+tasks.register<Copy>("copyRustLib") {
+    dependsOn("buildRust")
+    val osName = System.getProperty("os.name").lowercase()
+    val (platformDir, libName) = when {
+        osName.contains("win") -> "windows" to "systems.dll"
+        osName.contains("mac") -> "macos" to "libsystems.dylib"
+        else -> "linux" to "libsystems.so"
     }
-    from("$projectDir/src/main/kotlin/com/cameronsh/systems/rs/target/release/$libName")
-    into("$buildDir/resources/main/native")
+    val arch = if (System.getProperty("os.arch").contains("aarch64")) "aarch64" else "x86_64"
+    from("../systems/target/release/$libName")
+    into("src/main/resources/native/$platformDir/$arch")
 }
 
 tasks.named("processResources") {
-    dependsOn("copyNativeLib")
+    dependsOn("copyRustLib")
 }
-
 println("SYSTEMS : CONFIGURATION")
