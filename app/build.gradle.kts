@@ -17,6 +17,10 @@ dependencies {
     implementation(project(":systems"))
 }
 
+tasks.named<JavaExec>("run") {
+    workingDir = rootProject.projectDir
+}
+
 application {
     mainClass.set("com.cameronsh.app.AppKt")
 }
