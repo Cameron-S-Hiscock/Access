@@ -1,4 +1,4 @@
-package com.cameronsh.utils.serialization
+package com.cameronsh.utils
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*

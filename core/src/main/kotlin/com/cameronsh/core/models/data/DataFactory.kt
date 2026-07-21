@@ -8,11 +8,11 @@ object DataFactory {
     val id: String = Id.genId()
     fun create(
         name: String = "data",
-        type: String = "json"
+        data: String = ""
     ): Data {
         val data = Data(
             name = name,
-            type = type
+            data = data
         )
         return data
     }
