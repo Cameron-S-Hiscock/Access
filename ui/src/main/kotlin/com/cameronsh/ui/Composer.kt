@@ -15,9 +15,6 @@ import com.cameronsh.ui.components.btns.ExitBtn
 import com.cameronsh.ui.components.btns.RestartBtn
 import com.cameronsh.ui.components.btns.TaskBtn
 
-import com.cameronsh.core.models.tasks.TaskFactory
-import com.cameronsh.core.registry.RegistryService
-
 object Composer {
     val id: String = Id.genId()
 
@@ -26,7 +23,7 @@ object Composer {
         Box( modifier = Modifier.background(Color.Black).fillMaxSize()) {
             Box(modifier = Modifier.align(Alignment.TopEnd)) { ExitBtn() }
             Box(modifier = Modifier.align(Alignment.BottomEnd)) { RestartBtn() }
-            Box(modifier = Modifier.align(Alignment.Center)) { TaskBtn(TaskFactory) }
+            Box(modifier = Modifier.align(Alignment.Center)) { TaskBtn() }
         }
     }
 

@@ -8,7 +8,8 @@ import com.cameronsh.ui.components.btns.BaseBtn
 @Composable
 fun RestartBtn() {
     BaseBtn(
-        { println("Restarting Access") }
+        name = "RestartBtn",
+        action = { println("Restarting Access") }
     ) {
         Text("Restart")
     }

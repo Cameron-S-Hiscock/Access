@@ -2,18 +2,20 @@ package com.cameronsh.core.launcher
 
 import com.cameronsh.utils.Id
 
-import com.cameronsh.core.registry.RegistryService
-import com.cameronsh.core.models.tasks.*
+import com.cameronsh.core.scheduler.SchedulerService
+import com.cameronsh.core.models.task.*
 
 class Launcher(
-    registryService: RegistryService
+    schedulerService: SchedulerService
 ) {
     val id: String = Id.genId()
 
-    fun executeTask(task: Task): Boolean {
+    fun executeTask(task: Task?): Boolean {
+        require(task != null)
         if(task.state == TaskState.SCHEDULED || task.state == TaskState.PAUSED) {
             task.state = TaskState.RUNNING
             // TODO Make Launcher run Task's action
+            task.action.invoke()
             return true
         }
         return false
@@ -25,5 +27,13 @@ class Launcher(
             return true
         }
         return false
+    }
+    init {
+    while(!schedulerService.getSchedule().isNullOrEmpty()) {
+        val idx = schedulerService.getSchedule().indexOfFirst { it == null }
+        if(idx != -1) {
+            executeTask(schedulerService.getSchedule()[idx])
+        }
+    }
     }
 }

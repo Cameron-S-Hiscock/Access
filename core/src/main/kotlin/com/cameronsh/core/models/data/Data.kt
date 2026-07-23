@@ -9,10 +9,10 @@ import kotlinx.serialization.json.*
 
 @Serializable
 data class Data(
-    val name: String = "data",
+    val name: String = "Data",
     val data: String = ""
 ) {
     val id: String = Id.genId()
     val json = JSONSerializer.encode(data)
-    fun getData(): String = JSONSerializer.decode(json)
+    fun getJSONData(): String = JSONSerializer.decode(json)
 }

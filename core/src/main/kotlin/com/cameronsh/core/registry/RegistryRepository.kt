@@ -2,7 +2,7 @@ package com.cameronsh.core.registry
 
 import com.cameronsh.utils.Id
 
-import com.cameronsh.core.models.tasks.Task
+import com.cameronsh.core.models.task.Task
 
 class RegistryRepository(
     val taskCap: Int

@@ -1,15 +1,16 @@
-package com.cameronsh.core.models.tasks
+package com.cameronsh.core.models.task
 
 import com.cameronsh.utils.Id
 
-import com.cameronsh.core.models.tasks.*
+import com.cameronsh.core.models.task.*
 import com.cameronsh.core.registry.RegistryService
 
 object TaskFactory {
     val id: String = Id.genId()
     fun create(
-        name: String = "task",
-        priority: TaskPriority = TaskPriority.NORMAL,
+        name: String,
+        priority: TaskPriority,
+        register: Boolean = true,
         action: () -> Unit
     ): Task {
         val task = Task(
@@ -17,7 +18,9 @@ object TaskFactory {
             priority = priority,
             action = action
         )
-        RegistryService.registerTask(task)
+        if(register) {
+            RegistryService.registerTask(task)
+        }
         return task
     }
 }

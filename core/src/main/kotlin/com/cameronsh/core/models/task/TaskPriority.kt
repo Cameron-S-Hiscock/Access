@@ -1,4 +1,4 @@
-package com.cameronsh.core.models.tasks
+package com.cameronsh.core.models.task
 
 enum class TaskPriority {
     LOW,
