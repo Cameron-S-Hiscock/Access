@@ -1,4 +1,7 @@
 import sun.jvmstat.monitor.MonitoredVmUtil.mainClass
+dependencies {
+    implementation(project(":utils"))
+}
 
 plugins {
     id("conventions")

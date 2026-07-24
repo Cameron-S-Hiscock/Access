@@ -1,5 +1,8 @@
 package com.cameronsh.ui.components.inputs
 
+import com.cameronsh.utils.Id
+import java.util.UUID
+
 import androidx.compose.material3.TextField
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Slider
@@ -11,5 +14,6 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun BaseInput() {
+    val id: UUID = Id.genId()
     // TODO: add BaseInput
 }

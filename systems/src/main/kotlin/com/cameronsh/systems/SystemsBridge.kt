@@ -1,10 +1,14 @@
 package com.cameronsh.systems
 
+import com.cameronsh.utils.Id
+import java.util.UUID
+
 import java.io.File
 import java.lang.foreign.*
 import java.lang.invoke.MethodHandle
 
 object SystemsBridge {
+    public val id: UUID = Id.genId()
 
     val linker = Linker.nativeLinker()
     val arena = Arena.ofShared()

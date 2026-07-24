@@ -1,6 +1,7 @@
 package com.cameronsh.core.launcher
 
 import com.cameronsh.utils.Id
+import java.util.UUID
 
 import com.cameronsh.core.scheduler.SchedulerService
 import com.cameronsh.core.models.task.*
@@ -8,7 +9,7 @@ import com.cameronsh.core.models.task.*
 class Launcher(
     schedulerService: SchedulerService
 ) {
-    val id: String = Id.genId()
+    public val id: UUID = Id.genId()
 
     fun executeTask(task: Task?): Boolean {
         require(task != null)

@@ -2,6 +2,10 @@ plugins {
     id("conventions")
 }
 
+dependencies {
+    implementation(project(":utils"))
+}
+
 tasks.register<Exec>("buildRust") {
     workingDir = file("../systems")
     commandLine("cargo", "build", "--release")
@@ -23,4 +27,5 @@ tasks.register<Copy>("copyRustLib") {
 tasks.named("processResources") {
     dependsOn("copyRustLib")
 }
+
 println("SYSTEMS : CONFIGURATION")

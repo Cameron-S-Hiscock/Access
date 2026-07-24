@@ -1,12 +1,13 @@
 package com.cameronsh.core.models.task
 
 import com.cameronsh.utils.Id
+import java.util.UUID
 
 import com.cameronsh.core.models.task.*
 import com.cameronsh.core.registry.RegistryService
 
 object TaskFactory {
-    val id: String = Id.genId()
+    public val id: UUID = Id.genId()
     fun create(
         name: String,
         priority: TaskPriority,

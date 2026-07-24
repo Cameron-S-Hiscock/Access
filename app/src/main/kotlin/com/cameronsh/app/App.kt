@@ -1,6 +1,7 @@
 package com.cameronsh.app
 
 import com.cameronsh.utils.Id
+import java.util.UUID
 
 import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
@@ -16,7 +17,7 @@ fun main(args: Array<String>) = application {
     println("${args.size}")
     for(arg in args) {println(arg)}
 
-    val id: String = Id.genId()
+    val id: UUID = Id.genId()
 
     println("Kotlin")
 

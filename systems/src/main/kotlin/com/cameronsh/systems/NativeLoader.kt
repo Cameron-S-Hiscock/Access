@@ -1,9 +1,14 @@
 package com.cameronsh.systems
 
+import com.cameronsh.utils.Id
+import java.util.UUID
+
 import java.nio.file.*
 import java.lang.foreign.*
 
 object NativeLoader {
+    public val id: UUID = Id.genId()
+
     private val osName = System.getProperty("os.name").lowercase()
     private val archName = System.getProperty("os.arch").lowercase()
 
@@ -33,9 +38,6 @@ object NativeLoader {
         println("Classpath entries with 'native': " + cl.javaClass.name)
         val stream = javaClass.getResourceAsStream(resourcePath)
             ?: error("Native library not found for $platformDir/$arch at $resourcePath")
-        if(stream == null) {
-            println("Resource not found: $resourcePath")
-        }
         val tempFile = Files.createTempFile("rs", libFileName)
         tempFile.toFile().deleteOnExit()
         stream.use { input -> Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING) }

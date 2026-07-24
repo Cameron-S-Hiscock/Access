@@ -1,6 +1,7 @@
 package com.cameronsh.ui
 
 import com.cameronsh.utils.Id
+import java.util.UUID
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -16,7 +17,7 @@ import com.cameronsh.ui.components.btns.RestartBtn
 import com.cameronsh.ui.components.btns.TaskBtn
 
 object Composer {
-    val id: String = Id.genId()
+    public val id: UUID = Id.genId()
 
     @Composable
     fun App() {
