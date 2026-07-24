@@ -8,3 +8,9 @@ name = "systems"
 crate-type = ["cdylib"]
 
 [dependencies]
+
+[dependencies.uuid]
+version = "1.24.0"
+features = [
+    "v4",
+]
