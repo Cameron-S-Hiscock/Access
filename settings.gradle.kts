@@ -36,6 +36,7 @@ include("systems")
 include("api")
 include("web")
 include("data")
+include("cagis")
 
 println("SETTINGS : INITIALIZATION")
 

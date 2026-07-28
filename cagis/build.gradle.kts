@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
     implementation(project(":utils"))
-    implementation(project(":core"))
 }
 
-println("API : CONFIGURATION")
+println("CAGIS : CONFIGURATION")

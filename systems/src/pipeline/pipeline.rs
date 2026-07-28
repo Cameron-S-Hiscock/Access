@@ -19,7 +19,7 @@ let pipelines: Vec<pipeline> = Vec::new();
 fn create_pipeline(
     origin: Uuid,
     destination: Uuid,
-    max_messages: i32,
+    max_messages: u8,
 ) -> Pipeline {
     let pipeline = Pipeline{
         origin: origin,

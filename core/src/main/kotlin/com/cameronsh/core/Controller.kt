@@ -10,7 +10,7 @@ import com.cameronsh.core.launcher.Launcher
 import com.cameronsh.core.launcher.LauncherFactory
 
 object Controller {
-    public val id: UUID = Id.genId()
+    val id: UUID = Id.genId()
 
     val launchers = arrayListOf<Launcher>()
     val criticalLauncher = Launcher(SchedulerService)

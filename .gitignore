@@ -18,3 +18,6 @@ target/
 
 # Ignore VSCode config
 .vscode/
+
+# Ignore AI notes
+AI.md
