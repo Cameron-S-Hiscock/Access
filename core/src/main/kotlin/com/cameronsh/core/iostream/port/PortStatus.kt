@@ -1,4 +1,4 @@
-package com.cameronsh.api.iostream.port
+package com.cameronsh.core.iostream.port
 
 enum class PortStatus {
     OPEN,

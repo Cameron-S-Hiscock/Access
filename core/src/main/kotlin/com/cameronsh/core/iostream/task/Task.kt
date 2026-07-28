@@ -1,9 +1,9 @@
-package com.cameronsh.core.models.task
+package com.cameronsh.core.iostream.task
 
 import com.cameronsh.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.models.data.*
+import com.cameronsh.core.iostream.data.*
 
 data class Task (
     val name: String = "Task",

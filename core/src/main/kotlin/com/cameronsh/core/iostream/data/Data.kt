@@ -1,10 +1,10 @@
-package com.cameronsh.core.models.data
+package com.cameronsh.core.iostream.data
 
 import com.cameronsh.utils.Id
 import java.util.UUID
 import com.cameronsh.utils.JSONSerializer
 
-import com.cameronsh.core.models.task.Task
+import com.cameronsh.core.iostream.task.Task
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*

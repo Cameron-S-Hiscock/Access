@@ -4,7 +4,7 @@ import com.cameronsh.utils.Id
 import java.util.UUID
 
 import com.cameronsh.core.scheduler.SchedulerService
-import com.cameronsh.core.models.task.*
+import com.cameronsh.core.iostream.task.*
 
 class Launcher(
     schedulerService: SchedulerService

@@ -1,10 +1,10 @@
-package com.cameronsh.api.iostream
+package com.cameronsh.core.iostream
 
 import com.cameronsh.utils.Id
 import java.util.UUID
 
-import com.cameronsh.api.ports.*
+import com.cameronsh.core.iostream.port.*
 
 class IOStream(portAType: String, protBType: String) {
-    public val id = Id.genId()
+    val id = Id.genId()
 }

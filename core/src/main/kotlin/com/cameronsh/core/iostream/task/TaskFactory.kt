@@ -1,9 +1,9 @@
-package com.cameronsh.core.models.task
+package com.cameronsh.core.iostream.task
 
 import com.cameronsh.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.models.task.*
+import com.cameronsh.core.iostream.task.*
 import com.cameronsh.core.registry.RegistryService
 
 object TaskFactory {

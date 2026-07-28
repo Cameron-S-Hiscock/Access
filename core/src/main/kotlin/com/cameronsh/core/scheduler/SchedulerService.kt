@@ -4,8 +4,8 @@ import com.cameronsh.utils.Id
 import java.util.UUID
 
 import com.cameronsh.core.scheduler.SchedulerRepository
-import com.cameronsh.core.models.task.Task
-import com.cameronsh.core.models.task.TaskPriority
+import com.cameronsh.core.iostream.task.Task
+import com.cameronsh.core.iostream.task.TaskPriority
 import com.cameronsh.core.registry.RegistryService
 
 object SchedulerService {

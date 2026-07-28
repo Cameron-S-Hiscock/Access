@@ -3,8 +3,8 @@ package com.cameronsh.ui.components.btns
 import com.cameronsh.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.models.task.TaskFactory
-import com.cameronsh.core.models.task.TaskPriority
+import com.cameronsh.core.iostream.task.TaskFactory
+import com.cameronsh.core.iostream.task.TaskPriority
 
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable

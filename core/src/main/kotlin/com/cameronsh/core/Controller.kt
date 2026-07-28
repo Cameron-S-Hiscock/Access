@@ -5,7 +5,7 @@ import java.util.UUID
 
 import com.cameronsh.core.registry.*
 import com.cameronsh.core.scheduler.*
-import com.cameronsh.core.models.task.TaskFactory
+import com.cameronsh.core.iostream.task.TaskFactory
 import com.cameronsh.core.launcher.Launcher
 import com.cameronsh.core.launcher.LauncherFactory
 

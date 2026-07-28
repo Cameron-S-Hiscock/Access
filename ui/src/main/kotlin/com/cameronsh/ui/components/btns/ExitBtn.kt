@@ -6,7 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 import com.cameronsh.ui.components.btns.BaseBtn
-import com.cameronsh.core.models.task.TaskPriority
+import com.cameronsh.core.iostream.task.TaskPriority
 
 @Composable
 fun ExitBtn() {
