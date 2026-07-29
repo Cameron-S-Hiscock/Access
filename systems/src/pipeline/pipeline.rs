@@ -8,23 +8,28 @@ pub use crate::auth;
 
 use uuid::Uuid;
 
-pub struct Pipeline{
+pub struct Pipeline {
     origin: Uuid,
     destination: Uuid,
-    max_messages: i32,
+    max_messages: u8,
+}
+
+impl Pipeline {
+
 }
 
 let pipelines: Vec<pipeline> = Vec::new();
 
-fn create_pipeline(
+#[unsafe(no_mangle)]
+pub extern "C" fn create_pipeline(
     origin: Uuid,
     destination: Uuid,
     max_messages: u8,
 ) -> Pipeline {
     let pipeline = Pipeline{
-        origin: origin,
-        destination: destination,
-        max_messages: max_messages,
+        origin: &origin,
+        destination: &destination,
+        max_messages: &max_messages,
     };
     pipelines.push(pipeline);
     return pipeline
