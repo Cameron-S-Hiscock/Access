@@ -12,6 +12,5 @@ import androidx.compose.foundation.layout.fillMaxSize
 
 @Composable
 fun BaseScreen() {
-    val id: UUID = Id.genId()
     // TODO: add BaseScreen
 }

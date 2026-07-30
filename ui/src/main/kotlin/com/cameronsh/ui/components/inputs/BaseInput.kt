@@ -14,6 +14,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun BaseInput() {
-    val id: UUID = Id.genId()
     // TODO: add BaseInput
 }

@@ -8,6 +8,6 @@ import com.cameronsh.core.iostream.task.Task
 class RegistryRepository(
     val taskCap: Int
 ) {
-    internal val id: UUID = Id.genId()
+    init { Id.genId(this) }
     val tasks: Array<Task?> = arrayOfNulls(taskCap)
 }

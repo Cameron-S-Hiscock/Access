@@ -17,8 +17,6 @@ fun main(args: Array<String>) = application {
     println("${args.size}")
     for(arg in args) {println(arg)}
 
-    val id: UUID = Id.genId()
-
     println("Kotlin")
 
     println(SystemsBridge.systems_log("Rust"))

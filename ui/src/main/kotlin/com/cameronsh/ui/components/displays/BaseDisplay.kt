@@ -11,6 +11,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun BaseDisplay() {
-    val id: UUID = Id.genId()
     // TODO: add BaseDisplay
 }

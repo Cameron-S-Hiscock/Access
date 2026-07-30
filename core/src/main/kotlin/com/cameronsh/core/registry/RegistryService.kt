@@ -9,7 +9,7 @@ import com.cameronsh.core.scheduler.SchedulerService
 
 object RegistryService {
     private val registryRepository = RegistryRepository(100)
-    public val id: UUID = Id.genId()
+    init { Id.genId(this) }
     
     fun registerTask(task: Task): Boolean {
         val idx = registryRepository.tasks.indexOfFirst { it == null }

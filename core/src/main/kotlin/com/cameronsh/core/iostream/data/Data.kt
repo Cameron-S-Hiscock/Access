@@ -16,8 +16,7 @@ data class Data(
     val input: UUID,
     val data: String = ""
 ) {
-    @Contextual
-    public val id: UUID = Id.genId()
+    init { Id.genId(this) }
     val json = JSONSerializer.encode(data)
     fun getJSONData(): String = JSONSerializer.decode(json)
 }

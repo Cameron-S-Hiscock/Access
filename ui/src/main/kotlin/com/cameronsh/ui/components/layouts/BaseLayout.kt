@@ -17,6 +17,5 @@ import androidx.compose.runtime.Composable
 fun BaseLayout(
     type: String
 ) {
-    val id: UUID = Id.genId()
     // TODO: add BaseLayout
 }

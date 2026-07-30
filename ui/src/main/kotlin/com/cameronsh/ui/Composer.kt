@@ -17,7 +17,7 @@ import com.cameronsh.ui.components.btns.RestartBtn
 import com.cameronsh.ui.components.btns.TaskBtn
 
 object Composer {
-    public val id: UUID = Id.genId()
+    init { Id.genId(this) }
 
     @Composable
     fun App() {

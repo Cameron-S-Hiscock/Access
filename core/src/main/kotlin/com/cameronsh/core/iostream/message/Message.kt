@@ -10,8 +10,6 @@ data class Message(
     val name: String = "Message",
     val task: Task,
     val destination: String
-): PipelineHook {
-    val id: UUID = Id.genId()
-    val origin: UUID = task.id
-    override val message = id
+) {
+    init { Id.genId(this) }
 }

@@ -6,7 +6,7 @@ import java.util.UUID
 import java.io.File
 
 object WebBridge {
-    val id: UUID = Id.genId()
+    init { Id.genId(this) }
 
     fun runNodeScript(scriptPath: String, vararg args: String): String {
         val process = ProcessBuilder("node", scriptPath, *args)

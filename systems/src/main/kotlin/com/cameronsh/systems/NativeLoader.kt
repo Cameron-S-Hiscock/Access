@@ -7,7 +7,7 @@ import java.nio.file.*
 import java.lang.foreign.*
 
 object NativeLoader {
-    public val id: UUID = Id.genId()
+    init { Id.genId(this) }
 
     private val osName = System.getProperty("os.name").lowercase()
     private val archName = System.getProperty("os.arch").lowercase()

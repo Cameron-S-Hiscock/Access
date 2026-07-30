@@ -23,8 +23,6 @@ fun BaseBtn(
     content: @Composable () -> Unit
     
 ) {
-    val id = Id.genId()
-
     Button(
         onClick = { TaskFactory.create("${name}Task", priority = priority, register = true, action = { action }).action },
         modifier = modifier.padding(8.dp)

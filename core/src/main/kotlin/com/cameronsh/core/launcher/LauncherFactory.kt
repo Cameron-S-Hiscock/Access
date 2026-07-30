@@ -8,7 +8,7 @@ import com.cameronsh.core.scheduler.SchedulerService
 import com.cameronsh.core.Controller
 
 object LauncherFactory {
-    public val id: UUID = Id.genId()
+    init { Id.genId(this) }
 
     fun create(): Launcher {
         val launcher = Launcher(SchedulerService)

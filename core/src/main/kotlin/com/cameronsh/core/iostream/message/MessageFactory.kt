@@ -6,7 +6,7 @@ import java.util.UUID
 import com.cameronsh.core.iostream.message.Message
 
 object MessageFactory {
-    public val id: UUID = Id.genId()
+    init { Id.genId(this) }
 
     fun create(message: Message) {
 

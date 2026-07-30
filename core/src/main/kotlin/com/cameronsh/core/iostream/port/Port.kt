@@ -9,4 +9,6 @@ import com.cameronsh.core.iostream.port.PortStatus
 interface Port {
     val id: UUID
     val status: PortStatus
+    val parent: UUID
+    val iostream: UUID
 }
