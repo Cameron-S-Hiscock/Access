@@ -7,7 +7,7 @@ import com.cameronsh.core.iostream.task.*
 import com.cameronsh.core.registry.RegistryService
 
 object TaskFactory {
-    init { Id.genId(this) }
+    val id: UUID = Id.genId(this)
     fun create(
         name: String,
         priority: TaskPriority,

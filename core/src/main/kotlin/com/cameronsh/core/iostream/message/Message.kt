@@ -11,5 +11,5 @@ data class Message(
     val task: Task,
     val destination: String
 ) {
-    init { Id.genId(this) }
+    val id: UUID = Id.genId(this)
 }

@@ -8,6 +8,5 @@ import com.cameronsh.core.iostream.task.Task
 class RegistryRepository(
     val taskCap: Int
 ) {
-    init { Id.genId(this) }
     val tasks: Array<Task?> = arrayOfNulls(taskCap)
 }

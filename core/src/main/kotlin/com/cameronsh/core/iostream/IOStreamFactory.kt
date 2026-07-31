@@ -7,7 +7,7 @@ import com.cameronsh.core.iostream.IOStream
 import com.cameronsh.core.iostream.port.*
 
 object IOStreamFactory {
-    init { Id.genId(this) }
+    val id: UUID = Id.genId(this)
     fun create(
         origin: UUID,
         destination: UUID,

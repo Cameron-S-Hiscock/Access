@@ -11,5 +11,6 @@ data class Task (
     val priority: TaskPriority = TaskPriority.NORMAL,
     val action: () -> Unit
 ) {
-    init { Id.genId(this) }
+    val id: UUID = Id.genId(this)
+    val data = DataFactory.create(input = this)
 }

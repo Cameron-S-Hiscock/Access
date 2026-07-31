@@ -7,10 +7,10 @@ import com.cameronsh.core.iostream.data.*
 import com.cameronsh.core.iostream.task.Task
 
 object DataFactory {
-    init { Id.genId(this) }
+    val id: UUID = Id.genId(this)
     fun create(
         name: String = "data",
-        input: UUID,
+        input: Task,
         data: String = ""
     ): Data {
         val data = Data(

@@ -8,7 +8,7 @@ import java.lang.foreign.*
 import java.lang.invoke.MethodHandle
 
 object SystemsBridge {
-    init { Id.genId(this) }
+    val id: UUID = Id.genId(this)
 
     val linker = Linker.nativeLinker()
     val arena = Arena.ofShared()

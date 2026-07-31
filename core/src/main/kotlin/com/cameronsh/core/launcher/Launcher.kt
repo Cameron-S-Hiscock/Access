@@ -9,7 +9,7 @@ import com.cameronsh.core.iostream.task.*
 class Launcher(
     schedulerService: SchedulerService
 ) {
-    init { Id.genId(this) }
+    val id: UUID = Id.genId(this)
 
     fun executeTask(task: Task?): Boolean {
         require(task != null)

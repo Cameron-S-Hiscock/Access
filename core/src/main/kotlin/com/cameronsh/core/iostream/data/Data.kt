@@ -13,10 +13,11 @@ import kotlinx.serialization.json.*
 data class Data(
     val name: String = "Data",
     @Contextual
-    val input: UUID,
+    val input: Task,
     val data: String = ""
 ) {
-    init { Id.genId(this) }
+    @Contextual
+    val id: UUID = Id.genId(this)
     val json = JSONSerializer.encode(data)
     fun getJSONData(): String = JSONSerializer.decode(json)
 }
