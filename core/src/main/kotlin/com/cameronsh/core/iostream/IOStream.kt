@@ -14,11 +14,7 @@ class IOStream(
     val id: UUID = Id.genId(this)
     val origin = Id.objOf(originId)
     val destination = Id.objOf(destinationId)
-    val ports = arrayOf(origin, destination)
-
-    /*
-    
-    TODO Move commented code to Port logic
-
-    */
+    val ports: Array<Port?> = arrayOfNulls(2)
+    val originMessages = ArrayDeque<Message>(256)
+    val destinationMessages = ArrayDeque<Message>(256)
 }

@@ -15,7 +15,7 @@ pub struct Pipeline {
 }
 
 impl Pipeline {
-
+    
 }
 
 let pipelines: Vec<pipeline> = Vec::new();
