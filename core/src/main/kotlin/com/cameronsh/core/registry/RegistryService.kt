@@ -6,6 +6,8 @@ import java.util.UUID
 import com.cameronsh.core.registry.RegistryRepository
 import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.core.scheduler.SchedulerService
+import com.cameronsh.core.Controller
+import com.cameronsh.core.iostream.message.MessageFactory
 
 object RegistryService {
     private val registryRepository = RegistryRepository(100)

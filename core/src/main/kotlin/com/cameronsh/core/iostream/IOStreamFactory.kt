@@ -9,10 +9,10 @@ import com.cameronsh.core.iostream.port.*
 object IOStreamFactory {
     val id: UUID = Id.genId(this)
     fun create(
-        origin: UUID,
-        destination: UUID,
+        originId: UUID,
+        destinationId: UUID,
     ): IOStream {
-        val iostream = IOStream(origin, destination)
+        val iostream = IOStream(originId, destinationId)
         return iostream
     }
 }

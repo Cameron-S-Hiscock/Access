@@ -8,13 +8,13 @@ import com.cameronsh.core.iostream.port.PortStatus.*
 import com.cameronsh.core.iostream.IOStream
 import com.cameronsh.core.iostream.message.Message
 
-class StdioPort(
+open class StdioPort(
     hostId: UUID,
     iostreamId: UUID,
     toDestination: Boolean,
 ): Port {
     override val id: UUID = Id.genId(this)
-    override val status = OPEN
+    override val status: PortStatus = OPEN
     override val hostId = hostId
     override val host = Id.objOf(hostId)
     override val iostreamId = iostreamId

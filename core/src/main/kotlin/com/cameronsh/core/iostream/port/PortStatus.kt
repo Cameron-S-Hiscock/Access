@@ -5,4 +5,5 @@ enum class PortStatus {
     CLOSED,
     PAUSED,
     ERROR,
+    BUILDING,
 }
