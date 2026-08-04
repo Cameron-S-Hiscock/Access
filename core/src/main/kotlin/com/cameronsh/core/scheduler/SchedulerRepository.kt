@@ -6,5 +6,5 @@ import java.util.UUID
 import com.cameronsh.core.iostream.task.Task
 
 class SchedulerRepository() {
-    val tasks: ArrayList<Task?> = arrayListOf()
+    val tasks: ArrayList<Task> = arrayListOf()
 }

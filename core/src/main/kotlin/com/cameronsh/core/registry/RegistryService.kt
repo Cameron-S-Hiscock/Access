@@ -15,12 +15,9 @@ object RegistryService {
     val id: UUID = Id.genId(this)
     
     fun registerTask(task: Task) {
-        val idx = registryRepository.tasks.indexOfFirst { it == null }
-        if(idx != -1) {
-            registryRepository.tasks[idx] = task
-            task.state = REGISTERED
-            println("Registered task: ${task.name}")
-            SchedulerService.scheduleTask(task)
-        }
+        registryRepository.tasks.add(task)
+        task.state = REGISTERED
+        println("Registered task: ${task.name}")
+        SchedulerService.scheduleTask(task)
     }
 }

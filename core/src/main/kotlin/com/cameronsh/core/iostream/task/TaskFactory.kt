@@ -18,6 +18,7 @@ object TaskFactory {
             priority = priority,
             action = action
         )
+        println("Created task: ${name}Task")
         RegistryService.registerTask(task)
         return task
     }

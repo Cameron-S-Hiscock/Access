@@ -23,6 +23,9 @@ object Controller {
 
     suspend fun execute() {
         while(!SchedulerService.getSchedule().isNullOrEmpty()) {
+            for(task in SchedulerService.getSchedule()) {
+                println("${task.name}")
+            }
             val idx = SchedulerService.getSchedule().indexOfFirst { it != null }
             if(idx != -1) {
                 launcher.executeTask(SchedulerService.getSchedule()[idx])

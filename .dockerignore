@@ -7,9 +7,6 @@ build/
 # Ignore Kotlin plugin data
 .kotlin/
 
-# Ignore environment files
-.env
-
 # Ignore rust target directory
 target/
 

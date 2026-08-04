@@ -16,15 +16,14 @@ object SchedulerService {
     
     fun scheduleTask(task: Task) {
         if(task.state == REGISTERED) {
-            val idx = schedulerRepository.tasks.indexOfFirst { it == null }
-            if(idx != -1) {
-                schedulerRepository.tasks[idx] = task
-                task.state = SCHEDULED
-                println("Scheduled task: ${task.name}")
-            }
+            schedulerRepository.tasks.add(task)
+            task.state = SCHEDULED
+            println("Scheduled task: ${task.name}")
+        } else {
+            println("${task.name} not registered")
         }
     }
 
-    fun getSchedule(): ArrayList<Task?> = schedulerRepository.tasks
+    fun getSchedule(): ArrayList<Task> = schedulerRepository.tasks
 }
 
