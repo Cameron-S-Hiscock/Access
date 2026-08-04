@@ -5,36 +5,24 @@ import java.util.UUID
 
 import com.cameronsh.core.scheduler.SchedulerService
 import com.cameronsh.core.iostream.task.*
+import com.cameronsh.core.iostream.task.TaskState.*
 
-class Launcher(
-    schedulerService: SchedulerService
-) {
+class Launcher() {
     val id: UUID = Id.genId(this)
 
-    fun executeTask(task: Task?): Boolean {
+    fun executeTask(task: Task?) {
         require(task != null)
-        if(task.state == TaskState.SCHEDULED || task.state == TaskState.PAUSED) {
-            task.state = TaskState.RUNNING
-            // TODO Make Launcher run Task's action
+        if(task.state == SCHEDULED || task.state == PAUSED) {
+            task.state = RUNNING
+            println("Executing task: ${task.name}")
             task.action.invoke()
-            return true
         }
-        return false
     }
 
-    fun pauseTask(task: Task): Boolean {
-        if(task.state == TaskState.RUNNING) {
-            task.state = TaskState.PAUSED
-            return true
+    fun pauseTask(task: Task?) {
+        require(task != null)
+        if(task.state == RUNNING) {
+            task.state = PAUSED
         }
-        return false
-    }
-    init {
-    while(!schedulerService.getSchedule().isNullOrEmpty()) {
-        val idx = schedulerService.getSchedule().indexOfFirst { it == null }
-        if(idx != -1) {
-            executeTask(schedulerService.getSchedule()[idx])
-        }
-    }
     }
 }

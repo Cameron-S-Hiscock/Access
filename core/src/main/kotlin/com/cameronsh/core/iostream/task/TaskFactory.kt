@@ -11,7 +11,6 @@ object TaskFactory {
     fun create(
         name: String,
         priority: TaskPriority,
-        register: Boolean = true,
         action: () -> Unit
     ): Task {
         val task = Task(
@@ -19,9 +18,7 @@ object TaskFactory {
             priority = priority,
             action = action
         )
-        if(register) {
-            RegistryService.registerTask(task)
-        }
+        RegistryService.registerTask(task)
         return task
     }
 }

@@ -5,8 +5,6 @@ import java.util.UUID
 
 import com.cameronsh.core.iostream.task.Task
 
-class RegistryRepository(
-    val taskCap: Int
-) {
-    val tasks: Array<Task?> = arrayOfNulls(taskCap)
+class RegistryRepository() {
+    val tasks: ArrayList<Task?> = arrayListOf()
 }

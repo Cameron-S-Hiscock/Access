@@ -8,6 +8,8 @@ import com.cameronsh.core.iostream.port.Port
 import com.cameronsh.core.iostream.port.PortFactory
 import com.cameronsh.core.iostream.port.PortType.*
 import com.cameronsh.core.iostream.message.Message
+import com.cameronsh.core.iostream.pipeline.Pipeline
+import com.cameronsh.core.iostream.pipeline.PipelineFactory
 
 class IOStream(
     originId: UUID,
@@ -17,6 +19,7 @@ class IOStream(
     val origin = Id.objOf(originId)
     val destination = Id.objOf(destinationId)
     val ports: Array<Port?> = arrayOfNulls(2)
+    val pipelines: Array<Pipeline?> = arrayOfNulls(2)
     init {
         val portToDestination = PortFactory.create(
             hostId = originId,
@@ -32,6 +35,16 @@ class IOStream(
             toDestination = false,
         )
         ports[1] = portToOrigin
+        val originDestinationPipe = PipelineFactory.create(
+            originId = portToDestination.id,
+            destinationId = portToOrigin.id,
+        )
+        pipelines[0] = originDestinationPipe
+        val destinationOriginPipe = PipelineFactory.create(
+            originId = portToOrigin.id,
+            destinationId = portToDestination.id,
+        )
+        pipelines[1] = destinationOriginPipe
     }
     val originMessages = ArrayDeque<Message>(256)
     val destinationMessages = ArrayDeque<Message>(256)

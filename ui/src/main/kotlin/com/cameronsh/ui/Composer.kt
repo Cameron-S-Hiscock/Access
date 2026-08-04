@@ -25,6 +25,7 @@ object Composer {
             Box(modifier = Modifier.align(Alignment.TopEnd)) { ExitBtn() }
             Box(modifier = Modifier.align(Alignment.BottomEnd)) { RestartBtn() }
             Box(modifier = Modifier.align(Alignment.Center)) { TaskBtn() }
+            Box(modifier = Modifier.align(Alignment.BottomStart)) { BaseBtn(name = "default", action = { println("Btn pressed") }) { Text("Default") } }
         }
     }
 

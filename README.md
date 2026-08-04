@@ -19,6 +19,12 @@ Utils: Library of tools used in many different modules, Kotlin
 **Structure**
 Information and actions are wrapped in Data/Task objects and are passed around the framework along iostreams in Message objects. Iostreams contain two ports to connect to the framework, apps, plugins, or Docker containers that the user/developer needs to use, and two one-way pipelines that connect those ports and regulate the flow of Message objects.
 
+IOStream: Kotlin
+Plugins: JavaScript
+Security: Rust
+FFI: C
+UI: Kotlin
+
 **Languages Used**
 Kotlin
 Java

@@ -8,19 +8,19 @@ import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.core.scheduler.SchedulerService
 import com.cameronsh.core.Controller
 import com.cameronsh.core.iostream.message.MessageFactory
+import com.cameronsh.core.iostream.task.TaskState.*
 
 object RegistryService {
-    private val registryRepository = RegistryRepository(100)
+    private val registryRepository = RegistryRepository()
     val id: UUID = Id.genId(this)
     
-    fun registerTask(task: Task): Boolean {
+    fun registerTask(task: Task) {
         val idx = registryRepository.tasks.indexOfFirst { it == null }
         if(idx != -1) {
             registryRepository.tasks[idx] = task
+            task.state = REGISTERED
             println("Registered task: ${task.name}")
             SchedulerService.scheduleTask(task)
-            return true
         }
-        return false
     }
 }

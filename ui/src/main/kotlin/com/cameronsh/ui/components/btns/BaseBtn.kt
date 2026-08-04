@@ -24,7 +24,7 @@ fun BaseBtn(
     
 ) {
     Button(
-        onClick = { TaskFactory.create("${name}Task", priority = priority, register = true, action = { action }).action },
+        onClick = { TaskFactory.create("${name}Task", priority = priority, action = { action }).action },
         modifier = modifier.padding(8.dp)
     ) {
         content()

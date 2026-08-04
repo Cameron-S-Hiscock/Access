@@ -11,7 +11,7 @@ object LauncherFactory {
     val id: UUID = Id.genId(this)
 
     fun create(): Launcher {
-        val launcher = Launcher(SchedulerService)
+        val launcher = Launcher()
         return launcher
     }
 }

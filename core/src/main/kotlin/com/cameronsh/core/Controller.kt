@@ -13,18 +13,24 @@ import com.cameronsh.core.iostream.IOStreamFactory
 object Controller {
     val id: UUID = Id.genId(this)
 
-    val launchers = arrayListOf<Launcher>()
-    val criticalLauncher = Launcher(SchedulerService)
+    val launcher = Launcher()
+    val criticalLauncher = Launcher()
 
     val registrySchedulerIOStream = IOStreamFactory.create(
         originId = RegistryService.id,
         destinationId = SchedulerService.id,
     )
 
-    init {
-        repeat(2) {
-            launchers.add(LauncherFactory.create())
+    suspend fun execute() {
+        while(!SchedulerService.getSchedule().isNullOrEmpty()) {
+            val idx = SchedulerService.getSchedule().indexOfFirst { it != null }
+            if(idx != -1) {
+                launcher.executeTask(SchedulerService.getSchedule()[idx])
+            }
         }
     }
-}
 
+    suspend fun pushUI() {
+        println("Updating UI")
+    }
+}

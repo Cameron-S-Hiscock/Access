@@ -20,6 +20,7 @@ open class StdioPort(
     override val iostreamId = iostreamId
     override val iostream = Id.objOf(iostreamId) as IOStream
     override val toDestination = toDestination
+    val messages = ArrayDeque<Message>(8)
     override fun send(message: Message) {
         if(toDestination) {
             iostream.destinationMessages.add(message)
