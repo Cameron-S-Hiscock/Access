@@ -7,6 +7,7 @@ import com.cameronsh.core.iostream.port.Port
 import com.cameronsh.core.iostream.port.PortStatus.*
 import com.cameronsh.core.iostream.IOStream
 import com.cameronsh.core.iostream.message.Message
+import com.cameronsh.systems.SystemsBridge
 
 open class StdioPort(
     hostId: UUID,

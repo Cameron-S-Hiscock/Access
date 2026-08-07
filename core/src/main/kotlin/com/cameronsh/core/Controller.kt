@@ -23,12 +23,15 @@ object Controller {
 
     suspend fun execute() {
         while(!SchedulerService.getSchedule().isNullOrEmpty()) {
+            println("Task in schedule")
             for(task in SchedulerService.getSchedule()) {
                 println("${task.name}")
             }
             val idx = SchedulerService.getSchedule().indexOfFirst { it != null }
             if(idx != -1) {
                 launcher.executeTask(SchedulerService.getSchedule()[idx])
+                println("${SchedulerService.getSchedule()[idx].name} removed from schedule")
+                SchedulerService.getSchedule().removeAt(idx)
             }
         }
     }

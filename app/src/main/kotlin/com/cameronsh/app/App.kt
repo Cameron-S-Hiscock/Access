@@ -30,8 +30,10 @@ fun main(args: Array<String>) = application {
 
     GlobalScope.launch() {
         println("Backend Thread: ${Thread.currentThread().name}")
-        delay(1000L)
-        while(true) { Controller.execute() }
+        while(true) {
+            Controller.execute()
+        }
+        println("Execution finished")
     }
 
     with(Composer) { Compose() }

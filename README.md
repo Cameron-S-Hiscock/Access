@@ -6,6 +6,16 @@ Access provides a framework for building desktop apps and plugins without needin
 
 I am programming this mainly in NeoVim on Arch Linux with x86_64 architecture.
 
+**Tech Stack**
+
+Languages: Kotlin (JVM), Java, Rust, C, JavaScript (plugins)
+UI: Compose Multiplatform (Desktop, Material3)
+Build: Gradle 9.5.1 (Kotlin DSL), Cargo
+Libraries: Kotlinx, GraalVM Polyglot, Guava
+FFI: Project Panama (FFM), Rust cdylib native libs
+Data: PostgreSQL, SQL
+Runtime: JVM 25, Docker
+
 **Modules**
 App: Entry-point, Kotlin
 Core: Main backend and business logic, Kotlin

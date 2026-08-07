@@ -1,8 +1,8 @@
 use uuid::Uuid;
+use crate::engine::iostream;
 
-fn link(ids: [Uuid, 2]) {
+fn link(ids: [Uuid; 2]) {
     for id in ids {
-        assert!(id != null);
         println!("{}", id);
     }
 }
