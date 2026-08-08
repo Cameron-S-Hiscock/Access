@@ -1,10 +1,12 @@
-pub mod pipeline;
-pub mod port;
-pub mod message;
+mod port;
+mod pipeline;
+mod message;
 
 use uuid::Uuid;
-use port::Port;
-use pipeline::Pipeline;
+use crate::iostream::{
+    port::Port,
+    pipeline::Pipeline,
+};
 
 pub struct Iostream {
     id: Uuid,

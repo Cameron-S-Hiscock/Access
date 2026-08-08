@@ -1,11 +1,13 @@
 use std::collections::VecDeque;
 use uuid::Uuid;
-use crate::engine::iostream;
-use super::message::Message;
+use crate::iostream::{
+    message::Message,
+};
 
 pub struct Port {
-    host: Uuid,
-    message_cache: VecDeque<Message>,
+    pub id: Uuid,
+    pub host: Uuid,
+    pub message_cache: VecDeque<Message>,
 }
 
 impl Port {

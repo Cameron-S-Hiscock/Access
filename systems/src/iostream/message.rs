@@ -1,5 +1,6 @@
 use uuid::Uuid;
 
+#[derive(PartialEq)]
 pub struct Message {
     id: Uuid,
     origin: Uuid,
