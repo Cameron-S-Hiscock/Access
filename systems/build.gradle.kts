@@ -7,6 +7,7 @@ dependencies {
 }
 
 tasks.register<Exec>("buildRust") {
+    description = "Builds the Rust systems cdylib with Cargo"
     workingDir = file("../systems")
     commandLine("cargo", "build", "--release")
 }

@@ -20,6 +20,16 @@ object SystemsBridge {
             desc
         )
 
+    /*
+    private val initJvmHandle = handle(
+        "systems_init_jvm", FunctionDescriptor.ofVoid(ValueLayout.ADDRESS)
+    )
+
+    fun SystemsInitJvm() {
+        initJvmHandle.invokeExact(jvmPtr) as Unit
+    }
+    */
+
     private val addHandle = handle(
         "systems_add", FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
     )
