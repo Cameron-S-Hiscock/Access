@@ -1,8 +1,7 @@
-mod iostream;
-mod routing;
-
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
+
+mod iostream;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn systems_log(message: *const c_char) -> *mut c_char {
