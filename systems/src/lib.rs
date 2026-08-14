@@ -32,20 +32,25 @@ pub extern "C" fn systems_add(a: i32, b: i32) -> i32 {
     a + b
 }
 
+#[repr(C)]
+pub struct Targets {
+    pub values: [[u8; 16]; 2],
+}
+
 #[unsafe(no_mangle)]
-pub extern "C" fn create_iostream<'a>(env: &'a mut Env<'a>, obj: &JObject<'a>, targets: [[u8; 16]; 2]) -> Iostream {
+pub extern "C" fn create_iostream<'a>(env: &'a mut Env<'a>, obj: &JObject<'a>, id_targets: Targets) -> *mut Iostream {
     let iostream0 = Iostream {
         id: id::gen_id(env, obj).unwrap(),
-        targets: targets,
+        targets: id_targets.values,
         ports: [
             Port {
                 id: id::gen_id(env, obj).unwrap(),
-                host: targets[0],
+                host: id_targets.values[0],
                 message_cache: VecDeque::new(),
             },
             Port {
                 id: id::gen_id(env, obj).unwrap(),
-                host: targets[1],
+                host: id_targets.values[1],
                 message_cache: VecDeque::new(),
             },
         ],
@@ -62,5 +67,5 @@ pub extern "C" fn create_iostream<'a>(env: &'a mut Env<'a>, obj: &JObject<'a>, t
             },
         ],
     };
-    return iostream0
+    return Box::into_raw(Box::new(iostream0))
 }

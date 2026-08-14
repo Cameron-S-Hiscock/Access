@@ -54,4 +54,10 @@ object SystemsBridge {
     private val freeStrHandle = handle(
         "free_str", FunctionDescriptor.ofVoid(ValueLayout.ADDRESS)
     )
+
+    /*
+    private val createIostreamHandle = handle(
+        "create_iostream", FunctionDescriptor
+    )
+    */
 }

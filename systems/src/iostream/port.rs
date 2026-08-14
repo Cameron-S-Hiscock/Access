@@ -4,6 +4,7 @@ use crate::iostream::{
     message::Message,
 };
 
+#[repr(C)]
 pub struct Port {
     pub id: [u8; 16],
     pub host: [u8; 16],

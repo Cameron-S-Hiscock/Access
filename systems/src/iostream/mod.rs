@@ -8,6 +8,7 @@ use crate::iostream::{
     message::Message,
 };
 
+#[repr(C)]
 pub struct Iostream {
     pub id: [u8; 16],
     pub targets: [[u8; 16]; 2],
@@ -16,7 +17,7 @@ pub struct Iostream {
 }
 
 impl Iostream {
-    fn send(target: Port, message: Message) {
+    fn send(_target: Port, _message: Message) {
         
     }
 
