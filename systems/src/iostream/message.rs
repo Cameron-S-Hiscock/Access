@@ -1,18 +1,10 @@
-use uuid::Uuid;
-
-#[derive(PartialEq)]
+#[derive(PartialEq, Copy, Clone)]
 pub struct Message {
-    id: Uuid,
-    origin: Uuid,
-    destination: Uuid,
+    id: [u8; 16],
+    origin: [u8; 16],
+    destination: [u8; 16],
 }
 
 impl Message {
-    fn check_destination(&self, place: Uuid) -> bool {
-        return place == self.destination
-    }
 
-    fn check_origin(&self, place: Uuid) -> bool {
-        return place == self.origin
-    }
 }

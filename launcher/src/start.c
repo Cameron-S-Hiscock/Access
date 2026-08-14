@@ -65,7 +65,12 @@ int jvm_warmup(void *arg) {
     return 0;
 }
 
+int jvm_main_wait(int code) {
+    return 0;
+}
+
 int main(int argc, char *argv[]) {
+    printf("C Launcher");
     thrd_t warmup_thread;
     thrd_create(&warmup_thread, jvm_warmup, NULL);
 
@@ -114,6 +119,12 @@ int main(int argc, char *argv[]) {
         jstring arg = (*env)->NewStringUTF(env, argv[i]);
         (*env)->SetObjectArrayElement(env, jargs, i - 1, arg);
         (*env)->DeleteLocalRef(env, arg);
+    }
+
+    // Wait for signal before calling main
+    int jvm_wait = 0;
+    while(jvm_wait == 0) {
+        scanf("%d", &jvm_wait);
     }
 
     (*env)->CallStaticVoidMethod(env, appClass, mainMethod, jargs);

@@ -29,7 +29,7 @@ object NativeLoader {
         "windows" -> "systems.dll"
         "macos"   -> "libsystems.dylib"
         "linux"   -> "libsystems.so"
-        else -> error("unreachable")
+        else -> error("Could not find systems library")
     }
 
     fun resolveLibraryPath(): Path {

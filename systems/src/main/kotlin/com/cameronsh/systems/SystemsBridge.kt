@@ -54,6 +54,4 @@ object SystemsBridge {
     private val freeStrHandle = handle(
         "free_str", FunctionDescriptor.ofVoid(ValueLayout.ADDRESS)
     )
-
-
 }

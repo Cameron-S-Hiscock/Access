@@ -1,28 +1,26 @@
-use std::collections::VecDeque;
-use uuid::Uuid;
-
-mod port;
-mod pipeline;
-mod message;
+pub mod port;
+pub mod pipeline;
+pub mod message;
 
 use crate::iostream::{
     port::Port,
     pipeline::Pipeline,
+    message::Message,
 };
 
 pub struct Iostream {
-    pub id: Uuid,
-    pub targets: [Uuid; 2],
+    pub id: [u8; 16],
+    pub targets: [[u8; 16]; 2],
+    pub ports: [Port; 2],
+    pub pipelines: [Pipeline; 2],
 }
 
 impl Iostream {
-    fn create(targets: [Uuid; 2]) {
-        for target in targets {
-            let port = Port {
-                id: Uuid::new_v4(),
-                host: target,
-                message_cache: VecDeque::new(),
-            };
-        }
+    fn send(target: Port, message: Message) {
+        
+    }
+
+    fn receive(target: Port) -> Message {
+        return *target.message_cache.front().unwrap()
     }
 }
