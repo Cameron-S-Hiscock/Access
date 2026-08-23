@@ -5,9 +5,12 @@ import java.util.UUID
 
 import com.cameronsh.core.iostream.task.*
 import com.cameronsh.core.registry.RegistryService
+import com.cameronsh.core.iostream.data.DataFactory
 
-object TaskFactory {
-    val id: UUID = Id.genId(this)
+class TaskFactory(
+    private val registryService: RegistryService,
+    private val dataFactory: DataFactory,
+) {
     fun create(
         name: String,
         priority: TaskPriority,
@@ -16,10 +19,11 @@ object TaskFactory {
         val task = Task(
             name = name,
             priority = priority,
+            dataFactory = dataFactory,
             action = action
         )
         println("Created task: ${name}Task")
-        RegistryService.registerTask(task)
+        registryService.registerTask(task)
         return task
     }
 }

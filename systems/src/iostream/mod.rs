@@ -9,19 +9,19 @@ use crate::iostream::{
 };
 
 #[repr(C)]
-pub struct Iostream {
+pub struct Iostream<'a> {
     pub id: [u8; 16],
     pub targets: [[u8; 16]; 2],
-    pub ports: [Port; 2],
+    pub ports: [Port<'a>; 2],
     pub pipelines: [Pipeline; 2],
 }
 
-impl Iostream {
-    fn send(_target: Port, _message: Message) {
-        
+impl Iostream<'_> {
+    fn send<'a>(target: &mut Port<'a>, message: Message<'a>) {
+        target.message_cache.push_back(message);
     }
 
-    fn receive(target: Port) -> Message {
+    fn receive<'a>(target: &mut Port<'a>) -> Message<'a> {
         return *target.message_cache.front().unwrap()
     }
 }

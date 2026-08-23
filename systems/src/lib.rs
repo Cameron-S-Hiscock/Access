@@ -10,6 +10,7 @@ use crate::iostream::{
     Iostream,
     port::Port,
     pipeline::Pipeline,
+    message::Message,
 };
 
 mod iostream;
@@ -38,8 +39,8 @@ pub struct Targets {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn create_iostream<'a>(env: &'a mut Env<'a>, obj: &JObject<'a>, id_targets: Targets) -> *mut Iostream {
-    let iostream0 = Iostream {
+pub extern "C" fn create_iostream<'a>(env: &'a mut Env<'a>, obj: &JObject<'a>, id_targets: Targets) -> *mut Iostream<'a> {
+    let iostream_obj = Iostream {
         id: id::gen_id(env, obj).unwrap(),
         targets: id_targets.values,
         ports: [
@@ -67,5 +68,16 @@ pub extern "C" fn create_iostream<'a>(env: &'a mut Env<'a>, obj: &JObject<'a>, i
             },
         ],
     };
-    return Box::into_raw(Box::new(iostream0))
+    return Box::into_raw(Box::new(iostream_obj))
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn create_message<'a>(env: &'a mut Env<'a>, obj: &JObject<'a>, id_targets: Targets, task: &'a JObject<'a>, data: &'a JObject<'a>) -> *mut Message<'a> {
+    let message_obj = Message {
+        id: id::gen_id(env, obj).unwrap(),
+        targets: id_targets.values,
+        task: task,
+        data: data,
+    };
+    return Box::into_raw(Box::new(message_obj))
 }

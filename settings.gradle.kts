@@ -35,8 +35,6 @@ include("utils")
 include("systems")
 include("launcher")
 include("api")
-include("data")
-include("cagis")
 
 println("SETTINGS : INITIALIZATION")
 

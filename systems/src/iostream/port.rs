@@ -5,12 +5,12 @@ use crate::iostream::{
 };
 
 #[repr(C)]
-pub struct Port {
+pub struct Port<'a> {
     pub id: [u8; 16],
     pub host: [u8; 16],
-    pub message_cache: VecDeque<Message>,
+    pub message_cache: VecDeque<Message<'a>>,
 }
 
-impl Port {
+impl Port<'_> {
 
 }
