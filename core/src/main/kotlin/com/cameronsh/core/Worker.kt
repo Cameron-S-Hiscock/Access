@@ -12,11 +12,13 @@ open class Worker(
 ) {
     val id: UUID = Id.genId(this)
 
+    private val signalRadio()
+
     private val tasks = LinkedBlockingQueue<Task>()
     val thread = Thread.ofVirtual().name(name).unstarted() {
         while(true) {
             val task = tasks.take()
-            task()
+            task.action()
         }
     }
     fun addWork(task: Task) = tasks.add(task)

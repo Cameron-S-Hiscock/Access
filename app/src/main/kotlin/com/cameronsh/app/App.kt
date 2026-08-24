@@ -7,8 +7,6 @@ import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
 import com.cameronsh.systems.SystemsBridge
 
-import com.cameronsh.core.scheduler.SchedulerService
-
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.*
 import androidx.compose.runtime.Composable

@@ -10,6 +10,9 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.graphics.*
+import com.cameronsh.core.iostream.data.DataFactory
+import com.cameronsh.core.iostream.task.TaskFactory
+import com.cameronsh.core.registry.RegistryService
 
 import com.cameronsh.ui.components.btns.BaseBtn
 import com.cameronsh.ui.components.btns.ExitBtn
@@ -17,15 +20,22 @@ import com.cameronsh.ui.components.btns.RestartBtn
 import com.cameronsh.ui.components.btns.TaskBtn
 
 object Composer {
-    init { Id.genId(this) }
+    val id: UUID = Id.genId(this)
+
+    val registryService = RegistryService()
+    val dataFactory = DataFactory()
+    val taskFactory = TaskFactory(
+        registryService = registryService,
+        dataFactory =  dataFactory,
+    )
 
     @Composable
     fun App() {
         Box( modifier = Modifier.background(Color.Black).fillMaxSize()) {
-            Box(modifier = Modifier.align(Alignment.TopEnd)) { ExitBtn() }
-            Box(modifier = Modifier.align(Alignment.BottomEnd)) { RestartBtn() }
-            Box(modifier = Modifier.align(Alignment.Center)) { TaskBtn() }
-            Box(modifier = Modifier.align(Alignment.BottomStart)) { BaseBtn(name = "default", action = { println("Btn pressed") }) { Text("Default") } }
+            Box(modifier = Modifier.align(Alignment.TopEnd)) { ExitBtn(taskFactory = taskFactory) }
+            Box(modifier = Modifier.align(Alignment.BottomEnd)) { RestartBtn(taskFactory = taskFactory) }
+            Box(modifier = Modifier.align(Alignment.Center)) { TaskBtn(taskFactory = taskFactory) }
+            Box(modifier = Modifier.align(Alignment.BottomStart)) { BaseBtn(name = "default", taskFactory = taskFactory, action = { println("Btn pressed") }) { Text("Default") } }
         }
     }
 

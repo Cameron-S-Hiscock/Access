@@ -18,13 +18,14 @@ fun BaseBtn(
     // NOTE: modifier is optional
     name: String = "Btn",
     priority: TaskPriority = TaskPriority.NORMAL,
+    taskFactory: TaskFactory,
     action: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
     
 ) {
     Button(
-        onClick = { TaskFactory.create("${name}", priority = priority, action = { action }).action },
+        onClick = { taskFactory.create("${name}", priority = priority, action = { action }).action },
         modifier = modifier.padding(8.dp)
     ) {
         content()

@@ -15,7 +15,7 @@ class ExecutionService(scheduleService: ScheduleService) {
         if(task.state == SCHEDULED || task.state == PAUSED) {
             task.state = RUNNING
             println("Executing task: ${task.name}")
-            task.action.invoke()
+            task.action()
         }
     }
 

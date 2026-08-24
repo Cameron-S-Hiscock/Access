@@ -6,5 +6,5 @@ import java.util.UUID
 import com.cameronsh.core.iostream.task.Task
 
 class RegistryRepository() {
-    val tasks: ArrayList<Task?> = arrayListOf()
+    val tasks: MutableList<Task> = mutableListOf()
 }
