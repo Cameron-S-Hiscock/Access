@@ -20,5 +20,7 @@ fun main(args: Array<String>) = application {
 
     println(SystemsBridge.systems_log("Rust"))
 
+    Controller.initMainProcess()
+
     with(Composer) { Compose() }
 }

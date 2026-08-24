@@ -4,16 +4,16 @@ import com.cameronsh.utils.Id
 import java.util.UUID
 
 import com.cameronsh.core.iostream.task.*
-import com.cameronsh.core.registry.RegistryService
+import com.cameronsh.core.registry.RegistryWorker
 import com.cameronsh.core.iostream.data.DataFactory
+import com.cameronsh.core.iostream.task.TaskPriority.*
 
 class TaskFactory(
-    private val registryService: RegistryService,
     private val dataFactory: DataFactory,
 ) {
     fun create(
-        name: String,
-        priority: TaskPriority,
+        name: String = "Task",
+        priority: TaskPriority = NORMAL,
         action: () -> Unit
     ): Task {
         val task = Task(
@@ -23,7 +23,6 @@ class TaskFactory(
             action = action
         )
         println("Created task: ${name}Task")
-        registryService.registerTask(task)
         return task
     }
 }

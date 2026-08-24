@@ -4,28 +4,21 @@ import com.cameronsh.utils.Id
 import java.util.UUID
 
 import com.cameronsh.core.workers.Worker
-import com.cameronsh.core.execution.ExecutionService
+import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.core.iostream.task.TaskState.*
-import com.cameronsh.core.schedule.ScheduleService
 import com.cameronsh.core.iostream.task.TaskFactory
+import com.cameronsh.core.schedule.ScheduleWorker
+import java.util.concurrent.LinkedBlockingDeque
 
 class ExecutionWorker(
-    name: String = "ExecutionWorker",
-    private val scheduleService: ScheduleService,
-    private val executionService: ExecutionService,
+    val name: String = "ExecutionWorker",
+    private val RSETasks: LinkedBlockingDeque<Task>,
+    private val scheduleWorker: ScheduleWorker,
     private val taskFactory: TaskFactory,
 ) : Worker(name = name) {
-    fun run() {
-        while(true) {
-            for(task in scheduleService.getSchedule()) {
-                if(task.state == SCHEDULED) {
-                    addWork(taskFactory.create(
-                        name = "ExecutionWorkerTask: Execution: $task.name",
-                        priority = task.priority,
-                        action = { executionService.executeTask(task) },
-                    ))
-                }
-            }
-        }
+    private val executionService = ExecutionService(RSETasks = RSETasks)
+
+    fun executeTask(task: Task) {
+        executionService.executeTask(task)
     }
 }

@@ -8,19 +8,17 @@ import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.core.schedule.ScheduleService
 import com.cameronsh.core.Controller
 import com.cameronsh.core.iostream.task.TaskState.*
+import java.util.concurrent.LinkedBlockingDeque
 
-class RegistryService {
+class RegistryService(
+    private val RSETasks: LinkedBlockingDeque<Task>,
+) {
     private val registryRepository = RegistryRepository()
-    private val scheduleService = ScheduleService()
     val id: UUID = Id.genId(this)
     
     fun registerTask(task: Task) {
-        registryRepository.tasks.add(task)
+        RSETasks.add(task)
         task.state = REGISTERED
         println("Registered task: ${task.name}")
-        scheduleService.scheduleTask(task)
     }
-
-    fun getRegister(): ArrayList<Task?> = registryRepository.tasks
-    fun removeTask(task: Task) = registryRepository.tasks.remove(task)
 }

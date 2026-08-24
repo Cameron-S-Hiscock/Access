@@ -12,7 +12,9 @@ import androidx.compose.material.*
 import androidx.compose.ui.graphics.*
 import com.cameronsh.core.iostream.data.DataFactory
 import com.cameronsh.core.iostream.task.TaskFactory
-import com.cameronsh.core.registry.RegistryService
+import com.cameronsh.core.registry.RegistryWorker
+import java.util.concurrent.LinkedBlockingDeque
+import com.cameronsh.core.iostream.task.Task
 
 import com.cameronsh.ui.components.btns.BaseBtn
 import com.cameronsh.ui.components.btns.ExitBtn
@@ -22,11 +24,14 @@ import com.cameronsh.ui.components.btns.TaskBtn
 object Composer {
     val id: UUID = Id.genId(this)
 
-    val registryService = RegistryService()
+    val RSETasks = LinkedBlockingDeque<Task>()
     val dataFactory = DataFactory()
     val taskFactory = TaskFactory(
-        registryService = registryService,
         dataFactory =  dataFactory,
+    )
+    val registryWorker = RegistryWorker(
+        RSETasks = RSETasks,
+        taskFactory = taskFactory,
     )
 
     @Composable
