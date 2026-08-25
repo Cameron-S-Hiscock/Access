@@ -1,4 +1,4 @@
-package com.cameronsh.core.workers
+package com.cameronsh.core
 
 import com.cameronsh.utils.Id
 import java.util.UUID

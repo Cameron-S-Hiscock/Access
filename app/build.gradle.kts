@@ -5,15 +5,10 @@ dependencies {
 
 plugins {
     id("conventions")
-    id("org.jetbrains.compose")
-    kotlin("plugin.compose")
     application
 }
 
 dependencies {
-    implementation(compose.desktop.currentOs)
-    implementation(compose.material)
-    implementation(compose.runtime)
     implementation(project(":utils"))
     implementation(project(":core"))
     implementation(project(":ui"))
@@ -22,6 +17,26 @@ dependencies {
 
 tasks.named<JavaExec>("run") {
     workingDir = rootProject.projectDir
+}
+
+tasks.register<Exec>("genDevCert") {
+    val keystoreFile = file("src/main/resources/access-local.jks")
+    onlyIf { !keystoreFile.exists() }
+
+    commandLine(
+        "keytool", "-genkeypair",
+        "-alias", "access-local",
+        "-keyalg", "EC",
+        "-keysize", "256",
+        "-validity", "3650",
+        "-keystore", keystoreFile.absolutePath,
+        "-storepass", "changeit",
+        "-dname", "CN=localhost, OU=Access, O=Access, L=NA, ST=NA, C=US"
+    )
+}
+
+tasks.named("processResources") {
+    dependsOn("genDevCert")
 }
 
 application {

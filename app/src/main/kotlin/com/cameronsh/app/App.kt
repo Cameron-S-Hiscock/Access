@@ -5,15 +5,14 @@ import java.util.UUID
 
 import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
+import com.cameronsh.ui.MainWindow
 import com.cameronsh.systems.SystemsBridge
 
-import androidx.compose.ui.window.application
-import androidx.compose.ui.window.*
-import androidx.compose.runtime.Composable
-import kotlinx.coroutines.*
+import javax.swing.SwingUtilities
+
 import java.io.File
 
-fun main(args: Array<String>) = application {
+fun main(args: Array<String>) {
     println("Main Thread: ${Thread.currentThread().name}")
 
     println("Kotlin")
@@ -22,5 +21,9 @@ fun main(args: Array<String>) = application {
 
     Controller.initMainProcess()
 
-    with(Composer) { Compose() }
+    Composer.init()
+    SwingUtilities.invokeLater {
+        val window = MainWindow(Composer)
+        window.isVisible = true
+    }
 }

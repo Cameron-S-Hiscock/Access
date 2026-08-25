@@ -3,13 +3,12 @@ package com.cameronsh.core
 import com.cameronsh.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.workers.ProcessWorker
+import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.task.TaskFactory
 import com.cameronsh.core.iostream.data.DataFactory
 
 object Controller {
     val id: UUID = Id.genId(this)
-
 
     fun initMainProcess() {
         val dataFactory = DataFactory()
