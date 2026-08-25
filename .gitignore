@@ -28,3 +28,7 @@ llvm-access/
 kls_database.db
 
 .settings/
+
+jcef-bundle/
+
+.DS_Store
