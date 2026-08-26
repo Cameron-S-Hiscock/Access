@@ -60,6 +60,7 @@ object Composer {
             false,
             false,
         )
+        browser.getDevTools(null)
 
         messageRouter = CefMessageRouter.create()
         messageRouter.addHandler(object: CefMessageRouterHandlerAdapter() {
