@@ -9,7 +9,6 @@ import com.cameronsh.core.ProcessWorker
 import java.util.concurrent.LinkedBlockingDeque
 import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.ui.AssetServer
-
 import me.friwi.jcefmaven.CefAppBuilder
 import org.cef.CefApp
 import org.cef.CefClient
@@ -18,6 +17,8 @@ import org.cef.browser.CefMessageRouter
 import org.cef.handler.CefMessageRouterHandlerAdapter
 import org.cef.callback.CefQueryCallback
 import org.cef.browser.CefFrame
+import kotlin.system.exitProcess
+import com.cameronsh.ui.MessageRouter
 
 object Composer {
     val id: UUID = Id.genId(this)
@@ -62,23 +63,7 @@ object Composer {
         )
         browser.getDevTools(null)
 
-        messageRouter = CefMessageRouter.create()
-        messageRouter.addHandler(object: CefMessageRouterHandlerAdapter() {
-            override fun onQuery(
-                browser: CefBrowser?,
-                frame: CefFrame?,
-                queryId: Long,
-                request: String?,
-                presistent: Boolean,
-                callback: CefQueryCallback?,
-            ): Boolean {
-                println("JS sent: $request")
-                // TODO: Route to Controller via IOStream
-                callback?.success("Kotlin received: $request")
-                return true
-            }
-        }, true)
-        cefClient.addMessageRouter(messageRouter)
+        cefClient.addMessageRouter(MessageRouter.instance)
     }
 
     fun shutdown() {

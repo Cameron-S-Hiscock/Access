@@ -23,8 +23,7 @@ class ExecutionService(
         task.action()
     }
 
-    fun pauseTask(task: Task?) {
-        require(task != null)
+    fun pauseTask(task: Task) {
         if(task.state == RUNNING) {
             task.state = PAUSED
         }
