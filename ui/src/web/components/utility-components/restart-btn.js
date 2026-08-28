@@ -3,6 +3,7 @@ import { AccessBtn } from "../ui-templates/access-btn.js";
 export class RestartBtn extends AccessBtn {
     connectedCallback() {
         super.connectedCallback();
+        this.style.setProperty("--btn-background-color", "var(--onyx)");
         const btn = this.shadowRoot.querySelector("button");
         btn.classList.add("restart");
     }
@@ -16,3 +17,4 @@ export class RestartBtn extends AccessBtn {
         });
     }
 }
+customElements.define("restart-btn", RestartBtn);

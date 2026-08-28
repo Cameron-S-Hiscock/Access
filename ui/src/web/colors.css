@@ -5,7 +5,21 @@
 */
 
 :root {
-    --primary-color: #01455E;
-    --secondary-color: #6D344F;
-    --txt-color: #94B2A6;
+    --loyal-blue: #01455E;
+    --fabulous-grape: #6D344F;
+    --cerise: #99324E;
+    --vintage-vessel: #94B2A6;
+    --onyx: #0F0F0F;
+    --seashell: #F0F0F0;
+}
+
+body {
+    background: linear-gradient(
+        to bottom,
+        /* var(--cerise) 10%, */
+        /* var(--vintage-vessel), */
+        var(--loyal-blue) 60%,
+        var(--fabulous-grape) 80%,
+        var(--onyx) 100%
+    ) no-repeat fixed center;
 }

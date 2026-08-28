@@ -30,12 +30,16 @@ object MessageRouter {
     
                 when(request) {
                     "exit-app" -> {
-                        callback?.success("")
+                        callback?.success("Exiting app")
                         exitProcess(0)
                     }
                     "restart-app" -> {
-                        callback?.success("")
-                        println("Restarting Access")
+                        callback?.success("Restarting app")
+                        browser?.reload()
+                    }
+                    else -> {
+                        callback?.failure(1, "Unknown request")
+                        println("Unknown request")
                     }
                 }
 

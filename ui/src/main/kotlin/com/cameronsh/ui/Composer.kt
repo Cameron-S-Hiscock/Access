@@ -19,6 +19,8 @@ import org.cef.callback.CefQueryCallback
 import org.cef.browser.CefFrame
 import kotlin.system.exitProcess
 import com.cameronsh.ui.MessageRouter
+import org.cef.handler.CefLoadHandler
+import org.cef.handler.CefLoadHandlerAdapter
 
 object Composer {
     val id: UUID = Id.genId(this)
@@ -50,7 +52,9 @@ object Composer {
         builder.cefSettings.windowless_rendering_enabled = false
         builder.cefSettings.locale = "en-US"
         builder.cefSettings.let { }
+        builder.cefSettings.remote_debugging_port = 9222
         builder.addJcefArgs("--ignore-certificate-errors")
+        builder.addJcefArgs("--remote-allow-origins=http://localhost:9222")
 
         cefApp = builder.build()
         cefClient = cefApp.createClient()
@@ -61,7 +65,6 @@ object Composer {
             false,
             false,
         )
-        browser.getDevTools(null)
 
         cefClient.addMessageRouter(MessageRouter.instance)
     }

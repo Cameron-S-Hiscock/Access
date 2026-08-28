@@ -9,6 +9,4 @@ import com.cameronsh.systems.IOStreamBridge
 
 object IOValve {
     val id: UUID = Id.genId(this)
-
-    val ComposerControllerIOStream = IOStreamBridge.create_iostream(arrayOf(Controller.id, Composer.id))
 }
