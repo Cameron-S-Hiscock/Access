@@ -24,9 +24,6 @@ RUN pacman -S --noconfirm mingw-w64-gcc
 # cross (Rust cross-compilation tool, installed via cargo)
 RUN cargo install cross --git https://github.com/cross-rs/cross
 
-# Node.js + npm
-RUN pacman -S --noconfirm nodejs npm
-
 # Packaging dependencies for jpackage output (Linux .deb/.rpm)
 RUN pacman -S --noconfirm dpkg rpm-tools
 
