@@ -1,30 +1,27 @@
-FROM archlinux:latest
+FROM ubuntu:latest
 
 WORKDIR /usr/src
 
-# Base system update + essential build tools
-RUN pacman -Syu --noconfirm
-RUN pacman -S --noconfirm base-devel git curl wget unzip
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential git curl wget unzip zip ca-certificates \
+    openjdk-25-jdk \
+    gcc-mingw-w64 \
+    dpkg rpm \
+    clang \
+    && rm -rf /var/lib/apt/lists/*
 
-# Java / Kotlin (JDK, includes jlink + jpackage)
-RUN pacman -S --noconfirm jdk-openjdk
-RUN pacman -S --noconfirm kotlin
+# Kotlin (no apt package — install via SDKMAN)
+RUN curl -s "https://get.sdkman.io" | bash && \
+    bash -c "source \$HOME/.sdkman/bin/sdkman-init.sh && sdk install kotlin && sdk install gradle"
+ENV PATH="/root/.sdkman/candidates/kotlin/current/bin:/root/.sdkman/candidates/gradle/current/bin:${PATH}"
 
-# Gradle
-RUN pacman -S --noconfirm gradle
-
-# Rust toolchain (rustup preferred over pacman's rust for cross-compilation/target management)
-RUN pacman -S --noconfirm rustup
-RUN rustup default stable
+# Rust via rustup (not in apt as current stable)
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup target add x86_64-unknown-linux-gnu aarch64-unknown-linux-gnu
-
-# Rust cross-compilation support
-RUN pacman -S --noconfirm mingw-w64-gcc
-
-# cross (Rust cross-compilation tool, installed via cargo)
 RUN cargo install cross --git https://github.com/cross-rs/cross
 
-# Packaging dependencies for jpackage output (Linux .deb/.rpm)
-RUN pacman -S --noconfirm dpkg rpm-tools
+COPY . .
+RUN chmod +x gradlew
 
-CMD [ "./gradlew", "clean", "build", "test", "run" ]
+CMD ["./gradlew", "clean", "build", "test"]
