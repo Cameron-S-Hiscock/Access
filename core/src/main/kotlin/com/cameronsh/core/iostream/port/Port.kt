@@ -19,6 +19,7 @@ class Port(
         host = id,
     )
 
+    var state: PortState = PortState.PENDING
     val targets = ConcurrentHashMap<UUID, Port>()
     val messageCache = LinkedBlockingDeque<Message>()
 

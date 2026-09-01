@@ -19,8 +19,9 @@ target/
 # Ignore VSCode config
 .vscode/
 
-# Ignore AI notes
+# Ignore notes
 AI.md
+PLAN.md
 
 # Ignore LLVM config
 llvm-access/
