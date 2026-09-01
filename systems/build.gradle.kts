@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
     implementation(project(":utils"))
-    implementation(project(":core"))
 }
 
 tasks.register<Exec>("buildRust") {

@@ -10,6 +10,8 @@ import com.cameronsh.core.schedule.ScheduleWorker
 import com.cameronsh.core.execution.ExecutionWorker
 import com.cameronsh.core.iostream.data.DataFactory
 import com.cameronsh.core.iostream.task.Task
+import com.cameronsh.core.iostream.task.TaskPriority
+import com.cameronsh.core.iostream.task.TaskPriority.*
 import java.util.concurrent.LinkedBlockingDeque
 
 class ProcessWorker(
@@ -18,10 +20,7 @@ class ProcessWorker(
 ) : Worker(name = name) {
     private val RSETasks = LinkedBlockingDeque<Task>()
 
-    private val dataFactory = DataFactory()
-    private val taskFactory = TaskFactory(
-        dataFactory = dataFactory,
-    )
+    private val taskFactory = TaskFactory()
     private val registryWorker = RegistryWorker(
         RSETasks = RSETasks,
         taskFactory = taskFactory,
@@ -52,5 +51,13 @@ class ProcessWorker(
         executionWorker.addWork(
             taskFactory.create(name = "${name}ExecuteTask") { executionWorker.executeTask(task) }
         )
+    }
+
+    fun createTask(
+        name: String = "CreateTask",
+        priority: TaskPriority = NORMAL,
+        action: () -> Unit,
+    ) {
+        taskFactory.create(name = name, priority = priority) { action }
     }
 }

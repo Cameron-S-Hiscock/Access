@@ -5,14 +5,12 @@ import java.util.UUID
 
 import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.task.TaskFactory
-import com.cameronsh.core.iostream.data.DataFactory
 
 object Controller {
     val id: UUID = Id.genId(this)
 
     fun initMainProcess() {
-        val dataFactory = DataFactory()
-        val taskFactory = TaskFactory(dataFactory = dataFactory)
+        val taskFactory = TaskFactory()
         val mainProcess = ProcessWorker(name = "ControllerProcessWorker", host = id)
 
         val greetTask = taskFactory.create(

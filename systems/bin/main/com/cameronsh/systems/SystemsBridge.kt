@@ -31,27 +31,6 @@ object SystemsBridge {
     }
     */
 
-    private val addHandle = handle(
-        "systems_add", FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
-    )
-
-    fun systems_add(a: Int, b: Int): Int = 
-        addHandle.invoke(a, b) as Int
-
-    private val logHandle = handle(
-        "systems_log", FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.ADDRESS)
-    )
-
-    fun systems_log(message: String): String {
-        Arena.ofConfined().use { callArena ->
-            val msgSeg = callArena.allocateFrom(message)
-            val resultPtr = logHandle.invoke(msgSeg) as MemorySegment
-            val result = resultPtr.reinterpret(Long.MAX_VALUE).getString(0)
-            freeStrHandle.invoke(resultPtr)
-        return result
-        }
-    }
-
     private val freeStrHandle = handle(
         "free_str", FunctionDescriptor.ofVoid(ValueLayout.ADDRESS)
     )

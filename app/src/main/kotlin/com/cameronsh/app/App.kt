@@ -15,10 +15,6 @@ import java.io.File
 fun main(args: Array<String>) {
     println("Main Thread: ${Thread.currentThread().name}")
 
-    println("Kotlin")
-
-    println(SystemsBridge.systems_log("Rust"))
-
     Controller.initMainProcess()
 
     Composer.init()

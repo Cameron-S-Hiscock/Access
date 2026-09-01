@@ -25,10 +25,7 @@ import org.cef.handler.CefLoadHandlerAdapter
 object Composer {
     val id: UUID = Id.genId(this)
 
-    val dataFactory = DataFactory()
-    val taskFactory = TaskFactory(
-        dataFactory =  dataFactory,
-    )
+    val taskFactory = TaskFactory()
     val UIProcessWorker = ProcessWorker(
         name = "UIProcessWorker",
         host = id,

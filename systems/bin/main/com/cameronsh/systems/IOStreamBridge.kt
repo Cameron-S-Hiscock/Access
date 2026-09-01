@@ -7,8 +7,6 @@ import java.io.File
 import java.lang.foreign.*
 import java.lang.invoke.MethodHandle
 import com.cameronsh.systems.SystemsBridge
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.core.iostream.data.Data
 
 object IOStreamBridge {
     val id: UUID = Id.genId(this)
@@ -59,34 +57,6 @@ object IOStreamBridge {
         UUIDtoTargets(targets, 1, ids[1])
         Arena.ofShared().use { callArena ->
             createIostreamHandle.invoke(env, obj, targets)
-        }
-    }
-
-    private val createMessageHandle = SystemsBridge.handle(
-        "create_message", FunctionDescriptor.of(
-            ValueLayout.ADDRESS,
-            ValueLayout.ADDRESS,
-            TARGETS_LAYOUT,
-            ValueLayout.ADDRESS,
-            ValueLayout.ADDRESS,
-        )
-    )
-
-    fun create_message(
-        origin: UUID,
-        destination: UUID,
-        task: Task?,
-        data: Data?
-    ) {
-        val env: Any? = null
-        val obj: Any? = null
-        val targets: MemorySegment = SystemsBridge.arena.allocate(TARGETS_LAYOUT)
-        UUIDtoTargets(targets, 0, origin)
-        UUIDtoTargets(targets, 1, destination)
-        val taskRef = ValueLayout.ADDRESS
-        val dataRef = ValueLayout.ADDRESS
-        Arena.ofShared().use { callArena ->
-            createMessageHandle.invoke(env, obj, targets, task, data)
         }
     }
 }
