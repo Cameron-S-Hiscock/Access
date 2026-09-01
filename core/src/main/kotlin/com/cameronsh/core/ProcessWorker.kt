@@ -13,6 +13,7 @@ import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.core.iostream.task.TaskPriority
 import com.cameronsh.core.iostream.task.TaskPriority.*
 import java.util.concurrent.LinkedBlockingDeque
+import java.util.concurrent.atomic.AtomicBoolean
 
 class ProcessWorker(
     val name: String = "ProcessWorker",
@@ -34,6 +35,15 @@ class ProcessWorker(
         scheduleWorker = scheduleWorker,
         taskFactory = taskFactory,
     )
+
+    private val localactions = LinkedBlockingDeque<() -> Unit>()
+    private val localRunning = AtomicBoolean(true)
+    private val localThread = Thread.ofVirtual().name("${name}Local").unstarted {
+        while(localRunning.get()) {
+            val action = localactions.take()
+            runCatching { action() }.onFailure { println("Local task failed: ${it.message}") }
+        }
+    }
 
     fun run() {
         registryWorker.start()
