@@ -8,6 +8,7 @@ import com.cameronsh.core.iostream.task.TaskFactory
 
 object Controller {
     val id: UUID = Id.genId(this)
+    init { Id.objectIds.putIfAbsent("Controller", id) }
 
     fun initMainProcess() {
         val taskFactory = TaskFactory()

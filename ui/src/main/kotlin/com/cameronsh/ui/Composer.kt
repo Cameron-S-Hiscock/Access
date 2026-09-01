@@ -3,8 +3,6 @@ package com.cameronsh.ui
 import com.cameronsh.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.iostream.data.DataFactory
-import com.cameronsh.core.iostream.task.TaskFactory
 import com.cameronsh.core.ProcessWorker
 import java.util.concurrent.LinkedBlockingDeque
 import com.cameronsh.core.iostream.task.Task
@@ -24,8 +22,8 @@ import org.cef.handler.CefLoadHandlerAdapter
 
 object Composer {
     val id: UUID = Id.genId(this)
+    init { Id.objectIds.putIfAbsent("Composer", id) }
 
-    val taskFactory = TaskFactory()
     val UIProcessWorker = ProcessWorker(
         name = "UIProcessWorker",
         host = id,

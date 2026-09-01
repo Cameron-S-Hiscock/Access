@@ -6,10 +6,12 @@ import java.util.UUID
 import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.pipeline.Pipeline
 import com.cameronsh.core.iostream.port.Port
+import com.cameronsh.core.iostream.message.Message
+import java.util.concurrent.LinkedBlockingDeque
 
 class IOStream(
     val name: String = "IOStream",
-    val targets: Array<UUID>,
+    val targets: Array<UUID?>,
 ) {
     val id: UUID = Id.genId(this)
     private val processWorker = ProcessWorker(
@@ -28,10 +30,12 @@ class IOStream(
 
         var i = 0
         for(target in targets) {
-            val port = Port(
-                name = "${name}Port${i}",
-                host = target,
-            )
+            if(target != null) {
+                val port = Port(
+                    name = "${name}Port${i}",
+                    host = target,
+                )
+            }
             i++
         }
         i = 0
@@ -50,5 +54,29 @@ class IOStream(
             ports[i+1].targets.putIfAbsent(ports[i].id, pipeline1)
             i += 2
         }
+    }
+
+    fun send(target: UUID?, message: Message) {
+        if(target in targets && target != null) {
+            for(port in ports) {
+                if(port.host == target) {
+                    port.send(target, message)
+                }
+            }
+        }
+    }
+
+    fun receive(target: UUID?): Message? {
+        if(target in targets && target != null) {
+            for(port in ports) {
+                if(port.host == target) {
+                    val message = port.receive()
+                    if(message != null) {
+                        return message
+                    }
+                }
+            }
+        }
+        return null
     }
 }
