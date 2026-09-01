@@ -16,4 +16,9 @@ class Pipeline(
         name = "${name}ProcessWorker",
         host = id,
     )
+    init { processWorker.start() }
+
+    fun deliver() {
+
+    }
 }

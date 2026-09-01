@@ -36,11 +36,11 @@ class ProcessWorker(
         taskFactory = taskFactory,
     )
 
-    private val localactions = LinkedBlockingDeque<() -> Unit>()
+    private val localActions = LinkedBlockingDeque<() -> Unit>()
     private val localRunning = AtomicBoolean(true)
     private val localThread = Thread.ofVirtual().name("${name}Local").unstarted {
         while(localRunning.get()) {
-            val action = localactions.take()
+            val action = localActions.take()
             runCatching { action() }.onFailure { println("Local task failed: ${it.message}") }
         }
     }
@@ -49,6 +49,7 @@ class ProcessWorker(
         registryWorker.start()
         scheduleWorker.start()
         executionWorker.start()
+        localThread.start()
     }
 
     fun submitTask(task: Task) {
@@ -61,6 +62,10 @@ class ProcessWorker(
         executionWorker.addWork(
             taskFactory.create(name = "${name}ExecuteTask") { executionWorker.executeTask(task) }
         )
+    }
+
+    fun submitLocal(action: () -> Unit) {
+        localActions.add(action)
     }
 
     fun createTask(

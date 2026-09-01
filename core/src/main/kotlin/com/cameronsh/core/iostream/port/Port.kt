@@ -18,6 +18,7 @@ class Port(
         name = "${name}ProcessWorker",
         host = id,
     )
+    init { processWorker.start() }
 
     var state: PortState = PortState.PENDING
     val targets = ConcurrentHashMap<UUID, Port>()
