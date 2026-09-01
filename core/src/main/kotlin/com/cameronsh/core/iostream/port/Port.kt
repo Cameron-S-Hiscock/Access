@@ -23,11 +23,19 @@ class Port(
     val targets = ConcurrentHashMap<UUID, Port>()
     val messageCache = LinkedBlockingDeque<Message>()
 
-    fun send(message: Message) {
-
+    fun send(target: UUID, message: Message) {
+        if(targets.containsKey(target)) {
+            targets[target]!!.messageCache.putFirst(message)
+        } else {
+            // TODO: Add handling for this case
+            println("Target not in targets")
+        }
     }
     
-    fun receive(): Message? {
+    fun receive(target: UUID): Message? {
+        if(targets.containsKey(target)) {
+            return targets[target]!!.messageCache.pollFirst()
+        }
         return null
     }
 }
