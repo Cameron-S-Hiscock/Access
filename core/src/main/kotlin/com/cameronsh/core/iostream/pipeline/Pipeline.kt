@@ -19,6 +19,6 @@ class Pipeline(
     init { processWorker.start() }
 
     fun deliver() {
-
+        destination.messageCache.offerLast(origin.messageCache.pollFirst())
     }
 }
