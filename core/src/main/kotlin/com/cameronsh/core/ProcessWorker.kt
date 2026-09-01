@@ -21,7 +21,7 @@ class ProcessWorker(
 ) : Worker(name = name) {
     private val RSETasks = LinkedBlockingDeque<Task>()
 
-    private val taskFactory = TaskFactory()
+    val taskFactory = TaskFactory()
     private val registryWorker = RegistryWorker(
         RSETasks = RSETasks,
         taskFactory = taskFactory,

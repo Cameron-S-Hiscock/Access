@@ -17,19 +17,18 @@ class Pipeline(
         name = "${name}ProcessWorker",
         host = id,
     )
-    private val taskFactory = TaskFactory()
     init { processWorker.start() }
 
     fun deliver() {
-        val message = origin.messageCache.pollFirst()
+        val message = origin.outgoingCache.pollFirst()
         if(message != null) {
-            destination.messageCache.offerLast(message)
+            destination.incomingCache.offerLast(message)
         }
     }
 
     init {
         while(true) {
-            processWorker.addWork(taskFactory.create(name = "${processWorker.name}AddDelivery") { deliver() })
+            processWorker.addWork(processWorker.taskFactory.create(name = "${processWorker.name}AddDelivery") { deliver() })
         }
     }
 }
