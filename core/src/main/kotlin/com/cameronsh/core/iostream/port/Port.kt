@@ -26,8 +26,8 @@ class Port(
     val incomingCache = LinkedBlockingDeque<Message>()
     val outgoingCache = LinkedBlockingDeque<Message>()
 
-    fun send(target: UUID, message: Message) {
-        if(targets.containsKey(target)) {
+    fun send(target: UUID?, message: Message) {
+        if(targets.containsKey(target) && target != null) {
             targets[target]!!.deliver()
         } else {
             // TODO: Add handling for this case

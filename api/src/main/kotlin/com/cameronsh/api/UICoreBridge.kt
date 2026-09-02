@@ -7,6 +7,11 @@ import java.util.concurrent.LinkedBlockingDeque
 import com.cameronsh.core.iostream.message.Message
 import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.IOStream
+import com.cameronsh.core.iostream.message.MessageFactory
+import com.cameronsh.core.BridgeRepository
+import com.cameronsh.core.Controller
+import com.cameronsh.ui.Composer
+import com.cameronsh.core.iostream.IOStreamAuthorTable
 
 object UICoreBridge {
     val id: UUID = Id.genId(this)
@@ -16,15 +21,22 @@ object UICoreBridge {
         host = id,
     )
     init { processWorker.start() }
-    val io = IOStream(
+    val IO = IOStream(
         name = "UICoreBridgeIOStream",
         targets = arrayOf(Id.objectIds["Composer"], Id.objectIds["Controller"]),
     )
+
+    val messageFactory = MessageFactory()
 
     val UIInCache = LinkedBlockingDeque<Message>()
     val UIOutCache = LinkedBlockingDeque<Message>()
     val CoreInCache = LinkedBlockingDeque<Message>()
     val CoreOutCache = LinkedBlockingDeque<Message>()
+
+    init {
+        BridgeRepository.iostreams.putIfAbsent("UICoreBridge", IO)
+        IOStreamAuthorTable.addPair(Composer.id, Controller.id)
+    }
     
     init {
         processWorker.addWork(
@@ -32,8 +44,8 @@ object UICoreBridge {
                 name = "ReceiveMessages",
             ) {
                 while(true) {
-                    val uiMessage = io.receive(Id.objectIds["Composer"])
-                    val coreMessage = io.receive(Id.objectIds["Controller"])
+                    val uiMessage = IO.receive(Id.objectIds["Composer"])
+                    val coreMessage = IO.receive(Id.objectIds["Controller"])
                     if(uiMessage != null) {
                         UIOutCache.offerLast(uiMessage)
                     }
@@ -52,10 +64,10 @@ object UICoreBridge {
                     val uiMessage = UIInCache.pollFirst()
                     val coreMessage = CoreInCache.pollFirst()
                     if(uiMessage != null) {
-                        io.send(Id.objectIds["Controller"], uiMessage)
+                        IO.send(author = Controller.id, message = uiMessage)
                     }
                     if(coreMessage != null) {
-                        io.send(Id.objectIds["Composer"], coreMessage)
+                        IO.send(author = Composer.id, message = coreMessage)
                     }
                 }
             }

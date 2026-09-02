@@ -1,5 +1,6 @@
 package com.cameronsh.ui
 
+import com.cameronsh.core.BridgeRepository
 import com.cameronsh.utils.Id
 import java.util.UUID
 
@@ -19,6 +20,7 @@ import kotlin.system.exitProcess
 import com.cameronsh.ui.MessageRouter
 import org.cef.handler.CefLoadHandler
 import org.cef.handler.CefLoadHandlerAdapter
+import com.cameronsh.core.iostream.message.Message
 
 object Composer {
     val id: UUID = Id.genId(this)
@@ -28,6 +30,25 @@ object Composer {
         name = "UIProcessWorker",
         host = id,
     )
+    init {
+        UIProcessWorker.start()
+        UIProcessWorker.taskFactory.create(name = "${UIProcessWorker.name}StartWorkers") { UIProcessWorker.run() }
+        UIProcessWorker.addWork(
+            UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITest") {
+                val IO = BridgeRepository.iostreams["UICoreBridge"]
+                require(IO != null)
+                IO.send(
+                    author = id,
+                    message = UIProcessWorker.messageFactory.create(
+                        name = "UICoreBridgeUITestMessage",
+                        origin = id,
+                        destination = IO.id,
+                        task = UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITestMessageTask") { println("UICoreBridgeUITestMessageArrived") },
+                    )
+                )
+            }
+        )
+    }
 
     lateinit var assetServer: AssetServer
     lateinit var cefApp: CefApp

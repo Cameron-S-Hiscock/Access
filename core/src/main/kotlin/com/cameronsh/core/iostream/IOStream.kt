@@ -56,7 +56,15 @@ class IOStream(
         }
     }
 
-    fun send(target: UUID?, message: Message) {
+    fun send(target: UUID? = null, message: Message, author: UUID? = null) {
+        if(author != null) {
+            for(port in ports) {
+                if(port.host == IOStreamAuthorTable.pairs[author]) {
+                    port.send(IOStreamAuthorTable.pairs[author], message)
+                }
+            }
+        }
+
         if(target in targets && target != null) {
             for(port in ports) {
                 if(port.host == target) {

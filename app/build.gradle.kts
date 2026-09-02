@@ -12,6 +12,7 @@ dependencies {
     implementation(project(":utils"))
     implementation(project(":core"))
     implementation(project(":ui"))
+    implementation(project(":api"))
     implementation(project(":systems"))
 }
 

@@ -9,6 +9,7 @@ import com.cameronsh.core.iostream.task.TaskFactory
 import com.cameronsh.core.schedule.ScheduleWorker
 import com.cameronsh.core.execution.ExecutionWorker
 import com.cameronsh.core.iostream.data.DataFactory
+import com.cameronsh.core.iostream.message.MessageFactory
 import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.core.iostream.task.TaskPriority
 import com.cameronsh.core.iostream.task.TaskPriority.*
@@ -22,6 +23,7 @@ class ProcessWorker(
     private val RSETasks = LinkedBlockingDeque<Task>()
 
     val taskFactory = TaskFactory()
+    val messageFactory = MessageFactory()
     private val registryWorker = RegistryWorker(
         RSETasks = RSETasks,
         taskFactory = taskFactory,

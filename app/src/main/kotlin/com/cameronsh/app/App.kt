@@ -7,6 +7,7 @@ import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
 import com.cameronsh.ui.MainWindow
 import com.cameronsh.systems.SystemsBridge
+import com.cameronsh.api.UICoreBridge
 
 import javax.swing.SwingUtilities
 
@@ -14,6 +15,8 @@ import java.io.File
 
 fun main(args: Array<String>) {
     println("Main Thread: ${Thread.currentThread().name}")
+
+    UICoreBridge
 
     Controller.initMainProcess()
 
