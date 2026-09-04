@@ -29,8 +29,8 @@ open class Worker(
     fun addCriticalWork(task: Task) {
         try {
             require(task.priority == CRITICAL)
-        } catch(e: IllegalArgumentException) {
-            println("Invalid: ${e.message}")
+        } catch(e: Exception) {
+            println("Invalid: ${e}")
             return
         }
         tasks.addFirst(task)

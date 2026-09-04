@@ -5,6 +5,7 @@ import java.util.UUID
 
 import com.cameronsh.core.iostream.port.Port
 import com.cameronsh.core.ProcessWorker
+import com.cameronsh.core.iostream.message.Message
 import com.cameronsh.core.iostream.task.TaskFactory
 
 class Pipeline(
@@ -19,16 +20,9 @@ class Pipeline(
     )
     init { processWorker.start() }
 
-    fun deliver() {
-        val message = origin.outgoingCache.pollFirst()
+    fun deliver(message: Message?) {
         if(message != null) {
-            destination.incomingCache.offerLast(message)
-        }
-    }
-
-    init {
-        while(true) {
-            processWorker.addWork(processWorker.taskFactory.create(name = "${processWorker.name}AddDelivery") { deliver() })
+            destination.messageCache.offerLast(message)
         }
     }
 }

@@ -16,11 +16,19 @@ object Controller {
         host = id,
     )
     init {
+        CoreProcessWorker.run()
         CoreProcessWorker.start()
-        CoreProcessWorker.addWork(
-            CoreProcessWorker.taskFactory.create(name = "${CoreProcessWorker.name}StartWorkers") { CoreProcessWorker.run() }
+
+        CoreProcessWorker.submitWork(
+            CoreProcessWorker.taskFactory.create(name = "UICoreBridgeCoreReceiver") { 
+                val IO = BridgeRepository.iostreams["UICoreBridge"]
+                require(IO != null)
+                val message = IO.receive(author = id)
+                message?.task?.action()
+            }
         )
-        CoreProcessWorker.addWork(
+
+        CoreProcessWorker.submitWork(
             CoreProcessWorker.taskFactory.create(name = "UICoreBridgeCoreTest") {
                 val IO = BridgeRepository.iostreams["UICoreBridge"]
                 require(IO != null)
@@ -30,30 +38,10 @@ object Controller {
                         name = "UICoreBridgeUITestMessage",
                         origin = id,
                         destination = IO.id,
-                        task = CoreProcessWorker.taskFactory.create(name = "UICoreBridgeCoreTestMessageTask") { println("UICoreBridgeUITestMessageArrived") },
+                        task = CoreProcessWorker.taskFactory.create(name = "UICoreBridgeCoreTestPrint") { println("UICoreBridgeUITestArrived") },
                     )
                 )
             }
-        )
-    }
-
-    fun initMainProcess() {
-        val taskFactory = TaskFactory()
-        val mainProcess = ProcessWorker(name = "ControllerProcessWorker", host = id)
-
-        val greetTask = taskFactory.create(
-            name = "GreetTask",
-            action = { println("Hello World!") },
-        )
-        mainProcess.start()
-        mainProcess.addWork(
-            taskFactory.create(
-                name = "${mainProcess.name}AddWork",
-                action = { mainProcess.submitTask(greetTask) },
-            )
-        )
-        mainProcess.addWork(
-            taskFactory.create(name = "${mainProcess.name}StartWorkers") { mainProcess.run() }
         )
     }
 }

@@ -23,12 +23,11 @@ class Port(
 
     var state: PortState = PortState.PENDING
     val targets = ConcurrentHashMap<UUID, Pipeline>()
-    val incomingCache = LinkedBlockingDeque<Message>()
-    val outgoingCache = LinkedBlockingDeque<Message>()
+    val messageCache = LinkedBlockingDeque<Message>()
 
     fun send(target: UUID?, message: Message) {
         if(targets.containsKey(target) && target != null) {
-            targets[target]!!.deliver()
+            targets[target]!!.deliver(message)
         } else {
             // TODO: Add handling for this case
             println("Target not in targets")
@@ -36,6 +35,6 @@ class Port(
     }
     
     fun receive(): Message? {
-        return incomingCache.pollFirst()
+        return messageCache.pollFirst()
     }
 }

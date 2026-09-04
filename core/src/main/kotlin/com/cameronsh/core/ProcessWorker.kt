@@ -24,18 +24,19 @@ class ProcessWorker(
 
     val taskFactory = TaskFactory()
     val messageFactory = MessageFactory()
-    private val registryWorker = RegistryWorker(
+    private val executionWorker = ExecutionWorker(
         RSETasks = RSETasks,
         taskFactory = taskFactory,
     )
     private val scheduleWorker = ScheduleWorker(
         RSETasks = RSETasks,
         taskFactory = taskFactory,
+        executionWorker = executionWorker,
     )
-    private val executionWorker = ExecutionWorker(
+    private val registryWorker = RegistryWorker(
         RSETasks = RSETasks,
-        scheduleWorker = scheduleWorker,
         taskFactory = taskFactory,
+        scheduleWorker = scheduleWorker,
     )
 
     private val localActions = LinkedBlockingDeque<() -> Unit>()
@@ -54,15 +55,9 @@ class ProcessWorker(
         localThread.start()
     }
 
-    fun submitTask(task: Task) {
+    fun submitWork(task: Task) {
         registryWorker.addWork(
-            taskFactory.create(name = "${name}RegisterTask") { registryWorker.registerTask(task) }
-        )
-        scheduleWorker.addWork(
-            taskFactory.create(name = "${name}ScheduleTask") { scheduleWorker.scheduleTask(task) }
-        )
-        executionWorker.addWork(
-            taskFactory.create(name = "${name}ExecuteTask") { executionWorker.executeTask(task) }
+            taskFactory.create(name = "${task.name}RegisterTask") { registryWorker.registerTask(task) }
         )
     }
 

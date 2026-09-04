@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
 
     UICoreBridge
 
-    Controller.initMainProcess()
+    Controller
 
     Composer.init()
     SwingUtilities.invokeLater {

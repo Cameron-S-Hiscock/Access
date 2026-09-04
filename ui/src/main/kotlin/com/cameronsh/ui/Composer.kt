@@ -31,9 +31,19 @@ object Composer {
         host = id,
     )
     init {
+        UIProcessWorker.run()
         UIProcessWorker.start()
-        UIProcessWorker.taskFactory.create(name = "${UIProcessWorker.name}StartWorkers") { UIProcessWorker.run() }
-        UIProcessWorker.addWork(
+
+        UIProcessWorker.submitWork(
+            UIProcessWorker.taskFactory.create(name = "UICoreBridgeUIReceiver") {
+                val IO = BridgeRepository.iostreams["UICoreBridge"]
+                require(IO != null)
+                val message = IO.receive(author = id)
+                message?.task?.action()
+            }
+        )
+
+        UIProcessWorker.submitWork(
             UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITest") {
                 val IO = BridgeRepository.iostreams["UICoreBridge"]
                 require(IO != null)
@@ -43,7 +53,7 @@ object Composer {
                         name = "UICoreBridgeUITestMessage",
                         origin = id,
                         destination = IO.id,
-                        task = UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITestMessageTask") { println("UICoreBridgeUITestMessageArrived") },
+                        task = UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITestPrint") { println("UICoreBridgeUITestArrived") },
                     )
                 )
             }

@@ -18,9 +18,12 @@ class ExecutionService(
         if(task.state == SCHEDULED || task.state == PAUSED) {
             task.state = RUNNING
             println("Executing task: ${task.name}")
-            task.action()
+            try {
+                task.action()
+            } catch(e: Exception) {
+                println("${e}")
+            }
         }
-        task.action()
     }
 
     fun pauseTask(task: Task) {

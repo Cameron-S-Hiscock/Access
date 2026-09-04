@@ -12,15 +12,21 @@ import com.cameronsh.core.BridgeRepository
 import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
 import com.cameronsh.core.iostream.IOStreamAuthorTable
+import com.cameronsh.core.workers.Worker
 
 object UICoreBridge {
     val id: UUID = Id.genId(this)
     init { Id.objectIds.putIfAbsent("UICoreBridge", id) }
-    private val processWorker = ProcessWorker(
+    private val UICoreBridgeProcessWorker = ProcessWorker(
         name = "UICoreBridgeProcessWorker",
         host = id,
     )
-    init { processWorker.start() }
+    private val UICoreBridgeReceiverWorker = Worker(
+        name = "UICoreBridgeReceiverWorker"
+    )
+    private val UICoreBridgeSenderWorker = Worker(
+        name = "UICoreBridgeSenderWorker"
+    )
     val IO = IOStream(
         name = "UICoreBridgeIOStream",
         targets = arrayOf(Id.objectIds["Composer"], Id.objectIds["Controller"]),
@@ -39,9 +45,12 @@ object UICoreBridge {
     }
     
     init {
-        processWorker.addWork(
-            processWorker.taskFactory.create(
-                name = "ReceiveMessages",
+        UICoreBridgeProcessWorker.run()
+        UICoreBridgeProcessWorker.start()
+
+        UICoreBridgeProcessWorker.submitWork(
+            UICoreBridgeProcessWorker.taskFactory.create(
+                name = "UICoreBridgeReceiveMessages",
             ) {
                 while(true) {
                     val uiMessage = IO.receive(Id.objectIds["Composer"])
@@ -56,9 +65,9 @@ object UICoreBridge {
             }
         )
 
-        processWorker.addWork(
-            processWorker.taskFactory.create(
-                name = "SendMessages",
+        UICoreBridgeProcessWorker.submitWork(
+            UICoreBridgeProcessWorker.taskFactory.create(
+                name = "UICoreBridgeSendMessages",
             ) {
                 while(true) {
                     val uiMessage = UIInCache.pollFirst()

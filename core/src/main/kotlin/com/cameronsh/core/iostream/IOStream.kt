@@ -19,15 +19,9 @@ class IOStream(
         host = id,
     )
 
-    val ports: List<Port> = listOf()
+    val ports: MutableList<Port> = mutableListOf()
 
     init {
-        try {
-            require(targets.size == 2)
-        } catch(e: Exception) {
-            println("${name} failed initialization: ${e}")
-        }
-
         var i = 0
         for(target in targets) {
             if(target != null) {
@@ -41,13 +35,13 @@ class IOStream(
         i = 0
         while(i < ports.size) {
             val pipeline0 = Pipeline(
-                name = "${ports[i].name}-${ports[i+1].name}Pipeline",
+                name = "${ports[i].name}to${ports[i+1].name}Pipeline",
                 origin = ports[i],
                 destination = ports[i+1],
             )
             ports[i].targets.putIfAbsent(ports[i+1].id, pipeline0)
             val pipeline1 = Pipeline(
-                name = "${ports[i+1].name}-${ports[i].name}Pipeline",
+                name = "${ports[i+1].name}to${ports[i].name}Pipeline",
                 origin = ports[i+1],
                 destination = ports[i],
             )
@@ -74,7 +68,15 @@ class IOStream(
         }
     }
 
-    fun receive(target: UUID?): Message? {
+    fun receive(author: UUID? = null, target: UUID? = null): Message? {
+        if(author != null) {
+            for(port in ports) {
+                if(port.host == IOStreamAuthorTable.pairs[author]) {
+                    port.receive()
+                }
+            }
+        }
+
         if(target in targets && target != null) {
             for(port in ports) {
                 if(port.host == target) {

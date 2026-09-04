@@ -15,10 +15,12 @@ class RegistryWorker(
     val name: String = "RegistryWorker",
     private val RSETasks: LinkedBlockingDeque<Task>,
     private val taskFactory: TaskFactory,
+    private val scheduleWorker: ScheduleWorker,
 ) : Worker(name = name) {
     private val registryService = RegistryService(RSETasks = RSETasks)
 
     fun registerTask(task: Task) {
         registryService.registerTask(task)
+        scheduleWorker.scheduleTask(task)
     }
 }

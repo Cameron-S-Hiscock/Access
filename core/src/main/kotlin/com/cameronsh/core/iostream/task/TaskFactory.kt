@@ -21,7 +21,7 @@ class TaskFactory(
             dataFactory = dataFactory,
             action = action
         )
-        println("Created task: ${name}Task")
+        println("Created task: ${name}")
         return task
     }
 }
