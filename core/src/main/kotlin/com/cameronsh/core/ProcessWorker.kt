@@ -64,12 +64,4 @@ class ProcessWorker(
     fun submitLocal(action: () -> Unit) {
         localActions.add(action)
     }
-
-    fun createTask(
-        name: String = "CreateTask",
-        priority: TaskPriority = NORMAL,
-        action: () -> Unit,
-    ) {
-        taskFactory.create(name = name, priority = priority) { action }
-    }
 }

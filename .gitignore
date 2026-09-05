@@ -22,6 +22,7 @@ target/
 # Ignore notes
 AI.md
 PLAN.md
+NOTES.md
 
 # Ignore LLVM config
 llvm-access/
