@@ -8,20 +8,26 @@ import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
 import com.cameronsh.ui.MainWindow
 import com.cameronsh.systems.SystemsBridge
-
 import javax.swing.SwingUtilities
 import java.io.File
+import kotlinx.coroutines.*
 
-fun main(args: Array<String>) {
-    println("Main Thread: ${Thread.currentThread().name}")
+suspend fun main(args: Array<String>) {
+    withContext(Dispatchers.Default) {
+    this.launch { println("Main Thread: ${Thread.currentThread().name}") }
 
-    UICoreBridge
+    this.launch {
+        UICoreBridge.init()
+        Controller.init()
+        Composer.init()
+    }
 
-    Controller
-
-    Composer.init()
-    SwingUtilities.invokeLater {
-        val window = MainWindow(Composer)
-        window.isVisible = true
+    this.launch {
+        Composer.initUI()
+        SwingUtilities.invokeLater {
+            val window = MainWindow(Composer)
+            window.isVisible = true
+        }
+    }
     }
 }

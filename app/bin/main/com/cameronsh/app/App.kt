@@ -3,24 +3,31 @@ package com.cameronsh.app
 import com.cameronsh.utils.Id
 import java.util.UUID
 
+import com.cameronsh.api.UICoreBridge
 import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
+import com.cameronsh.ui.MainWindow
 import com.cameronsh.systems.SystemsBridge
-
-import com.cameronsh.core.scheduler.SchedulerService
-
-import androidx.compose.ui.window.application
-import androidx.compose.ui.window.*
-import androidx.compose.runtime.Composable
-import kotlinx.coroutines.*
+import javax.swing.SwingUtilities
 import java.io.File
+import kotlinx.coroutines.*
 
-fun main(args: Array<String>) = application {
-    println("Main Thread: ${Thread.currentThread().name}")
+suspend fun main(args: Array<String>) {
+    withContext(Dispatchers.Default) {
+    this.launch { println("Main Thread: ${Thread.currentThread().name}") }
 
-    println("Kotlin")
+    this.launch {
+        UICoreBridge.init()
+        Controller.init()
+        Composer.init()
+    }
 
-    println(SystemsBridge.systems_log("Rust"))
-
-    with(Composer) { Compose() }
+    this.launch {
+        Composer.initUI()
+        SwingUtilities.invokeLater {
+            val window = MainWindow(Composer)
+            window.isVisible = true
+        }
+    }
+    }
 }

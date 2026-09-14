@@ -8,5 +8,5 @@ enum class TaskState {
     COMPLETED,
     FAILED,
     CANCELLED,
-    PAUSED
+    PAUSED,
 }

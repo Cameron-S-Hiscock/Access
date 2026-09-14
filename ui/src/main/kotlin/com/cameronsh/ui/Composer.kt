@@ -21,43 +21,79 @@ import com.cameronsh.ui.MessageRouter
 import org.cef.handler.CefLoadHandler
 import org.cef.handler.CefLoadHandlerAdapter
 import com.cameronsh.core.iostream.message.Message
+import kotlinx.coroutines.*
 
 object Composer {
     val id: UUID = Id.genId(this)
     init { Id.objectIds.putIfAbsent("Composer", id) }
 
-    val UIProcessWorker = ProcessWorker(
+    private val UIProcessWorker = ProcessWorker(
         name = "UIProcessWorker",
         host = id,
     )
-    init {
-        UIProcessWorker.run()
-        UIProcessWorker.start()
+    private val UIMessageWorker = ProcessWorker(
+        name = "UIMessageWorker",
+        host = id,
+    )
+    private val UIMessageCache = LinkedBlockingDeque<Message>()
 
-        UIProcessWorker.submitWork(
-            UIProcessWorker.taskFactory.create(name = "UICoreBridgeUIReceiver") {
-                val IO = BridgeRepository.iostreams["UICoreBridge"]
-                require(IO != null)
-                val message = IO.receive(author = id)
-                message?.task?.action()
+    suspend fun processMessages() {
+        val IO = BridgeRepository.iostreams["UICoreBridge"]
+        require(IO != null)
+        while(true) {
+            val message = UIMessageCache.pollFirst()
+            if(message != null) {
+                UIProcessWorker.taskFactory.create(name = "UIProcess${message.name}") {
+                    message.task?.action
+                }
             }
-        )
+        }
+    }
+    
+    suspend fun receiveMessages() {
+        val IO = BridgeRepository.iostreams["UICoreBridge"]
+        require(IO != null)
+        while(true) {
+            val message = IO.receive(author = id)
+            if(message != null) {
+                UIMessageCache.putLast(message)
+            }
+        }
+    }
 
-        UIProcessWorker.submitWork(
-            UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITest") {
-                val IO = BridgeRepository.iostreams["UICoreBridge"]
-                require(IO != null)
-                IO.send(
-                    author = id,
-                    message = UIProcessWorker.messageFactory.create(
-                        name = "UICoreBridgeUITestMessage",
-                        origin = id,
-                        destination = IO.id,
-                        task = UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITestPrint") { println("UICoreBridgeUITestArrived") },
+    suspend fun init() {
+        withContext(Dispatchers.IO) {
+
+        this.launch {
+            UIProcessWorker.run()
+        }
+
+        this.launch {
+            receiveMessages()
+        }
+
+        this.launch {
+            processMessages()
+        }
+
+        this.launch {
+            UIProcessWorker.submitWork(
+                UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITest") {
+                    val IO = BridgeRepository.iostreams["UICoreBridge"]
+                    require(IO != null)
+                    IO.send(
+                        author = id,
+                        message = UIProcessWorker.messageFactory.create(
+                            name = "UICoreBridgeUITestMessage",
+                            origin = id,
+                            destination = IO.id,
+                            task = UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITestPrint") { println("UICoreBridgeUITestArrived") },
+                        )
                     )
-                )
-            }
-        )
+                }
+            )
+        }
+        }
     }
 
     lateinit var assetServer: AssetServer
@@ -66,7 +102,7 @@ object Composer {
     lateinit var browser: CefBrowser
     lateinit var messageRouter: CefMessageRouter
 
-    fun init() {
+    fun initUI() {
         assetServer = AssetServer()
         assetServer.start()
         println("AssetServer listening on port ${assetServer.port}")

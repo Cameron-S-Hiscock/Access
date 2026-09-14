@@ -6,14 +6,13 @@ import java.util.UUID
 import java.io.File
 import java.lang.foreign.*
 import java.lang.invoke.MethodHandle
-import com.cameronsh.systems.IOStreamBridge
 
 object SystemsBridge {
     val id: UUID = Id.genId(this)
 
     val linker = Linker.nativeLinker()
     val arena = Arena.ofShared()
-    val lookup = SymbolLookup.libraryLookup(NativeLoader.resolveLibraryPath(), arena)
+    val lookup = SymbolLookup.libraryLookup(NativeLoader.resolveSystemsLibraryPath(), arena)
 
     fun handle(name: String, desc: FunctionDescriptor): MethodHandle = 
         linker.downcallHandle(

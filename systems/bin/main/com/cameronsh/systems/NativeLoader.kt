@@ -25,20 +25,20 @@ object NativeLoader {
         else -> error("Unsupported arch: $archName")
     }
 
-    private val libFileName: String = when (platformDir) {
+    private val libSystemsFileName: String = when(platformDir) {
         "windows" -> "systems.dll"
         "macos"   -> "libsystems.dylib"
         "linux"   -> "libsystems.so"
         else -> error("Could not find systems library")
     }
 
-    fun resolveLibraryPath(): Path {
-        val resourcePath = "/native/$platformDir/$arch/$libFileName"
+    fun resolveSystemsLibraryPath(): Path {
+        val resourcePath = "/native/$platformDir/$arch/$libSystemsFileName"
         val cl = javaClass.classLoader
         println("Classpath entries with 'native': " + cl.javaClass.name)
         val stream = javaClass.getResourceAsStream(resourcePath)
             ?: error("Native library not found for $platformDir/$arch at $resourcePath")
-        val tempFile = Files.createTempFile("rs", libFileName)
+        val tempFile = Files.createTempFile("rs", libSystemsFileName)
         tempFile.toFile().deleteOnExit()
         stream.use { input -> Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING) }
         return tempFile
