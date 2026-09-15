@@ -37,6 +37,7 @@ class IOStream(
                     name = "${name}Port${i}",
                     host = target,
                 )
+                ports.add(port)
             }
             i++
         }
@@ -60,41 +61,27 @@ class IOStream(
 
     fun send(target: UUID? = null, message: Message, author: UUID? = null) {
         if(author != null) {
-            for(port in ports) {
-                if(port.host == IOStreamAuthorTable.pairs[author]) {
-                    port.send(IOStreamAuthorTable.pairs[author], message)
-                }
+            val destinationHost = IOStreamAuthorTable.pairs[author]
+            if(destinationHost != null) {
+                val origin = ports.firstOrNull { it.host == author } ?: return
+                val destination = ports.firstOrNull { it.host == destinationHost } ?: return
+                origin.send(destination.id, message)
+                return
             }
         }
 
         if(target in targets && target != null) {
-            for(port in ports) {
-                if(port.host == target) {
-                    port.send(target, message)
-                }
-            }
+            ports.firstOrNull { it.host == target }?.send(target, message)
         }
     }
 
     fun receive(author: UUID? = null, target: UUID? = null): Message? {
+        var message: Message? = null
         if(author != null) {
-            for(port in ports) {
-                if(port.host == IOStreamAuthorTable.pairs[author]) {
-                    port.receive()
-                }
-            }
+            message = ports.firstOrNull { it.host == author }?.receive()
+        } else if(target in targets && target != null) {
+            message = ports.firstOrNull { it.host == target }?.receive()
         }
-
-        if(target in targets && target != null) {
-            for(port in ports) {
-                if(port.host == target) {
-                    val message = port.receive()
-                    if(message != null) {
-                        return message
-                    }
-                }
-            }
-        }
-        return null
+        return message
     }
 }

@@ -16,7 +16,7 @@ class RegistryService(
     private val registryRepository = RegistryRepository()
     val id: UUID = Id.genId(this)
     
-    fun registerTask(task: Task) {
+    suspend fun registerTask(task: Task) {
         RSETasks.add(task)
         task.state = REGISTERED
         println("Registered task: ${task.name}")

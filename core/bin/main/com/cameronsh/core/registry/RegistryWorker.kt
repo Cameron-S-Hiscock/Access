@@ -19,7 +19,7 @@ class RegistryWorker(
 ) : Worker(name = name) {
     private val registryService = RegistryService(RSETasks = RSETasks)
 
-    fun registerTask(task: Task) {
+    suspend fun registerTask(task: Task) {
         registryService.registerTask(task)
         scheduleWorker.scheduleTask(task)
     }

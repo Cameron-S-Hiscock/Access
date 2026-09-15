@@ -16,7 +16,7 @@ class ExecutionWorker(
 ) : Worker(name = name) {
     private val executionService = ExecutionService(RSETasks = RSETasks)
 
-    fun executeTask(task: Task) {
+    suspend fun executeTask(task: Task) {
         executionService.executeTask(task)
     }
 }

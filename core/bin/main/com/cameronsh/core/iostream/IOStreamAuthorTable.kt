@@ -18,5 +18,6 @@ object IOStreamAuthorTable {
             return Unit
         }
         pairs[author] = target
+        pairs[target] = author
     }
 }

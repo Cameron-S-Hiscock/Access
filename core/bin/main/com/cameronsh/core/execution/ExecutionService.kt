@@ -14,15 +14,13 @@ class ExecutionService(
     private val executionRepository = ExecutionRepository()
     val id: UUID = Id.genId(this)
 
-    fun executeTask(task: Task) {
+    suspend fun executeTask(task: Task) {
         if(task.state == SCHEDULED || task.state == PAUSED) {
             task.state = RUNNING
             println("Executing task: ${task.name}")
-            try {
-                task.action()
-            } catch(e: Exception) {
-                println("${e}")
-            }
+            task.action()
+            task.state = COMPLETED
+            println("Finished executing task: ${task.name}")
         }
     }
 

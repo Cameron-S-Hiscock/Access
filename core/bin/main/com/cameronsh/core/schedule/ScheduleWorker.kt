@@ -21,7 +21,7 @@ class ScheduleWorker(
 ) : Worker(name = name) {
     private val scheduleService = ScheduleService(RSETasks = RSETasks)
 
-    fun scheduleTask(task: Task) {
+    suspend fun scheduleTask(task: Task) {
         scheduleService.scheduleTask(task)
         executionWorker.executeTask(task)
     }

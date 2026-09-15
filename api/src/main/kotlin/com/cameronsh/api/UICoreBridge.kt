@@ -31,7 +31,7 @@ object UICoreBridge {
     )
     val IO = IOStream(
         name = "UICoreBridgeIOStream",
-        targets = arrayOf(Id.objectIds["Composer"], Id.objectIds["Controller"]),
+        targets = arrayOf(Composer.id, Controller.id),
     )
     init {
         BridgeRepository.iostreams.putIfAbsent("UICoreBridge", IO)
@@ -56,8 +56,8 @@ object UICoreBridge {
                     name = "UICoreBridgeReceiveMessages",
                 ) {
                     while(true) {
-                        val uiMessage = IO.receive(Id.objectIds["Composer"])
-                        val coreMessage = IO.receive(Id.objectIds["Controller"])
+                        val uiMessage = UIOutCache.pollFirst()
+                        val coreMessage = CoreOutCache.pollFirst()
                         if(uiMessage != null) {
                             UIOutCache.offerLast(uiMessage)
                         }
@@ -78,10 +78,10 @@ object UICoreBridge {
                         val uiMessage = UIInCache.pollFirst()
                         val coreMessage = CoreInCache.pollFirst()
                         if(uiMessage != null) {
-                            IO.send(author = Controller.id, message = uiMessage)
+                            IO.send(author = uiMessage.origin, message = uiMessage)
                         }
                         if(coreMessage != null) {
-                            IO.send(author = Composer.id, message = coreMessage)
+                            IO.send(author = coreMessage.origin, message = coreMessage)
                         }
                     }
                 }

@@ -10,6 +10,7 @@ import java.lang.Thread
 import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.core.iostream.task.TaskPriority.*
 import kotlin.random.Random
+import kotlinx.coroutines.*
 
 open class Worker(
     name: String = "Worker",
@@ -18,51 +19,30 @@ open class Worker(
 
     private val running = AtomicBoolean(true)
 
-    private val tasks = LinkedBlockingDeque<Task>()
-    private val threads = CopyOnWriteArrayList<Thread>()
-    
-    init { repeat(4) {
-        val thread = Thread.ofVirtual().name(name).unstarted() {
-            while(running.get()) {
-                val task = tasks.take()
-                runCatching {
-                    task.action()
-                }.onFailure {
-                    println("Task ${task.name} failed: ${it.message}")
-                }
-            }
-        }
-        threads.add(thread)
-    } }
+    private val executor = Executors.newFixedThreadPool(4, Thread.ofVirtual().name(name).factory())
+    private val dispatcher = executor.asCoroutineDispatcher()
+    private val scope = CoroutineScope(SupervisorJob() + dispatcher)
 
     suspend fun addWork(task: Task) {
-        tasks.add(task)
+        scope.launch {
+            try {
+                task.action()
+            } catch(e: Exception) {
+                println("Task ${task.name} failed: ${e.message}")
+            }
+        }
     }
 
     suspend fun addCriticalWork(task: Task) {
-        try {
-            require(task.priority == CRITICAL)
-        } catch(e: Exception) {
-            println("Invalid: ${e}")
-            return
-        }
-        tasks.addFirst(task)
+        require(task.priority == CRITICAL)
+        scope.launch(start = CoroutineStart.UNDISPATCHED) { task.action() }
     }
 
-    fun start() {
-        for(thread in threads) {
-            thread.start()
-        }
-    }
-    fun join() {
-        for(thread in threads) {
-            thread.join()
-        }
-    }
+    fun start() {}
+    fun join() {}
     fun stop() {
         running.set(false)
-        for(thread in threads) {
-            thread.interrupt()
-        }
+        scope.cancel()
+        dispatcher.close()
     }
 }

@@ -17,7 +17,7 @@ class ScheduleService(
     private val scheduleRepository = ScheduleRepository()
     val id: UUID = Id.genId(this)
     
-    fun scheduleTask(task: Task) {
+    suspend fun scheduleTask(task: Task) {
         if(task.state == REGISTERED) {
             if(task.priority == CRITICAL) {
                 RSETasks.remove(task)

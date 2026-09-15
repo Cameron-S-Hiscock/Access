@@ -38,27 +38,37 @@ object Composer {
     private val UIMessageCache = LinkedBlockingDeque<Message>()
 
     suspend fun processMessages() {
-        val IO = BridgeRepository.iostreams["UICoreBridge"]
-        require(IO != null)
-        while(true) {
-            val message = UIMessageCache.pollFirst()
-            if(message != null) {
-                UIProcessWorker.taskFactory.create(name = "UIProcess${message.name}") {
-                    message.task?.action
+        UIProcessWorker.submitWork(
+            UIProcessWorker.taskFactory.create(name = "UIProcessMessages") {
+                val IO = BridgeRepository.iostreams["UICoreBridge"]
+                require(IO != null)
+                while(true) {
+                    val message = UIMessageCache.pollFirst()
+                    if(message != null) {
+                        message.task?.action()
+                        println("Processed message: ${message.name}")
+                    }
+                    delay(10)
                 }
             }
-        }
+        )
     }
     
     suspend fun receiveMessages() {
-        val IO = BridgeRepository.iostreams["UICoreBridge"]
-        require(IO != null)
-        while(true) {
-            val message = IO.receive(author = id)
-            if(message != null) {
-                UIMessageCache.putLast(message)
+        UIProcessWorker.submitWork(
+            UIProcessWorker.taskFactory.create(name = "UIReceiveMessages") {
+                val IO = BridgeRepository.iostreams["UICoreBridge"]
+                require(IO != null)
+                while(true) {
+                    val message = IO.receive(author = id)
+                    if(message != null) {
+                        UIMessageCache.putLast(message)
+                        println("Received message: ${message.name}")
+                    }
+                    delay(10)
+                }
             }
-        }
+        )
     }
 
     suspend fun init() {
