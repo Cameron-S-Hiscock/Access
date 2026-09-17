@@ -72,24 +72,6 @@ object Controller {
         this.launch {
             processMessages()
         }
-
-        this.launch {
-            CoreProcessWorker.submitWork(
-                CoreProcessWorker.taskFactory.create(name = "UICoreBridgeCoreTest") {
-                    val IO = BridgeRepository.iostreams["UICoreBridge"]
-                    require(IO != null)
-                    IO.send(
-                        author = id,
-                        message = CoreProcessWorker.messageFactory.create(
-                            name = "UICoreBridgeUITestMessage",
-                            origin = id,
-                            destination = IO.id,
-                            task = CoreProcessWorker.taskFactory.create(name = "UICoreBridgeCoreTestPrint") { println("UICoreBridgeUITestArrived") },
-                        )
-                    )
-                }
-            )
-        }
         }
     }
 }

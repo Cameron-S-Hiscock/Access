@@ -85,24 +85,6 @@ object Composer {
         this.launch {
             processMessages()
         }
-
-        this.launch {
-            UIProcessWorker.submitWork(
-                UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITest") {
-                    val IO = BridgeRepository.iostreams["UICoreBridge"]
-                    require(IO != null)
-                    IO.send(
-                        author = id,
-                        message = UIProcessWorker.messageFactory.create(
-                            name = "UICoreBridgeUITestMessage",
-                            origin = id,
-                            destination = IO.id,
-                            task = UIProcessWorker.taskFactory.create(name = "UICoreBridgeUITestPrint") { println("UICoreBridgeUITestArrived") },
-                        )
-                    )
-                }
-            )
-        }
         }
     }
 
