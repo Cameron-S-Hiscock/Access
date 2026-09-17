@@ -31,5 +31,5 @@ jobs:
           file: Dockerfile
           push: ${{ github.event_name == 'push' }}
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/${{ lower(github.repository) }}:latest
+            ghcr.io/${{ lower(github.repository) }}:${{ github.sha }}
