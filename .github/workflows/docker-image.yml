@@ -24,6 +24,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase repository name
+        id: repo
+        run: echo "repo=${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+
       - name: Build and push Access image
         uses: docker/build-push-action@v6
         with:
@@ -31,5 +35,5 @@ jobs:
           file: Dockerfile
           push: ${{ github.event_name == 'push' }}
           tags: |
-            ghcr.io/${{ lower(github.repository) }}:latest
-            ghcr.io/${{ lower(github.repository) }}:${{ github.sha }}
+            ghcr.io/${{ steps.repo.outputs.repo }}:latest
+            ghcr.io/${{ steps.repo.outputs.repo }}:${{ github.sha }}
