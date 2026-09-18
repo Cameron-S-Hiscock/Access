@@ -34,3 +34,6 @@ kls_database.db
 jcef-bundle/
 
 .DS_Store
+
+Dockerfile
+.dockerignore
