@@ -9,6 +9,7 @@ import java.lang.invoke.MethodHandle
 
 object SystemsBridge {
     val id: UUID = Id.genId(this)
+    init { Id.objectIds.putIfAbsent("SystemsBridge", id) }
 
     val linker = Linker.nativeLinker()
     val arena = Arena.ofShared()

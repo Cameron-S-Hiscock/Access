@@ -18,10 +18,6 @@ open class SQLDB() {
 
     }
 
-    suspend open fun rateData() {
-
-    }
-
     suspend open fun sendData() {
         
     }

@@ -11,10 +11,7 @@
     --vintage-vessel: #94B2A6;
     --onyx: #0F0F0F;
     --seashell: #F0F0F0;
-}
-
-body {
-    background: linear-gradient(
+    --background: linear-gradient(
         to bottom,
         /* var(--cerise) 10%, */
         /* var(--vintage-vessel), */

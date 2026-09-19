@@ -23,9 +23,4 @@ kotlin {
 
 tasks.test {
     useJUnitPlatform()
-    testLogging {
-        showStandardStreams = true
-    }
 }
-
-println("CONVENTION : CONFIGURATION")

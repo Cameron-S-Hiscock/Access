@@ -9,7 +9,6 @@ export class ExitBtn extends AccessBtn {
         btn.classList.add("exit");
     }
     onClick() {
-        super.onClick();
         this.setLoading(true);
         window.cefQuery({
             request: "exit-app",

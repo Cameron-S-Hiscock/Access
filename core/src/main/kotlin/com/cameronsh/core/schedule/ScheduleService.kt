@@ -26,9 +26,6 @@ class ScheduleService(
                 RSETasks.add(task)
             }
             task.state = SCHEDULED
-            println("Scheduled task: ${task.name}")
-        } else {
-            println("${task.name} not registered")
         }
     }
 }

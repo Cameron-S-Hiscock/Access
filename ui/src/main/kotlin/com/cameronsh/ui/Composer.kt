@@ -109,6 +109,7 @@ object Composer {
         builder.cefSettings.remote_debugging_port = 9222
         builder.addJcefArgs("--ignore-certificate-errors")
         builder.addJcefArgs("--remote-allow-origins=http://localhost:9222")
+        builder.addJcefArgs("--disable-gpu-compositing")
 
         cefApp = builder.build()
         cefClient = cefApp.createClient()

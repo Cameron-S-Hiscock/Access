@@ -1,19 +1,20 @@
 import { AccessBtn } from "../ui-templates/access-btn.js";
 
-export class RestartBtn extends AccessBtn {
+export class UtilitiesBtn extends AccessBtn {
     connectedCallback() {
         super.connectedCallback();
         this.style.setProperty("--btn-background-color", "var(--onyx)");
+        this.style.setProperty("--btn-color", "var(--seashell)");
         const btn = this.shadowRoot.querySelector("button");
-        btn.classList.add("restart");
+        btn.classList.add("utilities");
     }
     onClick() {
         this.setLoading(true);
         window.cefQuery({
-            request: "restart-app",
+            request: "open-utilities",
             onSuccess: () => {},
             onFailure: () => {},
         });
     }
 }
-customElements.define("restart-btn", RestartBtn);
+customElements.define("utilities-btn", UtilitiesBtn);

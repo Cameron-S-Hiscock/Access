@@ -8,5 +8,3 @@ dependencies {
     implementation(project(":ui"))
     implementation(project(":systems"))
 }
-
-println("API : CONFIGURATION")

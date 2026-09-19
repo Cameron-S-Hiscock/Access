@@ -24,7 +24,7 @@ object MessageRouter {
                 presistent: Boolean,
                 callback: CefQueryCallback?,
             ): Boolean {
-                println("JS sent: $request")
+                println("UI sent: $request")
     
                 // TODO: Route to Controller via IOStream
     

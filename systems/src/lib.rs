@@ -1,12 +1,10 @@
-use std::collections::VecDeque;
+#![allow(unused)]
+
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
-use jni::{
-    Env,
-    objects::JObject,
-};
 
 mod id;
+mod network;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn free_str(s: *mut c_char) {

@@ -41,5 +41,3 @@ tasks.named("processResources") {
 application {
     mainClass.set("com.cameronsh.app.AppKt")
 }
-
-println("APP : CONFIGURATION")

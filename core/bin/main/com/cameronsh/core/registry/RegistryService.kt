@@ -19,6 +19,5 @@ class RegistryService(
     suspend fun registerTask(task: Task) {
         RSETasks.add(task)
         task.state = REGISTERED
-        println("Registered task: ${task.name}")
     }
 }

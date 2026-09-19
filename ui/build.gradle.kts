@@ -24,5 +24,3 @@ tasks.named("processResources") {
 tasks.named("build") {
     dependsOn("processResources")
 }
-
-println("UI : CONFIGURATION")

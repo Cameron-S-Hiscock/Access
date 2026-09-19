@@ -28,5 +28,3 @@ tasks.register<Copy>("copyRustLib") {
 tasks.named("processResources") {
     dependsOn("copyRustLib")
 }
-
-println("SYSTEMS : CONFIGURATION")

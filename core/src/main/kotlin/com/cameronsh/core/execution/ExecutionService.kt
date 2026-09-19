@@ -17,10 +17,8 @@ class ExecutionService(
     suspend fun executeTask(task: Task) {
         if(task.state == SCHEDULED || task.state == PAUSED) {
             task.state = RUNNING
-            println("Executing task: ${task.name}")
             task.action()
             task.state = COMPLETED
-            println("Finished executing task: ${task.name}")
         }
     }
 
