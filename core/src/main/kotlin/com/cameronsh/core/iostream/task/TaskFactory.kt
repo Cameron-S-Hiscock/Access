@@ -10,7 +10,7 @@ class TaskFactory(
 ) {
     private val dataFactory = DataFactory()
 
-    fun create(
+    suspend fun create(
         name: String = "Task",
         priority: TaskPriority = NORMAL,
         action: suspend () -> Unit

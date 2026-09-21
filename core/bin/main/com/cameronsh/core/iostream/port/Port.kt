@@ -6,7 +6,9 @@ import java.util.UUID
 import java.util.concurrent.LinkedBlockingDeque
 import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.message.Message
+import com.cameronsh.core.iostream.message.MessageState
 import com.cameronsh.core.iostream.pipeline.Pipeline
+import com.cameronsh.core.iostream.port.PortState
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -25,16 +27,27 @@ class Port(
     val targets = ConcurrentHashMap<UUID, Pipeline>()
     val cache = LinkedBlockingDeque<Message>()
 
-    fun send(target: UUID?, message: Message) {
-        if(targets.containsKey(target) && target != null) {
-            targets[target]!!.deliver(message)
-        } else {
-            // TODO: Add handling for this case
-            println("Target not in targets")
+    suspend fun send(target: UUID?, message: Message) {
+        try {
+            require(targets.containsKey(target))
+            require(target != null)
+            require(message.state == MessageState.SCHEDULED)
+        } catch(e: Exception) {
+            message.state = MessageState.FAILED
+            println("Error sending ${message.name}: ${e}")
+            return
         }
+        message.state = MessageState.QUEUED
+        targets[target]!!.deliver(message)
     }
     
-    fun receive(): Message? {
-        return cache.pollFirst()
+    suspend fun receive(): Message? {
+        val message = cache.pollFirst()
+        if(message.state == MessageState.SENT) {
+            message.state = MessageState.RECEIVED
+            return message
+        } else {
+            return null
+        }
     }
 }

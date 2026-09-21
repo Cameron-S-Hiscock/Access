@@ -4,8 +4,10 @@ import com.cameronsh.utils.Id
 import java.util.UUID
 
 import com.cameronsh.core.iostream.port.Port
+import com.cameronsh.core.iostream.port.PortState
 import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.message.Message
+import com.cameronsh.core.iostream.message.MessageState
 import com.cameronsh.core.iostream.task.TaskFactory
 
 class Pipeline(
@@ -20,9 +22,17 @@ class Pipeline(
     )
     init { processWorker.start() }
 
-    fun deliver(message: Message?) {
-        if(message != null) {
-            destination.cache.offerLast(message)
+    suspend fun deliver(message: Message?) {
+        try {
+            require(message?.state == MessageState.QUEUED)
+            require(destination.state == PortState.OPEN)
+        } catch(e: Exception) {
+            message?.state = MessageState.FAILED
+            println("Delivery failed for ${message?.name} at ${name}: ${e}")
+            return
         }
+        message.state = MessageState.SENDING
+        destination.cache.offerLast(message)
+        message.state = MessageState.SENT
     }
 }

@@ -6,7 +6,8 @@ import java.util.UUID
 import com.cameronsh.core.iostream.task.Task
 import com.cameronsh.core.iostream.data.Data
 import com.cameronsh.core.iostream.message.MessagePriority.*
-import com.cameronsh.core.iostream.message.MessageState.*
+import com.cameronsh.core.iostream.message.MessageState
+import com.cameronsh.core.iostream.message.MessageError
 
 data class Message(
     val name: String = "Message",
@@ -17,5 +18,5 @@ data class Message(
     val data: Data? = null,
 ) {
     val id: UUID = Id.genId(this)
-    var state: MessageState = PENDING
+    var state: MessageState = MessageState.PENDING
 }
