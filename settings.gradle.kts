@@ -8,8 +8,6 @@
 pluginManagement {
     plugins {
         kotlin("jvm") version "2.4.10"
-        kotlin("plugin.compose") version "2.4.10"
-        id("org.jetbrains.compose") version "1.11.1"
         kotlin("plugin.serialization") version "2.4.10"
     }
     repositories {
@@ -33,6 +31,5 @@ include("core")
 include("ui")
 include("utils")
 include("systems")
-include("launcher")
 include("api")
 include("data")

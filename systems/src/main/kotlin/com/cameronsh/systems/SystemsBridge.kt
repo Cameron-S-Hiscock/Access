@@ -21,16 +21,6 @@ object SystemsBridge {
             desc
         )
 
-    /*
-    private val initJvmHandle = handle(
-        "systems_init_jvm", FunctionDescriptor.ofVoid(ValueLayout.ADDRESS)
-    )
-
-    fun SystemsInitJvm() {
-        initJvmHandle.invokeExact(jvmPtr) as Unit
-    }
-    */
-
     private val freeStrHandle = handle(
         "free_str", FunctionDescriptor.ofVoid(ValueLayout.ADDRESS)
     )

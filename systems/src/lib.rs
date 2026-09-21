@@ -5,6 +5,7 @@ use std::os::raw::c_char;
 
 mod id;
 mod network;
+mod jvm;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn free_str(s: *mut c_char) {
