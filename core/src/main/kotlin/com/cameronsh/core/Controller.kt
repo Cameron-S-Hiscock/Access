@@ -9,6 +9,7 @@ import com.cameronsh.core.iostream.task.TaskFactory
 import com.cameronsh.core.BridgeRepository
 import com.cameronsh.core.iostream.message.Message
 import kotlinx.coroutines.*
+import com.cameronsh.systems.NetworkBridge
 
 object Controller {
     val id: UUID = Id.genId(this)
@@ -23,6 +24,7 @@ object Controller {
         host = id,
     )
     private val CoreMessageCache = LinkedBlockingDeque<Message>()
+    val CoreNetworkBridge = NetworkBridge.newServer("[::1]")
 
     suspend fun processMessages() {
         CoreProcessWorker.submitWork(

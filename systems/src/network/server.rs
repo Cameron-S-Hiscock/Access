@@ -1,21 +1,24 @@
 use tokio::{
-    net::{
+    io::{
+        AsyncWriteExt,
+        AsyncReadExt,
+    }, net::{
         TcpListener,
         TcpSocket,
         TcpStream,
         ToSocketAddrs
-    },
-    runtime::Runtime,
+    }, runtime::Runtime,
 };
 use jni::{Env, objects::JObject};
 use std::{
-    ffi::{CStr, c_char},
-    ptr,
-    sync::OnceLock,
-    error::Error,
+    error::Error, ffi::{CStr, c_char}, os::unix::net::SocketAddr, ptr, sync::OnceLock,
 };
 
 use crate::id;
+use crate::network::protocol::{
+    BUFFER_SIZE,
+    BUFFER_TYPE,
+};
 
 static RUNTIME: OnceLock<Runtime> = OnceLock::new();
 
@@ -56,7 +59,7 @@ pub extern "C" fn server_free(server: *mut Server) {
 }
 
 pub struct Server {
-    listener: TcpListener,
+    listeners: Vec<TcpListener>,
     id: [u8; 16],
 }
 
@@ -65,17 +68,41 @@ impl Server {
         address: String,
         id: [u8; 16],
     ) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
+        let mut listeners = Vec::new();
         let listener = TcpListener::bind(format!("{address}:0")).await?;
-        return Ok( Self { listener, id } )
+        listeners.push(listener);
+        return Ok( Self { listeners, id } )
     }
 
     pub async fn run(&self) -> Result<(), Box<dyn Error>> {
         loop {
-            let (stream, address) = self.listener.accept().await?;
-            println!("Accepted connection from {address}");
-            tokio::spawn(async move {
+            for listener in &self.listeners {
+                let (stream, address) = listener.accept().await?;
+                println!("Accepted connection from {address}");
+                tokio::spawn(async move {
+                    Self::handle_client(stream, address);
+                });
+            }
+        }
 
-            });
+        return Ok(())
+    }
+
+    async fn handle_client(mut stream: TcpStream, address: std::net::SocketAddr) -> Result<(), Box<dyn Error>> {
+        let mut buffer = [0u8; BUFFER_SIZE];
+
+        match async {
+            loop {
+                let n = stream.read(&mut buffer).await?;
+                if n == 0 {
+                    return Ok::<(), std::io::Error>(());
+                }
+
+                stream.write_all(&buffer[..n]).await?;
+            }
+        }.await {
+            Ok(_) => println!("Client {address} disconnected"),
+            Err(e) => eprintln!("Client {address} error: {e}"),
         }
 
         return Ok(())

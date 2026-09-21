@@ -1,6 +1,5 @@
 package com.cameronsh.ui
 
-import com.cameronsh.core.BridgeRepository
 import com.cameronsh.utils.Id
 import java.util.UUID
 
@@ -22,6 +21,8 @@ import org.cef.handler.CefLoadHandler
 import org.cef.handler.CefLoadHandlerAdapter
 import com.cameronsh.core.iostream.message.Message
 import kotlinx.coroutines.*
+import com.cameronsh.core.BridgeRepository
+import com.cameronsh.systems.NetworkBridge
 
 object Composer {
     val id: UUID = Id.genId(this)
@@ -36,6 +37,7 @@ object Composer {
         host = id,
     )
     private val UIMessageCache = LinkedBlockingDeque<Message>()
+    val UINetworkServer = NetworkBridge.newServer("[::1]")
 
     suspend fun processMessages() {
         UIProcessWorker.submitWork(
