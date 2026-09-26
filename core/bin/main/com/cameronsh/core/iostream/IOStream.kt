@@ -7,14 +7,16 @@ import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.pipeline.Pipeline
 import com.cameronsh.core.iostream.port.Port
 import com.cameronsh.core.iostream.message.Message
+import com.cameronsh.core.iostream.message.MessageState
 import java.util.concurrent.LinkedBlockingDeque
 import kotlinx.coroutines.*
 
 class IOStream(
     val name: String = "IOStream",
-    val targets: Array<UUID?>,
+    val targets: MutableList<UUID?>,
 ) {
     val id: UUID = Id.genId(this)
+    var state: IOStreamState = IOStreamState.PENDING
     private val processWorker = ProcessWorker(
         name = "${name}ProcessWorker",
         host = id,
@@ -31,40 +33,48 @@ class IOStream(
     }
 
     suspend fun init() {
-        withContext(Dispatchers.IO) {
-        this.launch {
-            var i = 0
-            for(target in targets) {
-                if(target != null) {
-                    val port = Port(
-                        name = "${name}Port${i}",
-                        host = target,
-                    )
-                    ports.add(port)
-                }
-                i++
+        if(state == IOStreamState.OPEN) return
+        ports.clear()
+        var i = 0
+        for(target in targets) {
+            if(target != null) {
+                val port = Port(
+                    name = "${name}Port${i}",
+                    host = target,
+                )
+                ports.add(port)
             }
-            i = 0
-            while(i < ports.size - 1) {
-                val pipeline0 = Pipeline(
-                    name = "${ports[i].name}to${ports[i+1].name}Pipeline",
-                    origin = ports[i],
-                    destination = ports[i+1],
+            i++
+        }
+        for(i in ports.indices) {
+            for(j in i+1 until ports.size) {
+                val a = ports[i]
+                val b = ports[j]
+
+                val aToB = Pipeline(
+                    name = "${a.name}To${b.name}Pipeline",
+                    origin = a,
+                    destination = b,
                 )
-                ports[i].targets.putIfAbsent(ports[i+1].id, pipeline0)
-                val pipeline1 = Pipeline(
-                    name = "${ports[i+1].name}to${ports[i].name}Pipeline",
-                    origin = ports[i+1],
-                    destination = ports[i],
+                val bToA = Pipeline(
+                    name = "${b.name}To${a.name}",
+                    origin = b,
+                    destination = a,
                 )
-                ports[i+1].targets.putIfAbsent(ports[i].id, pipeline1)
-                i++
+                a.targets[b.id] = aToB
+                b.targets[a.id] = bToA
             }
         }
+        for(port in ports) {
+            port.init()
         }
+        state = IOStreamState.OPEN
     }
 
     suspend fun send(target: UUID? = null, message: Message, author: UUID? = null): Result<Unit> {
+        if(state != IOStreamState.OPEN) {
+            return Result.failure(IllegalArgumentException(IOStreamError.InvalidIOStreamState(state).toString()))
+        }
         if(author == null && target == null) {
             return Result.failure(IllegalArgumentException(IOStreamError.InvalidTarget(null).toString()))
         }
@@ -74,17 +84,23 @@ class IOStream(
             if(destinationHost == null) {
                 return Result.failure(IllegalArgumentException(IOStreamError.InvalidAuthorPair(author).toString()))
             }
-            val origin = ports.firstOrNull { it.host == author } ?: return Result.success(Unit)
-            val destination = ports.firstOrNull { it.host == destinationHost } ?: return Result.success(Unit)
+            val origin = ports.firstOrNull { it.host == author }
+            val destination = ports.firstOrNull { it.host == destinationHost }
+            if(origin == null || destination == null) {
+                return Result.failure(IllegalArgumentException(IOStreamError.InvalidTarget(null).toString()))
+            }
+            message.state = MessageState.REGISTERED
+            message.state = MessageState.SCHEDULED
             origin.send(destination.id, message)
             return Result.success(Unit)
         }
 
         if(target in targets && target != null) {
             ports.firstOrNull { it.host == target }?.send(target, message)
+                return Result.success(Unit)
         }
-        
-        return Result.success(Unit)
+
+        return Result.failure(IllegalArgumentException(IOStreamError.InvalidTarget(null).toString()))
     }
 
     suspend fun receive(author: UUID? = null, target: UUID? = null): Message? {

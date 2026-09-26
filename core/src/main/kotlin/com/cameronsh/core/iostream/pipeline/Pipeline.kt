@@ -22,17 +22,19 @@ class Pipeline(
     )
     init { processWorker.start() }
 
-    suspend fun deliver(message: Message?) {
-        try {
-            require(message?.state == MessageState.QUEUED)
-            require(destination.state == PortState.OPEN)
-        } catch(e: Exception) {
-            message?.state = MessageState.FAILED
-            println("Delivery failed for ${message?.name} at ${name}: ${e}")
-            return
+    suspend fun deliver(message: Message?): Result<Unit> {
+        if(message == null) {
+            return Result.failure(IllegalArgumentException(PipelineError.InvalidMessageState(null).toString()))
         }
-        message.state = MessageState.SENDING
+        if(message.state != MessageState.SENDING) {
+            return Result.failure(IllegalArgumentException(PipelineError.InvalidMessageState(message.state).toString()))
+        }
+        if(destination.state != PortState.OPEN) {
+            return Result.failure(IllegalArgumentException(PipelineError.InvalidDestination(destination.id).toString()))
+        }
+        
         destination.cache.offerLast(message)
         message.state = MessageState.SENT
+        return Result.success(Unit)
     }
 }

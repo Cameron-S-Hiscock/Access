@@ -6,8 +6,7 @@ import java.util.UUID
 import com.cameronsh.core.iostream.data.DataFactory
 import com.cameronsh.core.iostream.task.TaskPriority.*
 
-class TaskFactory(
-) {
+class TaskFactory() {
     private val dataFactory = DataFactory()
 
     suspend fun create(

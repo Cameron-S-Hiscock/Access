@@ -5,20 +5,21 @@ import io.kotest.matchers.shouldBe
 import com.cameronsh.api.UICoreBridge
 import com.cameronsh.core.Controller
 import com.cameronsh.ui.Composer
-import com.cameronsh.core.BridgeRepository
+import com.cameronsh.core.bridge.BridgeRepository
+import com.cameronsh.core.bridge.Bridge
 import com.cameronsh.core.ProcessWorker
 import kotlinx.coroutines.*
+import com.cameronsh.core.iostream.IOStream
 
 class UICoreBridgeTest : FunSpec({
     test("message sent by Controller from Core through UICoreBridge arrvies at Composer in UI") {
-        withContext(Dispatchers.Default) { this.launch {
+        runBlocking {
             UICoreBridge.init()
             Controller.init()
             Composer.init()
-        } }
-
-        val IO = BridgeRepository.iostreams["UICoreBridge"]
-        require(IO != null)
+            // bridge = BridgeRepository.bridges["UICoreBridge"] as Bridge
+            // bridge.init()
+        }
 
         val coreArrived = CompletableDeferred<Boolean>()
 
@@ -26,22 +27,25 @@ class UICoreBridgeTest : FunSpec({
             name = "CoreTestProcessWorker",
             host = Controller.id,
         )
-
-        CoreTestProcessWorker.submitWork(
-            CoreTestProcessWorker.taskFactory.create(name = "ControllerUICoreBridgeCoreTest") {
-                IO.send(
-                    author = Controller.id,
-                    message = CoreTestProcessWorker.messageFactory.create(
-                        name = "ControllerUICoreBridgeCoreTestMessage",
-                        origin = Controller.id,
-                        destination = IO.id,
-                        task = CoreTestProcessWorker.taskFactory.create(name = "ControllerUICoreBridgeCoreTestMessageAction") {
-                            coreArrived.complete(true)
-                        }
-                    )
-                )
-            }
+        val UITestProcessWorker = ProcessWorker(
+            name = "UITestProcessWorker",
+            host = Composer.id,
         )
+
+        UICoreBridge.send(
+            authorId = Controller.id,
+            message = CoreTestProcessWorker.messageFactory.create(
+                name = "ControllerUICoreBridgeCoreTestMessage",
+                origin = Controller.id,
+                destination = UICoreBridge.id,
+                task = CoreTestProcessWorker.taskFactory.create(name = "ControllerUICoreBridgeCoreTestMessageAction") {
+                    coreArrived.complete(true)
+                }
+            )
+        )
+
+        val message = UICoreBridge.receive(Composer.id)
+        message?.task?.action()
 
         withTimeout(2000) {
             coreArrived.await() shouldBe true
@@ -49,14 +53,13 @@ class UICoreBridgeTest : FunSpec({
     }
     
     test("message sent by Composer through UICoreBridge arrvies at Controller") {
-        // withContext(Dispatchers.Default) { this.launch {
+        runBlocking {
             // UICoreBridge.init()
             // Controller.init()
             // Composer.init()
-        // } }
-
-        val IO = BridgeRepository.iostreams["UICoreBridge"]
-        require(IO != null)
+            // bridge = BridgeRepository.bridges["UICoreBridge"] as Bridge
+            // bridge.init()
+        }
 
         val uiArrived = CompletableDeferred<Boolean>()
 
@@ -64,22 +67,25 @@ class UICoreBridgeTest : FunSpec({
             name = "UITestProcessWorker",
             host = Composer.id,
         )
-
-        UITestProcessWorker.submitWork(
-            UITestProcessWorker.taskFactory.create(name = "ComposerUICoreBridgeCoreTest") {
-                IO.send(
-                    author = Composer.id,
-                    message = UITestProcessWorker.messageFactory.create(
-                        name = "ComposerUICoreBridgeCoreTestMessage",
-                        origin = Composer.id,
-                        destination = IO.id,
-                        task = UITestProcessWorker.taskFactory.create(name = "ComposerUICoreBridgeCoreTestMessageAction") {
-                            uiArrived.complete(true)
-                        }
-                    )
-                )
-            }
+        val CoreTestProcessWorker = ProcessWorker(
+            name = "CoreTestProcessWorker",
+            host = Controller.id,
         )
+
+        UICoreBridge.send(
+            authorId = Composer.id,
+            message = UITestProcessWorker.messageFactory.create(
+                name = "ComposerUICoreBridgeCoreTestMessage",
+                origin = Composer.id,
+                destination = UICoreBridge.id,
+                task = UITestProcessWorker.taskFactory.create(name = "ComposerUICoreBridgeCoreTestMessageAction") {
+                    uiArrived.complete(true)
+                }
+            )
+        )
+
+        val message = UICoreBridge.receive(Controller.id)
+        message?.task?.action()
 
         withTimeout(2000) {
             uiArrived.await() shouldBe true

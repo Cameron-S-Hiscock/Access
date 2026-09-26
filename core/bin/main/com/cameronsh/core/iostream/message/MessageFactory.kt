@@ -26,6 +26,7 @@ class MessageFactory() {
             task = task,
             data = data,
         )
+        var state = MessageState.PENDING
         return message
     }
 }

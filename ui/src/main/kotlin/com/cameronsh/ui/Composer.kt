@@ -21,7 +21,7 @@ import org.cef.handler.CefLoadHandler
 import org.cef.handler.CefLoadHandlerAdapter
 import com.cameronsh.core.iostream.message.Message
 import kotlinx.coroutines.*
-import com.cameronsh.core.BridgeRepository
+import com.cameronsh.core.bridge.BridgeRepository
 import com.cameronsh.systems.NetworkBridge
 
 object Composer {
@@ -37,56 +37,46 @@ object Composer {
         host = id,
     )
     private val UIMessageCache = LinkedBlockingDeque<Message>()
-    val UINetworkServer = NetworkBridge.newServer("[::1]")
+    private val UINetworkServer = NetworkBridge.newServer("[::1]")
+    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     suspend fun processMessages() {
-        UIProcessWorker.submitWork(
-            UIProcessWorker.taskFactory.create(name = "UIProcessMessages") {
-                val IO = BridgeRepository.iostreams["UICoreBridge"]
-                require(IO != null)
-                while(true) {
-                    val message = UIMessageCache.pollFirst()
-                    if(message != null) {
-                        message.task?.action()
-                        println("Processed message: ${message.name}")
-                    }
-                    delay(10)
-                }
+        val bridge = BridgeRepository.bridges["UICoreBridge"]
+        require(bridge != null)
+        while(true) {
+            val message = UIMessageCache.pollFirst()
+            if(message != null) {
+                message.task?.action()
+                println("Processed message: ${message.name}")
             }
-        )
+            delay(10)
+        }
     }
     
     suspend fun receiveMessages() {
-        UIProcessWorker.submitWork(
-            UIProcessWorker.taskFactory.create(name = "UIReceiveMessages") {
-                val IO = BridgeRepository.iostreams["UICoreBridge"]
-                require(IO != null)
-                while(true) {
-                    val message = IO.receive(author = id)
-                    if(message != null) {
-                        UIMessageCache.putLast(message)
-                        println("Received message: ${message.name}")
-                    }
-                    delay(10)
-                }
+        val bridge = BridgeRepository.bridges["UICoreBridge"]
+        require(bridge != null)
+        while(true) {
+            val message = bridge.receive(id)
+            if(message != null) {
+                UIMessageCache.putLast(message)
+                println("Received message: ${message.name}")
             }
-        )
+            delay(10)
+        }
     }
 
     suspend fun init() {
-        withContext(Dispatchers.IO) {
-
-        this.launch {
+        serviceScope.launch {
             UIProcessWorker.run()
         }
 
-        this.launch {
+        serviceScope.launch {
             receiveMessages()
         }
 
-        this.launch {
+        serviceScope.launch {
             processMessages()
-        }
         }
     }
 

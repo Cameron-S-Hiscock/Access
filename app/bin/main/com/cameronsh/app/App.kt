@@ -19,18 +19,20 @@ suspend fun main(args: Array<String>) {
     withContext(Dispatchers.Default) {
     this.launch { println("Main Thread: ${Thread.currentThread().name}") }
 
-    this.launch {
+    val initJob = launch {
         UICoreBridge.init()
         Controller.init()
         Composer.init()
     }
+    initJob.join()
 
-    this.launch {
+    val initUIJob = launch {
         Composer.initUI()
         SwingUtilities.invokeLater {
             val window = MainWindow(Composer)
             window.isVisible = true
         }
     }
+    initUIJob.join()
     }
 }
