@@ -96,10 +96,10 @@ object UICoreBridge: Bridge {
 
     override suspend fun send(authorId: UUID, message: Message): Result<Unit> {
         if(state != BridgeState.OPEN) {
-            return Result.failure(IllegalArgumentException(BridgeError.InvalidBridgeState(state).toString()))
+            return Result.failure(Exception(BridgeError.InvalidBridgeState(state).toString()))
         }
         if(authorId != Controller.id && authorId != Composer.id) {
-            return Result.failure(IllegalArgumentException(BridgeError.InvalidAuthorPair(authorId).toString()))
+            return Result.failure(Exception(BridgeError.InvalidAuthorPair(authorId).toString()))
         }
         when(authorId) {
             Controller.id -> UICache.putLast(message)

@@ -24,13 +24,13 @@ class Pipeline(
 
     suspend fun deliver(message: Message?): Result<Unit> {
         if(message == null) {
-            return Result.failure(IllegalArgumentException(PipelineError.InvalidMessageState(null).toString()))
+            return Result.failure(Exception(PipelineError.InvalidMessageState(null).toString()))
         }
         if(message.state != MessageState.SENDING) {
-            return Result.failure(IllegalArgumentException(PipelineError.InvalidMessageState(message.state).toString()))
+            return Result.failure(Exception(PipelineError.InvalidMessageState(message.state).toString()))
         }
         if(destination.state != PortState.OPEN) {
-            return Result.failure(IllegalArgumentException(PipelineError.InvalidDestination(destination.id).toString()))
+            return Result.failure(Exception(PipelineError.InvalidDestination(destination.id).toString()))
         }
         
         destination.cache.offerLast(message)

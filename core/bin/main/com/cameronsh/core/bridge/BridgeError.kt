@@ -3,8 +3,9 @@ package com.cameronsh.core.bridge
 import java.util.UUID
 import com.cameronsh.utils.Module
 import com.cameronsh.core.iostream.IOComponent
+import com.cameronsh.utils.Error
 
-sealed class BridgeError {
+sealed class BridgeError : Error() {
     data class InvalidTarget(val targetId: UUID?) : BridgeError()
     data class NullIOComponent(val component: IOComponent) : BridgeError()
     data class InvalidBridgeState(val state: BridgeState) : BridgeError()

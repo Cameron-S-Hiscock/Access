@@ -6,7 +6,9 @@ import java.util.UUID
 import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.pipeline.Pipeline
 import com.cameronsh.core.iostream.port.Port
+import com.cameronsh.core.iostream.port.PortError
 import com.cameronsh.core.iostream.message.Message
+import com.cameronsh.core.iostream.message.MessageError
 import com.cameronsh.core.iostream.message.MessageState
 import java.util.concurrent.LinkedBlockingDeque
 import kotlinx.coroutines.*
@@ -71,45 +73,48 @@ class IOStream(
         state = IOStreamState.OPEN
     }
 
-    suspend fun send(target: UUID? = null, message: Message, author: UUID? = null): Result<Unit> {
+    suspend fun send(target: UUID? = null, message: Message, author: UUID? = null): Result<Unit>? {
         if(state != IOStreamState.OPEN) {
-            return Result.failure(IllegalArgumentException(IOStreamError.InvalidIOStreamState(state).toString()))
+            return Result.failure(Exception(IOStreamError.InvalidIOStreamState(state).toString()))
         }
         if(author == null && target == null) {
-            return Result.failure(IllegalArgumentException(IOStreamError.InvalidTarget(null).toString()))
+            return Result.failure(Exception(IOStreamError.InvalidTarget(null).toString()))
         }
 
         if(author != null) {
             val destinationHost = IOStreamAuthorTable.pairs[author]
             if(destinationHost == null) {
-                return Result.failure(IllegalArgumentException(IOStreamError.InvalidAuthorPair(author).toString()))
+                return Result.failure(Exception(IOStreamError.InvalidAuthorPair(author).toString()))
             }
             val origin = ports.firstOrNull { it.host == author }
             val destination = ports.firstOrNull { it.host == destinationHost }
             if(origin == null || destination == null) {
-                return Result.failure(IllegalArgumentException(IOStreamError.InvalidTarget(null).toString()))
+                return Result.failure(Exception(IOStreamError.InvalidTarget(null).toString()))
             }
             message.state = MessageState.REGISTERED
             message.state = MessageState.SCHEDULED
-            origin.send(destination.id, message)
-            return Result.success(Unit)
+            val result = origin.send(destination.id, message)
+            return result
         }
 
         if(target in targets && target != null) {
-            ports.firstOrNull { it.host == target }?.send(target, message)
-                return Result.success(Unit)
+            val result = ports.firstOrNull { it.host == target }?.send(target, message)
+            return result
         }
 
-        return Result.failure(IllegalArgumentException(IOStreamError.InvalidTarget(null).toString()))
+        return Result.failure(Exception(IOStreamError.InvalidTarget(null).toString()))
     }
 
     suspend fun receive(author: UUID? = null, target: UUID? = null): Message? {
-        var message: Message? = null
+        var message: Result<Message>? = null
         if(author != null) {
             message = ports.firstOrNull { it.host == author }?.receive()
         } else if(target in targets && target != null) {
             message = ports.firstOrNull { it.host == target }?.receive()
         }
-        return message
+        return when(message) {
+            null -> null
+            else -> message.getOrNull()
+        }
     }
 }

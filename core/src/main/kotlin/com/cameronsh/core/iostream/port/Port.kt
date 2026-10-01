@@ -6,8 +6,10 @@ import java.util.UUID
 import java.util.concurrent.LinkedBlockingDeque
 import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.message.Message
+import com.cameronsh.core.iostream.message.MessageError
 import com.cameronsh.core.iostream.message.MessageState
 import com.cameronsh.core.iostream.pipeline.Pipeline
+import com.cameronsh.core.iostream.pipeline.PipelineError
 import com.cameronsh.core.iostream.port.PortState
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
@@ -34,30 +36,30 @@ class Port(
 
     suspend fun send(target: UUID?, message: Message): Result<Unit> {
         if(target == null) {
-            return Result.failure(IllegalArgumentException(PortError.InvalidTarget(null).toString()))
+            return Result.failure(Exception(PortError.InvalidTarget(null).toString()))
         }
         if(!targets.containsKey(target)) {
-            return Result.failure(IllegalArgumentException(PortError.InvalidTarget(target).toString()))
+            return Result.failure(Exception(PortError.InvalidTarget(target).toString()))
         }
         if(message.state != MessageState.SCHEDULED) {
-            return Result.failure(IllegalArgumentException(PortError.InvalidMessageState(message.state).toString()))
+            return Result.failure(Exception(PortError.InvalidMessageState(message.state).toString()))
         }
         message.state = MessageState.QUEUED
         message.state = MessageState.SENDING
-        targets[target]!!.deliver(message)
-        return Result.success(Unit)
+        val result = targets[target]!!.deliver(message)
+        return result
     }
     
-    suspend fun receive(): Message? {
+    suspend fun receive(): Result<Message> {
         val message = cache.pollFirst()
         if(message == null) {
-            return null
+            return Result.failure(Exception(MessageError.NullMessage(null).toString()))
         }
         if(message.state == MessageState.SENT) {
             message.state = MessageState.RECEIVED
-            return message
+            return Result.success(message)
         } else {
-            return null
+            return Result.failure(Exception())
         }
     }
 }

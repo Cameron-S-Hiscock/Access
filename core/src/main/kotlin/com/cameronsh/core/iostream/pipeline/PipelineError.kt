@@ -2,8 +2,9 @@ package com.cameronsh.core.iostream.pipeline
 
 import java.util.UUID
 import com.cameronsh.core.iostream.message.MessageState
+import com.cameronsh.utils.Error
 
-sealed class PipelineError {
+sealed class PipelineError : Error() {
     data class InvalidOrigin(val originId: UUID) : PipelineError()
     data class InvalidDestination(val destinationId: UUID) : PipelineError()
     data class InvalidMessageState(val state: MessageState?) : PipelineError()

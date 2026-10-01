@@ -1,8 +1,9 @@
 package com.cameronsh.core.iostream
 
 import java.util.UUID
+import com.cameronsh.utils.Error
 
-sealed class IOStreamError {
+sealed class IOStreamError : Error() {
     data class InvalidTarget(val targetId: UUID?) : IOStreamError()
     data class NullComponent(val component: IOComponent) : IOStreamError()
     data class InvalidIOStreamState(val state: IOStreamState) : IOStreamError()
