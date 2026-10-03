@@ -1,13 +1,12 @@
 package com.cameronsh.core.iostream
 
 import java.util.UUID
-import com.cameronsh.utils.Error
+import com.cameronsh.core.iostream.IOError
 
-sealed class IOStreamError : Error() {
+sealed class IOStreamError : IOError() {
     data class InvalidTarget(val targetId: UUID?) : IOStreamError()
     data class NullComponent(val component: IOComponent) : IOStreamError()
     data class InvalidIOStreamState(val state: IOStreamState) : IOStreamError()
     data class InvalidAuthorPair(val authorId: UUID?) : IOStreamError()
     data class CriticalPrioritySpam(val criticalTasks: Int) : IOStreamError()
-    data class EmptyField(val fieldName: String) : IOStreamError()
 }

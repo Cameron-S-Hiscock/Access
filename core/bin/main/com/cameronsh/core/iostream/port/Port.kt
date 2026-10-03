@@ -14,6 +14,9 @@ import com.cameronsh.core.iostream.port.PortState
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlinx.coroutines.*
+import com.cameronsh.core.iostream.IOResult
+import com.cameronsh.core.iostream.IOSuccess
+import com.cameronsh.core.iostream.IOError
 
 class Port(
     val name: String = "Port",
@@ -34,15 +37,15 @@ class Port(
         state = PortState.OPEN
     }
 
-    suspend fun send(target: UUID?, message: Message): Result<Unit> {
+    suspend fun send(target: UUID?, message: Message): IOResult {
         if(target == null) {
-            return Result.failure(Exception(PortError.InvalidTarget(null).toString()))
+            return IOResult(error = PortError.InvalidTarget(null))
         }
         if(!targets.containsKey(target)) {
-            return Result.failure(Exception(PortError.InvalidTarget(target).toString()))
+            return IOResult(error = PortError.InvalidTarget(target))
         }
         if(message.state != MessageState.SCHEDULED) {
-            return Result.failure(Exception(PortError.InvalidMessageState(message.state).toString()))
+            return IOResult(error = PortError.InvalidMessageState(message.state))
         }
         message.state = MessageState.QUEUED
         message.state = MessageState.SENDING
@@ -50,16 +53,16 @@ class Port(
         return result
     }
     
-    suspend fun receive(): Result<Message> {
+    suspend fun receive(): IOResult {
         val message = cache.pollFirst()
         if(message == null) {
-            return Result.failure(Exception(MessageError.NullMessage(null).toString()))
+            return IOResult(error = MessageError.NullMessage(null))
         }
         if(message.state == MessageState.SENT) {
             message.state = MessageState.RECEIVED
-            return Result.success(message)
+            return IOResult(success = IOSuccess.Value(message))
         } else {
-            return Result.failure(Exception())
+            return IOResult(error = IOError.UnknownError(id))
         }
     }
 }

@@ -2,9 +2,9 @@ package com.cameronsh.core.iostream.port
 
 import java.util.UUID
 import com.cameronsh.core.iostream.message.MessageState
-import com.cameronsh.utils.Error
+import com.cameronsh.core.iostream.IOError
 
-sealed class PortError : Error() {
+sealed class PortError : IOError() {
     data class InvalidHost(val hostId: UUID) : PortError()
     data class InvalidTarget(val targetId: UUID?) : PortError()
     data class UnbuiltState(val state: PortState) : PortError()

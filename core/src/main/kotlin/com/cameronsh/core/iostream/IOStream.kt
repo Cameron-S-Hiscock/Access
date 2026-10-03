@@ -73,23 +73,23 @@ class IOStream(
         state = IOStreamState.OPEN
     }
 
-    suspend fun send(target: UUID? = null, message: Message, author: UUID? = null): Result<Unit>? {
+    suspend fun send(target: UUID? = null, message: Message, author: UUID? = null): IOResult {
         if(state != IOStreamState.OPEN) {
-            return Result.failure(Exception(IOStreamError.InvalidIOStreamState(state).toString()))
+            return IOResult(error = IOStreamError.InvalidIOStreamState(state))
         }
         if(author == null && target == null) {
-            return Result.failure(Exception(IOStreamError.InvalidTarget(null).toString()))
+            return IOResult(error = IOStreamError.InvalidTarget(null))
         }
 
         if(author != null) {
             val destinationHost = IOStreamAuthorTable.pairs[author]
             if(destinationHost == null) {
-                return Result.failure(Exception(IOStreamError.InvalidAuthorPair(author).toString()))
+                return IOResult(error = IOStreamError.InvalidAuthorPair(author))
             }
             val origin = ports.firstOrNull { it.host == author }
             val destination = ports.firstOrNull { it.host == destinationHost }
             if(origin == null || destination == null) {
-                return Result.failure(Exception(IOStreamError.InvalidTarget(null).toString()))
+                return IOResult(error = IOStreamError.InvalidTarget(null))
             }
             message.state = MessageState.REGISTERED
             message.state = MessageState.SCHEDULED
@@ -99,22 +99,36 @@ class IOStream(
 
         if(target in targets && target != null) {
             val result = ports.firstOrNull { it.host == target }?.send(target, message)
-            return result
+            return result as IOResult
         }
 
-        return Result.failure(Exception(IOStreamError.InvalidTarget(null).toString()))
+        return IOResult(error = IOStreamError.InvalidTarget(null))
     }
 
-    suspend fun receive(author: UUID? = null, target: UUID? = null): Message? {
-        var message: Result<Message>? = null
+    suspend fun receive(author: UUID? = null, target: UUID? = null): IOResult {
+        var result: IOResult? = null
         if(author != null) {
-            message = ports.firstOrNull { it.host == author }?.receive()
+            result = ports.firstOrNull { it.host == author }?.receive()
         } else if(target in targets && target != null) {
-            message = ports.firstOrNull { it.host == target }?.receive()
+            result = ports.firstOrNull { it.host == target }?.receive()
         }
-        return when(message) {
-            null -> null
-            else -> message.getOrNull()
+
+        if(result == null) {
+            return IOResult(error = MessageError.NullMessage(null))
         }
+
+        if(result.error is IOError && result.error != null) {
+            val error = result.error
+            when(error) {
+                
+                else -> { }
+            }
+        }
+
+        if(result.success is IOSuccess.Value && result.success != null) {
+            return IOResult(success = IOSuccess.Value(result.success.value))
+        }
+
+        return IOResult(error = IOError.UnknownError(null))
     }
 }

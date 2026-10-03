@@ -1,8 +1,10 @@
 package com.cameronsh.core.iostream.data
 
-import com.cameronsh.utils.Error
+import java.util.UUID
+import com.cameronsh.core.iostream.IOError
 
-sealed class DataError : Error() {
+sealed class DataError : IOError() {
     data class FailedSerialization(val json: String) : DataError()
-    data class EmptyField(val fieldName: String) : DataError()
+    data class CorruptedData(val dataId: UUID) : DataError()
+    data class UnknownDataFormat(val type: String) : DataError()
 }

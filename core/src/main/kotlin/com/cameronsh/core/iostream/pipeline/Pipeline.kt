@@ -9,6 +9,9 @@ import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.message.Message
 import com.cameronsh.core.iostream.message.MessageState
 import com.cameronsh.core.iostream.task.TaskFactory
+import com.cameronsh.core.iostream.IOResult
+import com.cameronsh.core.iostream.IOSuccess
+import com.cameronsh.core.iostream.IOError
 
 class Pipeline(
     val name: String = "Pipeline",
@@ -22,19 +25,19 @@ class Pipeline(
     )
     init { processWorker.start() }
 
-    suspend fun deliver(message: Message?): Result<Unit> {
+    suspend fun deliver(message: Message?): IOResult {
         if(message == null) {
-            return Result.failure(Exception(PipelineError.InvalidMessageState(null).toString()))
+            return IOResult(error = PipelineError.InvalidMessageState(null))
         }
         if(message.state != MessageState.SENDING) {
-            return Result.failure(Exception(PipelineError.InvalidMessageState(message.state).toString()))
+            return IOResult(error = PipelineError.InvalidMessageState(message.state))
         }
         if(destination.state != PortState.OPEN) {
-            return Result.failure(Exception(PipelineError.InvalidDestination(destination.id).toString()))
+            return IOResult(error = PipelineError.InvalidDestination(destination.id))
         }
         
         destination.cache.offerLast(message)
         message.state = MessageState.SENT
-        return Result.success(Unit)
+        return IOResult(success = IOSuccess.Value(message))
     }
 }
