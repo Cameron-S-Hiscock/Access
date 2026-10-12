@@ -16,23 +16,15 @@ import kotlinx.coroutines.*
 suspend fun main(args: Array<String>) {
     val AppNetworkServer = NetworkBridge.newServer("[::1]")
 
-    withContext(Dispatchers.Default) {
-    this.launch { println("Main Thread: ${Thread.currentThread().name}") }
+    println("Main Thread: ${Thread.currentThread().name}")
 
-    val initJob = launch {
-        UICoreBridge.init()
-        Controller.init()
-        Composer.init()
-    }
-    initJob.join()
+    UICoreBridge.init()
+    Controller.init()
+    Composer.init()
 
-    val initUIJob = launch {
-        Composer.initUI()
-        SwingUtilities.invokeLater {
-            val window = MainWindow(Composer)
-            window.isVisible = true
-        }
-    }
-    initUIJob.join()
+    Composer.initUI()
+    SwingUtilities.invokeLater {
+        val window = MainWindow(Composer)
+        window.isVisible = true
     }
 }

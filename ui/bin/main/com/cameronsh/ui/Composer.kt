@@ -23,6 +23,7 @@ import com.cameronsh.core.iostream.message.Message
 import kotlinx.coroutines.*
 import com.cameronsh.core.bridge.BridgeRepository
 import com.cameronsh.systems.NetworkBridge
+import java.io.File
 
 object Composer {
     val id: UUID = Id.genId(this)
@@ -84,12 +85,14 @@ object Composer {
     lateinit var cefApp: CefApp
     lateinit var cefClient: CefClient
     lateinit var browser: CefBrowser
-    lateinit var messageRouter: CefMessageRouter
+    lateinit var messageRouter: MessageRouter
 
     fun initUI() {
         assetServer = AssetServer()
         assetServer.start()
         println("AssetServer listening on port ${assetServer.port}")
+
+        messageRouter = MessageRouter()
 
         val url = "https://localhost:${assetServer.port}"
 
@@ -99,6 +102,7 @@ object Composer {
         builder.cefSettings.locale = "en-US"
         builder.cefSettings.let { }
         builder.cefSettings.remote_debugging_port = 9222
+        builder.cefSettings.root_cache_path = File(System.getProperty("user.home"), ".access/cef").absolutePath
         builder.addJcefArgs("--ignore-certificate-errors")
         builder.addJcefArgs("--remote-allow-origins=http://localhost:9222")
         builder.addJcefArgs("--disable-gpu-compositing")
@@ -113,7 +117,7 @@ object Composer {
             false,
         )
 
-        cefClient.addMessageRouter(MessageRouter.instance)
+        cefClient.addMessageRouter(messageRouter.instance)
     }
 
     fun shutdown() {

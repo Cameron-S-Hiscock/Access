@@ -117,15 +117,16 @@ class IOStream(
             return IOResult(error = MessageError.NullMessage(null))
         }
 
-        if(result.error is IOError && result.error != null) {
+        if(result.error is IOError) {
             val error = result.error
             when(error) {
-                
+                is MessageError.NullMessage -> return IOResult(success = IOSuccess.Value(null))
+                is IOError.UnknownError -> return IOResult(error = IOError.UnknownError(null))
                 else -> { }
             }
         }
 
-        if(result.success is IOSuccess.Value && result.success != null) {
+        if(result.success is IOSuccess.Value) {
             return IOResult(success = IOSuccess.Value(result.success.value))
         }
 

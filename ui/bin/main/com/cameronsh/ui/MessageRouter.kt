@@ -11,7 +11,7 @@ import org.cef.callback.CefQueryCallback
 import org.cef.browser.CefFrame
 import com.cameronsh.ui.Composer
 
-object MessageRouter {
+class MessageRouter() {
     val id: UUID = Id.genId(this)
 
     val instance: CefMessageRouter = CefMessageRouter.create().apply {
