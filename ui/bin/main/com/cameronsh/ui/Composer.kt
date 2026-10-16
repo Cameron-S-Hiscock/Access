@@ -92,12 +92,10 @@ object Composer {
         assetServer.start()
         println("AssetServer listening on port ${assetServer.port}")
 
-        messageRouter = MessageRouter()
-
         val url = "https://localhost:${assetServer.port}"
 
         val builder = CefAppBuilder()
-        builder.setInstallDir(java.io.File("jcef-bundle"))
+        builder.setInstallDir(File("jcef-bundle"))
         builder.cefSettings.windowless_rendering_enabled = false
         builder.cefSettings.locale = "en-US"
         builder.cefSettings.let { }
@@ -109,6 +107,7 @@ object Composer {
 
         cefApp = builder.build()
         cefClient = cefApp.createClient()
+        messageRouter = MessageRouter()
 
         println("Loading browser URL: $url")
         browser = cefClient.createBrowser(

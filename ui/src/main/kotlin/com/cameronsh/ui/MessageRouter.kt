@@ -10,9 +10,12 @@ import org.cef.handler.CefMessageRouterHandlerAdapter
 import org.cef.callback.CefQueryCallback
 import org.cef.browser.CefFrame
 import com.cameronsh.ui.Composer
+import com.cameronsh.ui.RequestLibrary
 
 class MessageRouter() {
     val id: UUID = Id.genId(this)
+
+    val requestLibrary = RequestLibrary()
 
     val instance: CefMessageRouter = CefMessageRouter.create().apply {
         addHandler(object: CefMessageRouterHandlerAdapter() {
@@ -26,21 +29,11 @@ class MessageRouter() {
             ): Boolean {
                 println("UI sent: $request")
     
-                // TODO: Route to Controller via IOStream
-    
-                when(request) {
-                    "exit-app" -> {
-                        callback?.success("Exiting app")
-                        exitProcess(0)
-                    }
-                    "restart-app" -> {
-                        callback?.success("Restarting app")
-                        browser?.reload()
-                    }
-                    else -> {
-                        callback?.failure(1, "Unknown request")
-                        println("Unknown request")
-                    }
+                lateinit var action: () -> Unit
+                val requestAction = requestLibrary.getRequest(request)
+                if(requestAction.success is UISuccess.Value) {
+                    action = (requestAction.success as UISuccess.Value).value as () -> Unit
+                    action()
                 }
 
                 callback?.success("Kotlin received: $request")
