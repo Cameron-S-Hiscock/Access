@@ -16,7 +16,7 @@ class MessageRouter() {
     val id: UUID = Id.genId(this)
 
     val requestLibrary = RequestLibrary()
-
+    
     val instance: CefMessageRouter = CefMessageRouter.create().apply {
         addHandler(object: CefMessageRouterHandlerAdapter() {
             override fun onQuery(
@@ -29,10 +29,9 @@ class MessageRouter() {
             ): Boolean {
                 println("UI sent: $request")
     
-                lateinit var action: () -> Unit
                 val requestAction = requestLibrary.getRequest(request)
                 if(requestAction.success is UISuccess.Value) {
-                    action = (requestAction.success as UISuccess.Value).value as () -> Unit
+                    val action = (requestAction.success as UISuccess.Value).value as () -> Unit
                     action()
                 }
 

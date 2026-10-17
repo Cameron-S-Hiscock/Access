@@ -20,7 +20,7 @@ tasks.register<Copy>("copyRustLib") {
         osName.contains("mac") -> "macos" to "libsystems.dylib"
         else -> "linux" to "libsystems.so"
     }
-    val arch = if (System.getProperty("os.arch").contains("aarch64")) "aarch64" else "x86_64"
+    val arch = if(System.getProperty("os.arch").contains("aarch64")) "aarch64" else "x86_64"
     from("../systems/target/release/$libName")
     into("src/main/resources/native/$platformDir/$arch")
 }
