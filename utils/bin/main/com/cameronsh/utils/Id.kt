@@ -21,4 +21,6 @@ object Id {
         // println("Registered Id: ${id}")
         return id
     }
+
+    val id: UUID = Id.genId(this)
 }

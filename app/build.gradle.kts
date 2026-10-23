@@ -19,18 +19,17 @@ tasks.named<JavaExec>("run") {
 }
 
 tasks.register<Exec>("genDevCert") {
-    val keystoreFile = file("src/main/resources/access-local.jks")
-    onlyIf { !keystoreFile.exists() }
-
+    val dir = file("src/main/resources")
+    onlyIf { !File(dir, "access-local.crt").exists() }
+    
     commandLine(
-        "keytool", "-genkeypair",
-        "-alias", "access-local",
-        "-keyalg", "EC",
-        "-keysize", "256",
-        "-validity", "3650",
-        "-keystore", keystoreFile.absolutePath,
-        "-storepass", "changeit",
-        "-dname", "CN=localhost, OU=Access, O=Access, L=NA, ST=NA, C=US"
+        "openssl", "req", "-x509", "-newkey", "ec",
+        "-pkeyopt", "ec_paramgen_curve:prime256v1",
+        "-nodes", "-days", "3650",
+        "-keyout", File(dir, "access-local.key").absolutePath,
+        "-out", File(dir, "access-local.crt").absolutePath,
+        "-subj", "/CN=localhost/OU=Access/O=Access/C=US",
+        "-addext", "subjectAltName=DNS:localhost,IP:127.0.0.1"
     )
 }
 

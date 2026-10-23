@@ -31,7 +31,7 @@ class MessageRouter() {
     
                 val requestAction = requestLibrary.getRequest(request)
                 if(requestAction.success is UISuccess.Value) {
-                    val action = (requestAction.success as UISuccess.Value).value as () -> Unit
+                    val action = requestAction.success.value as () -> Unit
                     action()
                 }
 

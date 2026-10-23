@@ -9,7 +9,12 @@ import com.sun.net.httpserver.HttpsConfigurator
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpExchange
 import java.net.InetSocketAddress
+import java.io.ByteArrayInputStream
+import java.security.KeyFactory
 import java.security.KeyStore
+import java.security.spec.PKCS8EncodedKeySpec
+import java.security.cert.CertificateFactory
+import java.util.Base64
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 
@@ -25,11 +30,23 @@ class AssetServer() {
     }
 
     private fun buildSslContext(): SSLContext {
-        val password = "changeit".toCharArray()
-        val keyStore = KeyStore.getInstance("JKS")
-        javaClass.getResourceAsStream("/access-local.jks").use { keyStore.load(it, password) }
+        fun pem(path: String) = javaClass.getResourceAsStream(path)!!.readBytes()
+            .decodeToString()
+            .replace(Regex("-----[A-Z ]+-----|\\s"), "")
+            .let { Base64.getDecoder().decode(it) }
+
+        val key = KeyFactory.getInstance("EC")
+            .generatePrivate(PKCS8EncodedKeySpec(pem("/access-local.key")))
+        val cert = CertificateFactory.getInstance("X.509")
+            .generateCertificate(ByteArrayInputStream(
+                javaClass.getResourceAsStream("/access-local.crt")!!.readBytes()))
+
+        val ks = KeyStore.getInstance("PKCS12").apply {
+            load(null, null)
+            setKeyEntry("access-local", key, charArrayOf(), arrayOf(cert))
+        }
         val kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
-        kmf.init(keyStore, password)
+            .apply { init(ks, charArrayOf()) }
         return SSLContext.getInstance("TLS").apply { init(kmf.keyManagers, null, null) }
     }
 
