@@ -4,11 +4,12 @@ import com.cameronsh.utils.Id
 import java.util.UUID
 
 import java.util.concurrent.ConcurrentHashMap
+import com.cameronsh.utils.AppSuccess
 
 class RequestLibrary() {
     val id: UUID = Id.genId(this)
 
-    val requests = ConcurrentHashMap<String, () -> Unit>()
+    val requests = ConcurrentHashMap<String, () -> Any?>()
 
     fun getRequest(request: String?): UIResult {
         if(request == null) {
@@ -19,6 +20,6 @@ class RequestLibrary() {
             return UIResult(error = RequestError.UnknownRequest(request))
         }
         
-        return UIResult(success = UISuccess.Value(action))
+        return UIResult(success = AppSuccess.Value(action))
     }
 }

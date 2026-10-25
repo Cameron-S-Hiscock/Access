@@ -17,6 +17,8 @@ import kotlinx.coroutines.*
 import com.cameronsh.core.iostream.IOResult
 import com.cameronsh.core.iostream.IOSuccess
 import com.cameronsh.core.iostream.IOError
+import com.cameronsh.utils.AppError
+import com.cameronsh.utils.AppSuccess
 
 class Port(
     val name: String = "Port",
@@ -60,9 +62,9 @@ class Port(
         }
         if(message.state == MessageState.SENT) {
             message.state = MessageState.RECEIVED
-            return IOResult(success = IOSuccess.Value(message))
+            return IOResult(success = AppSuccess.Value(message))
         } else {
-            return IOResult(error = IOError.UnknownError(id))
+            return IOResult(error = AppError.UnknownError(id))
         }
     }
 }

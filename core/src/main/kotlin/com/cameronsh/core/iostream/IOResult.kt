@@ -1,11 +1,12 @@
 package com.cameronsh.core.iostream
 
-import com.cameronsh.core.iostream.IOSuccess
-import com.cameronsh.core.iostream.IOError
+import com.cameronsh.utils.AppError
+import com.cameronsh.utils.AppSuccess
+import com.cameronsh.utils.AppResult
 
 class IOResult(
-    val success: IOSuccess? = null,
-    val error: IOError? = null,
-) {
+    override val success: AppSuccess? = null,
+    override val error: AppError? = null,
+) : AppResult {
     
 }

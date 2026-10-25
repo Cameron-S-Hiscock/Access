@@ -7,6 +7,7 @@ import java.util.concurrent.LinkedBlockingDeque
 import com.cameronsh.core.iostream.message.Message
 import com.cameronsh.core.ProcessWorker
 import com.cameronsh.core.iostream.IOStream
+import com.cameronsh.core.iostream.IOResult
 import com.cameronsh.core.iostream.message.MessageFactory
 import com.cameronsh.core.bridge.Bridge
 import com.cameronsh.core.bridge.BridgeError
@@ -17,6 +18,9 @@ import com.cameronsh.ui.Composer
 import com.cameronsh.core.iostream.IOStreamAuthorTable
 import com.cameronsh.core.workers.Worker
 import kotlinx.coroutines.*
+import com.cameronsh.utils.AppError
+import com.cameronsh.utils.AppSuccess
+import com.cameronsh.utils.AppResult
 
 object UICoreBridge: Bridge {
     override val id: UUID = Id.genId(this)
@@ -94,18 +98,18 @@ object UICoreBridge: Bridge {
         state = BridgeState.OPEN
     }
 
-    override suspend fun send(authorId: UUID, message: Message): Result<Unit> {
+    override suspend fun send(authorId: UUID, message: Message): IOResult? {
         if(state != BridgeState.OPEN) {
-            return Result.failure(Exception(BridgeError.InvalidBridgeState(state).toString()))
+            return IOResult(error = BridgeError.InvalidBridgeState(state))
         }
         if(authorId != Controller.id && authorId != Composer.id) {
-            return Result.failure(Exception(BridgeError.InvalidAuthorPair(authorId).toString()))
+            return IOResult(error = BridgeError.InvalidAuthorPair(authorId))
         }
         when(authorId) {
             Controller.id -> UICache.putLast(message)
             Composer.id -> CoreCache.putLast(message)
         }
-        return Result.success(Unit)
+        return IOResult(success = AppSuccess.Value(message.id))
     }
 
     override suspend fun receive(authorId: UUID): Message? {

@@ -12,6 +12,7 @@ import com.cameronsh.core.iostream.task.TaskFactory
 import com.cameronsh.core.iostream.IOResult
 import com.cameronsh.core.iostream.IOSuccess
 import com.cameronsh.core.iostream.IOError
+import com.cameronsh.utils.AppSuccess
 
 class Pipeline(
     val name: String = "Pipeline",
@@ -38,6 +39,6 @@ class Pipeline(
         
         destination.cache.offerLast(message)
         message.state = MessageState.SENT
-        return IOResult(success = IOSuccess.Value(message))
+        return IOResult(success = AppSuccess.Value(message))
     }
 }

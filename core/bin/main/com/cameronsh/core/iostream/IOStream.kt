@@ -12,6 +12,9 @@ import com.cameronsh.core.iostream.message.MessageError
 import com.cameronsh.core.iostream.message.MessageState
 import java.util.concurrent.LinkedBlockingDeque
 import kotlinx.coroutines.*
+import com.cameronsh.utils.AppError
+import com.cameronsh.utils.AppSuccess
+import com.cameronsh.utils.AppResult
 
 class IOStream(
     val name: String = "IOStream",
@@ -106,7 +109,7 @@ class IOStream(
     }
 
     suspend fun receive(author: UUID? = null, target: UUID? = null): IOResult {
-        var result: IOResult? = null
+        var result: AppResult? = null
         if(author != null) {
             result = ports.firstOrNull { it.host == author }?.receive()
         } else if(target in targets && target != null) {
@@ -120,16 +123,17 @@ class IOStream(
         if(result.error is IOError) {
             val error = result.error
             when(error) {
-                is MessageError.NullMessage -> return IOResult(success = IOSuccess.Value(null))
-                is IOError.UnknownError -> return IOResult(error = IOError.UnknownError(null))
+                is MessageError.NullMessage -> return IOResult(success = AppSuccess.Value(null))
+                is AppError.UnknownError -> return IOResult(error = AppError.UnknownError(null))
                 else -> { }
             }
         }
 
-        if(result.success is IOSuccess.Value) {
-            return IOResult(success = IOSuccess.Value(result.success.value))
+        val success = result.success
+        if(success is AppSuccess.Value) {
+            return IOResult(success = AppSuccess.Value(success.value))
         }
 
-        return IOResult(error = IOError.UnknownError(null))
+        return IOResult(error = AppError.UnknownError(null))
     }
 }

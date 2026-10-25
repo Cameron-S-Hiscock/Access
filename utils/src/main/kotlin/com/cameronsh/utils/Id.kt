@@ -18,7 +18,6 @@ object Id {
         idOf(obj)?.let { return it }
         val id = java.util.UUID.randomUUID()
         ids[id] = obj
-        // println("Registered Id: ${id}")
         return id
     }
 

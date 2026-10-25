@@ -41,7 +41,7 @@ class ProcessWorker(
         scheduleWorker = scheduleWorker,
     )
 
-    private val localActions = LinkedBlockingDeque<() -> Unit>()
+    private val localActions = LinkedBlockingDeque<() -> Any?>()
     private val localRunning = AtomicBoolean(true)
     private val localThread = Thread.ofVirtual().name("${name}Local").unstarted {
         while(localRunning.get()) {
@@ -70,7 +70,7 @@ class ProcessWorker(
         }
     }
 
-    suspend fun submitLocal(action: () -> Unit) {
+    suspend fun submitLocal(action: () -> Any?) {
         localActions.add(action)
     }
 }

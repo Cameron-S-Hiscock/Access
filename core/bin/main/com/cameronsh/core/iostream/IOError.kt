@@ -1,8 +1,8 @@
 package com.cameronsh.core.iostream
 
 import java.util.UUID
+import com.cameronsh.utils.AppError
 
-abstract class IOError() {
-    data class EmptyField(val fieldName: String) : IOError()
-    data class UnknownError(val id: UUID?) : IOError()
+interface IOError : AppError {
+    
 }

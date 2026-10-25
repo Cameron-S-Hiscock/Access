@@ -1,5 +1,7 @@
 package com.cameronsh.ui
 
-abstract class UISuccess() {
-    data class Value(val value: Any? = null) : UISuccess()
+import com.cameronsh.utils.AppSuccess
+
+interface UISuccess : AppSuccess {
+
 }

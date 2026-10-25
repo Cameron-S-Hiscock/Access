@@ -12,7 +12,7 @@ class TaskFactory() {
     suspend fun create(
         name: String = "Task",
         priority: TaskPriority = NORMAL,
-        action: suspend () -> Unit
+        action: suspend () -> Any?
     ): Task {
         val task = Task(
             name = name,

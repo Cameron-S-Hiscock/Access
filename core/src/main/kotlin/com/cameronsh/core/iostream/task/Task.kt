@@ -11,7 +11,7 @@ data class Task (
     var state: TaskState = TaskState.PENDING,
     val priority: TaskPriority = TaskPriority.NORMAL,
     private val dataFactory: DataFactory,
-    val action: suspend () -> Unit
+    val action: suspend () -> Any?
 ) {
     val id: UUID = Id.genId(this)
     val data = dataFactory.create(input = this)

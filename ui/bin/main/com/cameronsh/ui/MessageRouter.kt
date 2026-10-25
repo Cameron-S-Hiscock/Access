@@ -11,6 +11,9 @@ import org.cef.callback.CefQueryCallback
 import org.cef.browser.CefFrame
 import com.cameronsh.ui.Composer
 import com.cameronsh.ui.RequestLibrary
+import com.cameronsh.utils.AppError
+import com.cameronsh.utils.AppSuccess
+import com.cameronsh.utils.AppResult
 
 class MessageRouter() {
     val id: UUID = Id.genId(this)
@@ -30,9 +33,11 @@ class MessageRouter() {
                 println("UI sent: $request")
     
                 val requestAction = requestLibrary.getRequest(request)
-                if(requestAction.success is UISuccess.Value) {
-                    val action = requestAction.success.value as () -> Unit
+                try {
+                    val action = requestAction.success as () -> Any?
                     action()
+                } catch(e: Exception) {
+                    println("${e}")
                 }
 
                 callback?.success("Kotlin received: $request")

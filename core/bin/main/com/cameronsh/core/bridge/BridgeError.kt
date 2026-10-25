@@ -5,7 +5,7 @@ import com.cameronsh.utils.Module
 import com.cameronsh.core.iostream.IOComponent
 import com.cameronsh.core.iostream.IOError
 
-sealed class BridgeError : IOError() {
+sealed class BridgeError : IOError {
     data class InvalidTarget(val targetId: UUID?) : BridgeError()
     data class NullIOComponent(val component: IOComponent) : BridgeError()
     data class InvalidBridgeState(val state: BridgeState) : BridgeError()
