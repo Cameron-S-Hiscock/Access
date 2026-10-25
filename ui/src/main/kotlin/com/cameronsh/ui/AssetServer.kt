@@ -17,7 +17,6 @@ import java.security.cert.CertificateFactory
 import java.util.Base64
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
-import java.io.File
 
 class AssetServer() {
     val id: UUID = Id.genId(this)
