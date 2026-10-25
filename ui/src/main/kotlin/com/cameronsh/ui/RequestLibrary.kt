@@ -22,11 +22,22 @@ class RequestLibrary() {
     }
 
     init {
-        requests["exit-app"] = { _ -> exitProcess(0) }
+        requests["exit-app"] = { args ->
+            val exitCode = try {
+                args.firstOrNull() as Int
+            } catch(e: Exception) {
+                0
+            }
+            exitProcess(exitCode)
+        }
         requests["restart-app"] = { _ -> /* restart */}
         requests["load-app"] = { args ->
             val appPath = args.firstOrNull()
             // load app
+        }
+        requests["close-app"] = { args ->
+            val appPath = args.firstOrNull()
+            // close app
         }
         requests["edit-ui"] = { args ->
             // edit ui
