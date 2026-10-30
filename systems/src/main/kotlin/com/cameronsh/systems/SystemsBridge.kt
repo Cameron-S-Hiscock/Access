@@ -13,7 +13,7 @@ object SystemsBridge {
 
     val linker = Linker.nativeLinker()
     val arena = Arena.ofShared()
-    val lookup = SymbolLookup.libraryLookup(NativeLoader.resolveSystemsLibraryPath(), arena)
+    val lookup = SymbolLookup.libraryLookup(LibSystemsNativeLoader.resolveSystemsLibraryPath(), arena)
 
     fun handle(name: String, desc: FunctionDescriptor): MethodHandle = 
         linker.downcallHandle(
