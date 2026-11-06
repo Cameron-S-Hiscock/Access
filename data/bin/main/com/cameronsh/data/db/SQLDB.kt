@@ -1,6 +1,6 @@
-package com.cameronsh.data.db
+package com.csh_s.data.db
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import org.jetbrains.exposed.sql.Table

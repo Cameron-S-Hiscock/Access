@@ -1,4 +1,4 @@
-package com.cameronsh.core.iostream
+package com.csh_s.core.iostream
 
 enum class IOStreamState {
     PENDING,

@@ -1,26 +1,26 @@
-package com.cameronsh.api
+package com.csh_s.api
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import java.util.concurrent.LinkedBlockingDeque
-import com.cameronsh.core.iostream.message.Message
-import com.cameronsh.core.ProcessWorker
-import com.cameronsh.core.iostream.IOStream
-import com.cameronsh.core.iostream.IOResult
-import com.cameronsh.core.iostream.message.MessageFactory
-import com.cameronsh.core.bridge.Bridge
-import com.cameronsh.core.bridge.BridgeError
-import com.cameronsh.core.bridge.BridgeState
-import com.cameronsh.core.bridge.BridgeRepository
-import com.cameronsh.core.Controller
-import com.cameronsh.ui.Composer
-import com.cameronsh.core.iostream.IOStreamAuthorTable
-import com.cameronsh.core.workers.Worker
+import com.csh_s.core.iostream.message.Message
+import com.csh_s.core.ProcessWorker
+import com.csh_s.core.iostream.IOStream
+import com.csh_s.core.iostream.IOResult
+import com.csh_s.core.iostream.message.MessageFactory
+import com.csh_s.core.bridge.Bridge
+import com.csh_s.core.bridge.BridgeError
+import com.csh_s.core.bridge.BridgeState
+import com.csh_s.core.bridge.BridgeRepository
+import com.csh_s.core.Controller
+import com.csh_s.ui.Composer
+import com.csh_s.core.iostream.IOStreamAuthorTable
+import com.csh_s.core.workers.Worker
 import kotlinx.coroutines.*
-import com.cameronsh.utils.AppError
-import com.cameronsh.utils.AppSuccess
-import com.cameronsh.utils.AppResult
+import com.csh_s.utils.AppError
+import com.csh_s.utils.AppSuccess
+import com.csh_s.utils.AppResult
 
 object UICoreBridge: Bridge {
     override val id: UUID = Id.genId(this)

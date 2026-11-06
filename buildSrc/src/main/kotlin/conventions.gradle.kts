@@ -3,7 +3,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-group = "com.cameronsh"
+group = "com.csh_s"
 version = "unspecified"
 
 dependencies {
@@ -14,7 +14,6 @@ dependencies {
     implementation("org.graalvm.polyglot:polyglot:24.1.1")
     implementation("org.graalvm.polyglot:js:24.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
-    implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
 
     testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
     testImplementation("io.kotest:kotest-assertions-core:5.9.1")

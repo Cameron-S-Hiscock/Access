@@ -1,6 +1,6 @@
-package com.cameronsh.ui
+package com.csh_s.ui
 
-import com.cameronsh.utils.AppSuccess
+import com.csh_s.utils.AppSuccess
 
 interface UISuccess : AppSuccess {
 

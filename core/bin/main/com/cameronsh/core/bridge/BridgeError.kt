@@ -1,9 +1,9 @@
-package com.cameronsh.core.bridge
+package com.csh_s.core.bridge
 
 import java.util.UUID
-import com.cameronsh.utils.Module
-import com.cameronsh.core.iostream.IOComponent
-import com.cameronsh.core.iostream.IOError
+import com.csh_s.utils.Module
+import com.csh_s.core.iostream.IOComponent
+import com.csh_s.core.iostream.IOError
 
 sealed class BridgeError : IOError {
     data class InvalidTarget(val targetId: UUID?) : BridgeError()

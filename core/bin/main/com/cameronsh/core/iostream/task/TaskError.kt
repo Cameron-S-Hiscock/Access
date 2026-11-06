@@ -1,7 +1,7 @@
-package com.cameronsh.core.iostream.task
+package com.csh_s.core.iostream.task
 
 import java.util.UUID
-import com.cameronsh.core.iostream.IOError
+import com.csh_s.core.iostream.IOError
 
 sealed class TaskError : IOError {
     data class ErrorProneAction(val exception: Exception) : TaskError()

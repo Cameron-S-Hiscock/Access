@@ -1,9 +1,9 @@
-package com.cameronsh.core.iostream.task
+package com.csh_s.core.iostream.task
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.*
-import com.cameronsh.core.iostream.data.DataFactory
+import com.csh_s.core.iostream.data.DataFactory
 
 class TaskCreationTest : FunSpec({
     test("create Task object from scratch") {

@@ -1,14 +1,14 @@
-package com.cameronsh.core.workers
+package com.csh_s.core.workers
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import java.util.concurrent.*
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.LinkedBlockingDeque
 import java.lang.Thread
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.core.iostream.task.TaskPriority.*
+import com.csh_s.core.iostream.task.Task
+import com.csh_s.core.iostream.task.TaskPriority.*
 import kotlin.random.Random
 import kotlinx.coroutines.*
 
@@ -23,7 +23,7 @@ open class Worker(
     private val dispatcher = executor.asCoroutineDispatcher()
     private val scope = CoroutineScope(SupervisorJob() + dispatcher)
 
-    suspend fun addWork(task: Task) {
+    suspend fun addWork(task: Task, critical: Boolean = false) {
         scope.launch {
             try {
                 task.action()
@@ -31,11 +31,6 @@ open class Worker(
                 println("Task ${task.name} failed: ${e.message}")
             }
         }
-    }
-
-    suspend fun addCriticalWork(task: Task) {
-        require(task.priority == CRITICAL)
-        scope.launch(start = CoroutineStart.UNDISPATCHED) { task.action() }
     }
 
     fun start() {}

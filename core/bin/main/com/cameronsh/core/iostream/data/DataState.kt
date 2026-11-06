@@ -1,4 +1,4 @@
-package com.cameronsh.core.iostream.data
+package com.csh_s.core.iostream.data
 
 enum class DataState {
     READ,

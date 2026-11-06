@@ -1,13 +1,13 @@
-package com.cameronsh.core.iostream.message
+package com.csh_s.core.iostream.message
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.core.iostream.data.Data
-import com.cameronsh.core.iostream.message.MessagePriority.*
-import com.cameronsh.core.iostream.message.MessageState
-import com.cameronsh.core.iostream.message.MessageError
+import com.csh_s.core.iostream.task.Task
+import com.csh_s.core.iostream.data.Data
+import com.csh_s.core.iostream.message.MessagePriority.*
+import com.csh_s.core.iostream.message.MessageState
+import com.csh_s.core.iostream.message.MessageError
 
 data class Message(
     val name: String = "Message",

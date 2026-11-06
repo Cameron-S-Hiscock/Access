@@ -1,8 +1,8 @@
-package com.cameronsh.core.iostream.pipeline
+package com.csh_s.core.iostream.pipeline
 
 import java.util.UUID
-import com.cameronsh.core.iostream.message.MessageState
-import com.cameronsh.core.iostream.IOError
+import com.csh_s.core.iostream.message.MessageState
+import com.csh_s.core.iostream.IOError
 
 sealed class PipelineError : IOError {
     data class InvalidOrigin(val originId: UUID) : PipelineError()

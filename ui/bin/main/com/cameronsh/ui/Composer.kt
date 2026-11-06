@@ -1,12 +1,12 @@
-package com.cameronsh.ui
+package com.csh_s.ui
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.ProcessWorker
+import com.csh_s.core.ProcessWorker
 import java.util.concurrent.LinkedBlockingDeque
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.ui.AssetServer
+import com.csh_s.core.iostream.task.Task
+import com.csh_s.ui.AssetServer
 import me.friwi.jcefmaven.CefAppBuilder
 import org.cef.CefApp
 import org.cef.CefClient
@@ -16,13 +16,13 @@ import org.cef.handler.CefMessageRouterHandlerAdapter
 import org.cef.callback.CefQueryCallback
 import org.cef.browser.CefFrame
 import kotlin.system.exitProcess
-import com.cameronsh.ui.MessageRouter
+import com.csh_s.ui.MessageRouter
 import org.cef.handler.CefLoadHandler
 import org.cef.handler.CefLoadHandlerAdapter
-import com.cameronsh.core.iostream.message.Message
+import com.csh_s.core.iostream.message.Message
 import kotlinx.coroutines.*
-import com.cameronsh.core.bridge.BridgeRepository
-import com.cameronsh.systems.NetworkBridge
+import com.csh_s.core.bridge.BridgeRepository
+import com.csh_s.systems.NetworkBridge
 import java.io.File
 
 object Composer {

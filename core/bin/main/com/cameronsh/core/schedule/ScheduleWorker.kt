@@ -1,28 +1,37 @@
-package com.cameronsh.core.schedule
+package com.csh_s.core.schedule
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import java.util.concurrent.*
 import java.lang.Thread
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.core.iostream.task.TaskState.*
-import com.cameronsh.core.iostream.task.TaskPriority.*
-import com.cameronsh.core.iostream.task.TaskFactory
-import com.cameronsh.core.schedule.ScheduleService
-import com.cameronsh.core.workers.Worker
-import com.cameronsh.core.execution.ExecutionWorker
+import com.csh_s.core.iostream.task.Task
+import com.csh_s.core.iostream.task.TaskState
+import com.csh_s.core.iostream.task.TaskPriority.*
+import com.csh_s.core.iostream.task.TaskFactory
+import com.csh_s.core.schedule.ScheduleService
+import com.csh_s.core.workers.Worker
+import com.csh_s.core.execution.ExecutionWorker
+import com.csh_s.core.RSEQueue
 
 class ScheduleWorker(
     val name: String = "ScheduleWorker",
-    private val RSETasks: LinkedBlockingDeque<Task>,
+    private val rseQueue: RSEQueue,
     private val taskFactory: TaskFactory,
-    private val executionWorker: ExecutionWorker,
 ) : Worker(name = name) {
-    private val scheduleService = ScheduleService(RSETasks = RSETasks)
+    private val scheduleService = ScheduleService(rseQueue = rseQueue)
 
     suspend fun scheduleTask(task: Task) {
-        scheduleService.scheduleTask(task)
-        executionWorker.executeTask(task)
+        if(task.state == TaskState.REGISTERED) {
+            scheduleService.scheduleTask(task)
+        }
+    }
+
+    suspend fun scheduleRSETasks() {
+        while(true) {
+            for(task in rseQueue) {
+                scheduleTask(task)
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
-package com.cameronsh.core.iostream.message
+package com.csh_s.core.iostream.message
 
 import java.util.UUID
-import com.cameronsh.core.iostream.IOError
+import com.csh_s.core.iostream.IOError
 
 sealed class MessageError : IOError {
     data class UnknownTarget(val targetId: UUID) : MessageError()

@@ -1,4 +1,4 @@
-package com.cameronsh.utils
+package com.csh_s.utils
 
 import java.util.UUID
 import com.google.common.collect.Maps

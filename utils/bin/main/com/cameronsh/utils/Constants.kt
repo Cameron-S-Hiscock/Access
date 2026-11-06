@@ -1,4 +1,4 @@
-package com.cameronsh.utils
+package com.csh_s.utils
 
 object Constants {
     const val APP_NAME: String = "Access"

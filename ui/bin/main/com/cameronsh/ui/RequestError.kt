@@ -1,4 +1,4 @@
-package com.cameronsh.ui
+package com.csh_s.ui
 
 sealed class RequestError : UIError {
     data class UnknownRequest(val request: String) : RequestError()

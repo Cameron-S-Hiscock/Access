@@ -1,9 +1,9 @@
-package com.cameronsh.core.bridge
+package com.csh_s.core.bridge
 
 import java.util.UUID
 
-import com.cameronsh.core.iostream.message.Message
-import com.cameronsh.core.iostream.IOResult
+import com.csh_s.core.iostream.message.Message
+import com.csh_s.core.iostream.IOResult
 
 interface Bridge {
     val id: UUID

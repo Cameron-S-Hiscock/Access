@@ -1,4 +1,4 @@
-package com.cameronsh.core.iostream.data
+package com.csh_s.core.iostream.data
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe

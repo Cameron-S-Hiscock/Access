@@ -1,6 +1,6 @@
-package com.cameronsh.core.iostream
+package com.csh_s.core.iostream
 
-import com.cameronsh.utils.AppSuccess
+import com.csh_s.utils.AppSuccess
 interface IOSuccess : AppSuccess {
     
 }

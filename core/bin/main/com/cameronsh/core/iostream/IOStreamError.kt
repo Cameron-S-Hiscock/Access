@@ -1,7 +1,7 @@
-package com.cameronsh.core.iostream
+package com.csh_s.core.iostream
 
 import java.util.UUID
-import com.cameronsh.core.iostream.IOError
+import com.csh_s.core.iostream.IOError
 
 sealed class IOStreamError : IOError {
     data class InvalidTarget(val targetId: UUID?) : IOStreamError()

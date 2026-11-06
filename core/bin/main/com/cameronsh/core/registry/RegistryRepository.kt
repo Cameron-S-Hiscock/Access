@@ -1,10 +1,10 @@
-package com.cameronsh.core.registry
+package com.csh_s.core.registry
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import java.util.concurrent.LinkedBlockingDeque
-import com.cameronsh.core.iostream.task.Task
+import com.csh_s.core.iostream.task.Task
 
 class RegistryRepository() {
     internal val tasks = LinkedBlockingDeque<Task>()

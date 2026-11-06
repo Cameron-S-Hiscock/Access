@@ -1,8 +1,8 @@
-package com.cameronsh.ui
+package com.csh_s.ui
 
-import com.cameronsh.utils.AppError
-import com.cameronsh.utils.AppSuccess
-import com.cameronsh.utils.AppResult
+import com.csh_s.utils.AppError
+import com.csh_s.utils.AppSuccess
+import com.csh_s.utils.AppResult
 
 class UIResult(
     override val success: AppSuccess? = null,

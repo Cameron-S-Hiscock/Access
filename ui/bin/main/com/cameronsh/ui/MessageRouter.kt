@@ -1,6 +1,6 @@
-package com.cameronsh.ui
+package com.csh_s.ui
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import kotlin.system.exitProcess
@@ -9,11 +9,11 @@ import org.cef.browser.CefMessageRouter
 import org.cef.handler.CefMessageRouterHandlerAdapter
 import org.cef.callback.CefQueryCallback
 import org.cef.browser.CefFrame
-import com.cameronsh.ui.Composer
-import com.cameronsh.ui.RequestLibrary
-import com.cameronsh.utils.AppError
-import com.cameronsh.utils.AppSuccess
-import com.cameronsh.utils.AppResult
+import com.csh_s.ui.Composer
+import com.csh_s.ui.RequestLibrary
+import com.csh_s.utils.AppError
+import com.csh_s.utils.AppSuccess
+import com.csh_s.utils.AppResult
 
 class MessageRouter() {
     val id: UUID = Id.genId(this)

@@ -1,4 +1,4 @@
-package com.cameronsh.core.bridge
+package com.csh_s.core.bridge
 
 enum class BridgeState {
     PENDING,

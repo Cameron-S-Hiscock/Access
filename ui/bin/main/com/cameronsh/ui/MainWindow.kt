@@ -1,7 +1,7 @@
-package com.cameronsh.ui
+package com.csh_s.ui
 
-import com.cameronsh.utils.Constants
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Constants
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import java.awt.BorderLayout

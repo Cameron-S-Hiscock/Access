@@ -8,9 +8,9 @@ use jni::{
 };
 
 pub fn gen_id<'a>(env: &mut Env<'a>, obj: &JObject<'a>) -> Result<[u8; 16]> {
-    let class = env.find_class(jni_str!("com/cameronsh/utils/Id"))?;
+    let class = env.find_class(jni_str!("com/csh_s/utils/Id"))?;
     let instance = env
-        .get_static_field(class, jni_str!("INSTANCE"), jni_sig!("Lcom/cameronsh/utils/Id;"))?
+        .get_static_field(class, jni_str!("INSTANCE"), jni_sig!("Lcom/csh_s/utils/Id;"))?
         .l()?;
 
     let uuid_obj = env
@@ -42,9 +42,9 @@ pub fn obj_of<'a>(env: &mut Env<'a>, id: &[u8; 16]) -> Result<JObject<'a>> {
         &[JValue::from(msb), JValue::from(lsb)],
     )?;
 
-    let class = env.find_class(jni_str!("com/cameronsh/utils/Id"))?;
+    let class = env.find_class(jni_str!("com/csh_s/utils/Id"))?;
     let instance = env
-        .get_static_field(class, jni_str!("INSTANCE"), jni_sig!("Lcom/cameronsh/utils/Id;"))?
+        .get_static_field(class, jni_str!("INSTANCE"), jni_sig!("Lcom/csh_s/utils/Id;"))?
         .l()?;
 
     let obj = env
@@ -55,9 +55,9 @@ pub fn obj_of<'a>(env: &mut Env<'a>, id: &[u8; 16]) -> Result<JObject<'a>> {
 }
 
 pub fn id_of<'a>(env: &mut Env<'a>, obj: &JObject<'a>) -> Result<[u8; 16]> {
-    let class = env.find_class(jni_str!("com/cameronsh/utils/Id"))?;
+    let class = env.find_class(jni_str!("com/csh_s/utils/Id"))?;
     let instance = env
-        .get_static_field(class, jni_str!("INSTANCE"), jni_sig!("Lcom/cameronsh/utils/Id;"))?
+        .get_static_field(class, jni_str!("INSTANCE"), jni_sig!("Lcom/csh_s/utils/Id;"))?
         .l()?;
 
     let idtoobj_obj = env

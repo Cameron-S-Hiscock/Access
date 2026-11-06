@@ -1,11 +1,11 @@
-package com.cameronsh.core.iostream.message
+package com.csh_s.core.iostream.message
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.iostream.message.MessagePriority.*
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.core.iostream.data.Data
+import com.csh_s.core.iostream.message.MessagePriority.*
+import com.csh_s.core.iostream.task.Task
+import com.csh_s.core.iostream.data.Data
 
 class MessageFactory() {
     val id: UUID = Id.genId(this)

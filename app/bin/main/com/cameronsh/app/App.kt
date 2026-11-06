@@ -1,14 +1,14 @@
-package com.cameronsh.app
+package com.csh_s.app
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
-import com.cameronsh.api.UICoreBridge
-import com.cameronsh.core.Controller
-import com.cameronsh.ui.Composer
-import com.cameronsh.ui.MainWindow
-import com.cameronsh.systems.SystemsBridge
-import com.cameronsh.systems.NetworkBridge
+import com.csh_s.api.UICoreBridge
+import com.csh_s.core.Controller
+import com.csh_s.ui.Composer
+import com.csh_s.ui.MainWindow
+import com.csh_s.systems.SystemsBridge
+import com.csh_s.systems.NetworkBridge
 import javax.swing.SwingUtilities
 import java.io.File
 import kotlinx.coroutines.*

@@ -1,10 +1,10 @@
-package com.cameronsh.core.schedule
+package com.csh_s.core.schedule
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import java.util.concurrent.LinkedBlockingDeque
-import com.cameronsh.core.iostream.task.Task
+import com.csh_s.core.iostream.task.Task
 
 class ScheduleRepository() {
     internal val tasks = LinkedBlockingDeque<Task>()

@@ -1,7 +1,7 @@
-package com.cameronsh.core.iostream
+package com.csh_s.core.iostream
 
 import java.util.UUID
-import com.cameronsh.utils.AppError
+import com.csh_s.utils.AppError
 
 interface IOError : AppError {
     

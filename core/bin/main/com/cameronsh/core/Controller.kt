@@ -1,15 +1,15 @@
-package com.cameronsh.core
+package com.csh_s.core
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import java.util.concurrent.LinkedBlockingDeque
-import com.cameronsh.core.ProcessWorker
-import com.cameronsh.core.iostream.task.TaskFactory
-import com.cameronsh.core.bridge.BridgeRepository
-import com.cameronsh.core.iostream.message.Message
+import com.csh_s.core.ProcessWorker
+import com.csh_s.core.iostream.task.TaskFactory
+import com.csh_s.core.bridge.BridgeRepository
+import com.csh_s.core.iostream.message.Message
 import kotlinx.coroutines.*
-import com.cameronsh.systems.NetworkBridge
+import com.csh_s.systems.NetworkBridge
 
 object Controller {
     val id: UUID = Id.genId(this)

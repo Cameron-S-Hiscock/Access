@@ -1,4 +1,4 @@
-package com.cameronsh.core.iostream.pipeline
+package com.csh_s.core.iostream.pipeline
 
 enum class PipelineState {
     PENDING,

@@ -1,44 +1,43 @@
-package com.cameronsh.core
+package com.csh_s.core
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.workers.Worker
-import com.cameronsh.core.registry.RegistryWorker
-import com.cameronsh.core.iostream.task.TaskFactory
-import com.cameronsh.core.schedule.ScheduleWorker
-import com.cameronsh.core.execution.ExecutionWorker
-import com.cameronsh.core.iostream.data.DataFactory
-import com.cameronsh.core.iostream.message.Message
-import com.cameronsh.core.iostream.message.MessageFactory
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.core.iostream.task.TaskPriority
-import com.cameronsh.core.iostream.task.TaskPriority.*
+import com.csh_s.core.workers.Worker
+import com.csh_s.core.registry.RegistryWorker
+import com.csh_s.core.iostream.task.TaskFactory
+import com.csh_s.core.schedule.ScheduleWorker
+import com.csh_s.core.execution.ExecutionWorker
+import com.csh_s.core.iostream.data.DataFactory
+import com.csh_s.core.iostream.message.Message
+import com.csh_s.core.iostream.message.MessageFactory
+import com.csh_s.core.iostream.task.Task
+import com.csh_s.core.iostream.task.TaskPriority
+import com.csh_s.core.iostream.task.TaskPriority.*
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.CopyOnWriteArrayList
+import com.csh_s.core.RSEQueue
 
 class ProcessWorker(
     val name: String = "ProcessWorker",
     val host: UUID,
 ) : Worker(name = name) {
-    private val RSETasks = LinkedBlockingDeque<Task>()
+    private val rseQueue = RSEQueue()
 
     val taskFactory = TaskFactory()
     val messageFactory = MessageFactory()
     private val executionWorker = ExecutionWorker(
-        RSETasks = RSETasks,
+        rseQueue = rseQueue,
         taskFactory = taskFactory,
     )
     private val scheduleWorker = ScheduleWorker(
-        RSETasks = RSETasks,
+        rseQueue = rseQueue,
         taskFactory = taskFactory,
-        executionWorker = executionWorker,
     )
     private val registryWorker = RegistryWorker(
-        RSETasks = RSETasks,
+        rseQueue = rseQueue,
         taskFactory = taskFactory,
-        scheduleWorker = scheduleWorker,
     )
 
     private val localActions = LinkedBlockingDeque<() -> Any?>()
@@ -55,13 +54,17 @@ class ProcessWorker(
         scheduleWorker.start()
         executionWorker.start()
         localThread.start()
+        registryWorker.registerRSETasks()
+        scheduleWorker.scheduleRSETasks()
+        executionWorker.executeRSETasks()
         start()
     }
 
     suspend fun submitWork(task: Task) {
         if(task.priority == CRITICAL) {
-            registryWorker.addCriticalWork(
-                taskFactory.create(name = "${task.name}RegisterCriticalTask") { registryWorker.registerTask(task) }
+            registryWorker.addWork(
+                taskFactory.create(name = "${task.name}RegisterCriticalTask") { registryWorker.registerTask(task) },
+                true,
             )
         } else {
             registryWorker.addWork(

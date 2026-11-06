@@ -1,6 +1,6 @@
-package com.cameronsh.api
+package com.csh_s.api
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 class WASMBridge() {

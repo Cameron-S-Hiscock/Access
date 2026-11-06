@@ -1,4 +1,4 @@
-package com.cameronsh.utils
+package com.csh_s.utils
 
 enum class Module {
     APP,

@@ -1,26 +1,35 @@
-package com.cameronsh.core.registry
+package com.csh_s.core.registry
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.workers.Worker
-import com.cameronsh.core.registry.RegistryService
-import com.cameronsh.core.iostream.task.TaskFactory
-import com.cameronsh.core.iostream.task.TaskState.*
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.core.schedule.ScheduleWorker
+import com.csh_s.core.workers.Worker
+import com.csh_s.core.registry.RegistryService
+import com.csh_s.core.iostream.task.TaskFactory
+import com.csh_s.core.iostream.task.TaskState
+import com.csh_s.core.iostream.task.Task
+import com.csh_s.core.schedule.ScheduleWorker
 import java.util.concurrent.LinkedBlockingDeque
+import com.csh_s.core.RSEQueue
 
 class RegistryWorker(
     val name: String = "RegistryWorker",
-    private val RSETasks: LinkedBlockingDeque<Task>,
+    private val rseQueue: RSEQueue,
     private val taskFactory: TaskFactory,
-    private val scheduleWorker: ScheduleWorker,
 ) : Worker(name = name) {
-    private val registryService = RegistryService(RSETasks = RSETasks)
+    private val registryService = RegistryService(rseQueue = rseQueue)
 
     suspend fun registerTask(task: Task) {
-        registryService.registerTask(task)
-        scheduleWorker.scheduleTask(task)
+        if(task.state == TaskState.PENDING) {
+            registryService.registerTask(task)
+        }
+    }
+
+    suspend fun registerRSETasks() {
+        while(true) {
+            for(task in rseQueue) {
+                registerTask(task)
+            }
+        }
     }
 }

@@ -1,15 +1,15 @@
-package com.cameronsh.app
+package com.csh_s.app
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import com.cameronsh.api.UICoreBridge
-import com.cameronsh.core.Controller
-import com.cameronsh.ui.Composer
-import com.cameronsh.core.bridge.BridgeRepository
-import com.cameronsh.core.bridge.Bridge
-import com.cameronsh.core.ProcessWorker
+import com.csh_s.api.UICoreBridge
+import com.csh_s.core.Controller
+import com.csh_s.ui.Composer
+import com.csh_s.core.bridge.BridgeRepository
+import com.csh_s.core.bridge.Bridge
+import com.csh_s.core.ProcessWorker
 import kotlinx.coroutines.*
-import com.cameronsh.core.iostream.IOStream
+import com.csh_s.core.iostream.IOStream
 
 class UICoreBridgeTest : FunSpec({
     test("message sent by Controller from Core through UICoreBridge arrvies at Composer in UI") {

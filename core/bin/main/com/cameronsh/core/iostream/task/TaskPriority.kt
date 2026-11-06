@@ -1,4 +1,4 @@
-package com.cameronsh.core.iostream.task
+package com.csh_s.core.iostream.task
 
 enum class TaskPriority {
     LOW,

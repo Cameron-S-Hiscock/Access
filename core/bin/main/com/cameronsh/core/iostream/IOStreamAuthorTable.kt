@@ -1,6 +1,6 @@
-package com.cameronsh.core.iostream
+package com.csh_s.core.iostream
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import com.google.common.collect.Maps

@@ -38,5 +38,5 @@ tasks.named("processResources") {
 }
 
 application {
-    mainClass.set("com.cameronsh.app.AppKt")
+    mainClass.set("com.csh_s.app.AppKt")
 }

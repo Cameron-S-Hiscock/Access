@@ -1,0 +1,12 @@
+package com.csh_s.core.iostream
+
+import java.util.UUID
+import com.csh_s.core.iostream.IOError
+
+sealed class IOStreamError : IOError {
+    data class InvalidTarget(val targetId: UUID?) : IOStreamError()
+    data class NullComponent(val component: IOComponent) : IOStreamError()
+    data class InvalidIOStreamState(val state: IOStreamState) : IOStreamError()
+    data class InvalidAuthorPair(val authorId: UUID?) : IOStreamError()
+    data class CriticalPrioritySpam(val criticalTasks: Int) : IOStreamError()
+}

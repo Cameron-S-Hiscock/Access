@@ -1,32 +1,25 @@
-package com.cameronsh.core.schedule
+package com.csh_s.core.schedule
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
-import com.cameronsh.core.schedule.ScheduleRepository
-import com.cameronsh.core.iostream.task.Task
-import com.cameronsh.core.iostream.task.TaskPriority.*
-import com.cameronsh.core.registry.RegistryService
-import com.cameronsh.core.iostream.task.TaskState.*
-import com.cameronsh.core.Controller
+import com.csh_s.core.schedule.ScheduleRepository
+import com.csh_s.core.iostream.task.Task
+import com.csh_s.core.iostream.task.TaskPriority.*
+import com.csh_s.core.registry.RegistryService
+import com.csh_s.core.iostream.task.TaskState.*
+import com.csh_s.core.Controller
 import java.util.concurrent.LinkedBlockingDeque
+import com.csh_s.core.RSEQueue
 
 class ScheduleService(
-    private val RSETasks: LinkedBlockingDeque<Task>,
+    private val rseQueue: RSEQueue,
 ) {
     private val scheduleRepository = ScheduleRepository()
     val id: UUID = Id.genId(this)
     
     suspend fun scheduleTask(task: Task) {
-        if(task.state == REGISTERED) {
-            if(task.priority == CRITICAL) {
-                RSETasks.remove(task)
-                RSETasks.addFirst(task)
-            } else {
-                RSETasks.add(task)
-            }
-            task.state = SCHEDULED
-        }
+        task.state = SCHEDULED
     }
 }
 

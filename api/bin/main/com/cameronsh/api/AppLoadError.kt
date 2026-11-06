@@ -1,4 +1,4 @@
-package com.cameronsh.api
+package com.csh_s.api
 
 sealed class AppLoadError : APIError {
     data class InvalidIndexHTMLFile(val filePath: String) : AppLoadError()

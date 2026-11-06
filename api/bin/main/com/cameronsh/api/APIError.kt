@@ -1,7 +1,7 @@
-package com.cameronsh.api
+package com.csh_s.api
 
 import java.util.UUID
-import com.cameronsh.utils.AppError
+import com.csh_s.utils.AppError
 
 interface APIError : AppError {
     

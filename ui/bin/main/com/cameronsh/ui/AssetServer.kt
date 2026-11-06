@@ -1,6 +1,6 @@
-package com.cameronsh.ui
+package com.csh_s.ui
 
-import com.cameronsh.utils.Id
+import com.csh_s.utils.Id
 import java.util.UUID
 
 import java.io.File
