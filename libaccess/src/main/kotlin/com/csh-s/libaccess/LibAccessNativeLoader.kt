@@ -38,7 +38,7 @@ object LibAccessNativeLoader {
         println("Classpath entries with 'native': " + cl.javaClass.name)
         val stream = javaClass.getResourceAsStream(resourcePath)
             ?: error("Native library not found for $platformDir/$arch at $resourcePath")
-        val tempFile = Files.createTempFile("rs", libAccessFileName)
+        val tempFile = Files.createTempFile("c", libAccessFileName)
         tempFile.toFile().deleteOnExit()
         stream.use { input -> Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING) }
         return tempFile

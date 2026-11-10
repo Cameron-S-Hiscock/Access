@@ -14,7 +14,7 @@ import java.io.File
 import kotlinx.coroutines.*
 
 suspend fun main(args: Array<String>) {
-    val AppNetworkServer = NetworkBridge.newServer("[::1]")
+    val appNetworkServer = NetworkBridge.newServer("[::1]")
 
     println("Main Thread: ${Thread.currentThread().name}")
 

@@ -9,6 +9,8 @@ dependencies {
 tasks.register<Exec>("buildLibAccess") {
     description = "Builds libaccess"
     workingDir = file("../libaccess")
+    commandLine("cmake", "-B", "./build", "-S", "./src", "-G", "Ninja")
+    // commandLine("cmake", "--build", "./build")
 }
 
 tasks.register<Copy>("copyLibAccess") {
@@ -17,10 +19,10 @@ tasks.register<Copy>("copyLibAccess") {
     val (platformDir, libName) = when {
         osName.contains("win") -> "windows" to "access.dll"
         osName.contains("mac") -> "macos" to "libaccess.dylib"
-        else -> linux to "libaccess.so"
+        else -> "linux" to "libaccess.so"
     }
     val arch = if(System.getProperty("os.arch").contains("aarch64")) "aarch64" else "x86_64"
-    from("../libaccess/target/release/$libName")
+    from("../build/$libName")
     into("src/main/resources/native/$platformDir/$arch")
 }
 

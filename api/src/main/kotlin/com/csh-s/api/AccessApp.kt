@@ -7,8 +7,9 @@ import java.io.File
 
 class AccessApp(
     val name: String = "AccessApp",
+    val appPath: String,
     val indexHTML: File,
-    val indexBack: File,
+    val indexJVM: File,
 ) {
     val id: UUID = Id.genId(this)
 }
