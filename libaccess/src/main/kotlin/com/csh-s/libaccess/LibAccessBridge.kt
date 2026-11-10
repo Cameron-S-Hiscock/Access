@@ -10,4 +10,8 @@ import java.lang.invoke.MethodHandle
 object LibAccessBridge {
     val id: UUID = Id.genId(this)
     init { Id.objectIds.putIfAbsent("LibAccessBridge", id) }
+
+    val linker = Linker.nativeLinker()
+    val arena = Arena.ofShared()
+    val lookup = SymbolLookup.libraryLookup(LibAccessNativeLoader.resolveLibAccessLibraryPath(), arena)
 }

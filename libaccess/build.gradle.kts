@@ -4,12 +4,16 @@ plugins {
 
 dependencies {
     implementation(project(":utils"))
+    implementation(project(":core"))
+    implementation(project(":ui"))
+    implementation(project(":systems"))
+    implementation(project(":data"))
 }
 
 tasks.register<Exec>("buildLibAccess") {
     description = "Builds libaccess"
     workingDir = file("../libaccess")
-    commandLine("cmake", "-B", "./build", "-S", "./src", "-G", "Ninja")
+    commandLine("cmake", "-B", "./build", "-S", ".", "-G", "Ninja")
     // commandLine("cmake", "--build", "./build")
 }
 
