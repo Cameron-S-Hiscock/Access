@@ -81,11 +81,11 @@ object Composer {
         }
     }
 
-    lateinit var assetServer: AssetServer
-    lateinit var cefApp: CefApp
-    lateinit var cefClient: CefClient
-    lateinit var browser: CefBrowser
-    lateinit var messageRouter: MessageRouter
+    internal lateinit var assetServer: AssetServer
+    internal lateinit var cefApp: CefApp
+    internal lateinit var cefClient: CefClient
+    internal lateinit var browser: CefBrowser
+    internal lateinit var messageRouter: MessageRouter
 
     fun initUI() {
         assetServer = AssetServer()

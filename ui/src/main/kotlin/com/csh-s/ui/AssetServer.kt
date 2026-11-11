@@ -18,7 +18,7 @@ import java.util.Base64
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 
-class AssetServer() {
+internal class AssetServer() {
     val id: UUID = Id.genId(this)
     private val server: HttpsServer = HttpsServer.create(InetSocketAddress("localhost", 0), 0)
     val port: Int get() = server.address.port
