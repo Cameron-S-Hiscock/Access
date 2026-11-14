@@ -9,7 +9,7 @@ import com.csh_s.core.iostream.task.TaskState
 import java.util.concurrent.LinkedBlockingDeque
 import com.csh_s.core.RSEQueue
 
-class ExecutionService(
+internal class ExecutionService(
     private val rseQueue: RSEQueue,
 ) {
     private val executionRepository = ExecutionRepository()

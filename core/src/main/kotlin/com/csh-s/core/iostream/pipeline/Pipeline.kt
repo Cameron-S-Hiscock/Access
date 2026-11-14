@@ -24,7 +24,9 @@ class Pipeline(
         name = "${name}ProcessWorker",
         host = id,
     )
-    init { processWorker.start() }
+    suspend fun init() {
+        processWorker.start()
+    }
 
     suspend fun deliver(message: Message?): IOResult {
         if(message == null) {

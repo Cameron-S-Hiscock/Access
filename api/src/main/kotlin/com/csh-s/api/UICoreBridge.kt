@@ -55,6 +55,7 @@ object UICoreBridge: Bridge {
     override suspend fun init() = coroutineScope {
         launch {
             UICoreBridgeProcessWorker.run()
+            println("Run workers")
         }
 
         // launch {

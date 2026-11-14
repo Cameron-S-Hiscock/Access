@@ -27,11 +27,15 @@ class ScheduleWorker(
         }
     }
 
-    suspend fun scheduleRSETasks() {
+    private val scheduleRSETasks = taskFactory.create(name = "scheduleRSETasks") {
         while(true) {
             for(task in rseQueue) {
                 scheduleTask(task)
             }
         }
+    }
+
+    override suspend fun start() {
+        addWork(scheduleRSETasks)
     }
 }

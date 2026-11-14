@@ -24,7 +24,7 @@ suspend fun main(args: Array<String>) {
 
     Composer.initUI()
     SwingUtilities.invokeLater {
-        val window = MainWindow(Composer)
+        val window = MainWindow()
         window.isVisible = true
     }
 }

@@ -33,9 +33,9 @@ open class Worker(
         }
     }
 
-    fun start() {}
-    fun join() {}
-    fun stop() {
+    open suspend fun start() {}
+    open suspend fun join() {}
+    open suspend fun stop() {
         running.set(false)
         scope.cancel()
         dispatcher.close()

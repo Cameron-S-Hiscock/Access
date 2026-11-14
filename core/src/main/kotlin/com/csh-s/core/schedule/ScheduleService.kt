@@ -12,7 +12,7 @@ import com.csh_s.core.Controller
 import java.util.concurrent.LinkedBlockingDeque
 import com.csh_s.core.RSEQueue
 
-class ScheduleService(
+internal class ScheduleService(
     private val rseQueue: RSEQueue,
 ) {
     private val scheduleRepository = ScheduleRepository()

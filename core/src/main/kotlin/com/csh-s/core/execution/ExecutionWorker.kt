@@ -23,11 +23,15 @@ class ExecutionWorker(
         }
     }
 
-    suspend fun executeRSETasks() {
+    private val executeRSETasks = taskFactory.create(name = "executeRSETasks") {
         while(true) {
             for(task in rseQueue) {
                 executeTask(task)
             }
         }
+    }
+
+    override suspend fun start() {
+        addWork(executeRSETasks)
     }
 }

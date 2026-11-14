@@ -6,6 +6,6 @@ import java.util.UUID
 import java.util.concurrent.LinkedBlockingDeque
 import com.csh_s.core.iostream.task.Task
 
-class RegistryRepository() {
+internal class RegistryRepository() {
     internal val tasks = LinkedBlockingDeque<Task>()
 }

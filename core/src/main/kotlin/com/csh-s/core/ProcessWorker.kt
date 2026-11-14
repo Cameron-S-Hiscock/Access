@@ -54,9 +54,6 @@ class ProcessWorker(
         scheduleWorker.start()
         executionWorker.start()
         localThread.start()
-        registryWorker.registerRSETasks()
-        scheduleWorker.scheduleRSETasks()
-        executionWorker.executeRSETasks()
         start()
     }
 

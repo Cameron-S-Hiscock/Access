@@ -25,11 +25,15 @@ class RegistryWorker(
         }
     }
 
-    suspend fun registerRSETasks() {
+    private val registerRSETasks = taskFactory.create(name = "registerRSETasks") {
         while(true) {
             for(task in rseQueue) {
                 registerTask(task)
             }
         }
+    }
+
+    override suspend fun start() {
+        addWork(registerRSETasks)
     }
 }

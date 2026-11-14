@@ -9,7 +9,7 @@ import com.csh_s.core.iostream.task.TaskPriority.*
 class TaskFactory() {
     private val dataFactory = DataFactory()
 
-    suspend fun create(
+    fun create(
         name: String = "Task",
         priority: TaskPriority = NORMAL,
         action: suspend () -> Any?
@@ -20,7 +20,6 @@ class TaskFactory() {
             dataFactory = dataFactory,
             action = action
         )
-        println("Created task: ${name}")
         return task
     }
 }

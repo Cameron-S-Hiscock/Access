@@ -29,15 +29,14 @@ class Port(
         name = "${name}ProcessWorker",
         host = id,
     )
-    init { processWorker.start() }
+    suspend fun init() {
+        processWorker.start()
+        state = PortState.OPEN
+    }
 
     var state: PortState = PortState.PENDING
     val targets = ConcurrentHashMap<UUID, Pipeline>()
     val cache = LinkedBlockingDeque<Message>()
-
-    suspend fun init() = runBlocking {
-        state = PortState.OPEN
-    }
 
     suspend fun send(target: UUID?, message: Message): IOResult {
         if(target == null) {

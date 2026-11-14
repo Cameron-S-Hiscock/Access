@@ -11,7 +11,7 @@ import com.csh_s.core.iostream.task.TaskState.*
 import java.util.concurrent.LinkedBlockingDeque
 import com.csh_s.core.RSEQueue
 
-class RegistryService(
+internal class RegistryService(
     private val rseQueue: RSEQueue,
 ) {
     private val registryRepository = RegistryRepository()
