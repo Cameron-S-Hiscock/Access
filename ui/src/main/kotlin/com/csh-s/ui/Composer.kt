@@ -1,5 +1,6 @@
 package com.csh_s.ui
 
+import com.csh_s.utils.Constants
 import com.csh_s.utils.Id
 import java.util.UUID
 
@@ -107,7 +108,7 @@ object Composer {
 
         cefApp = builder.build()
         cefClient = cefApp.createClient()
-        messageRouter = MessageRouter()
+        messageRouter = MessageRouter(Constants.APP_ID)
 
         println("Loading browser URL: $url")
         browser = cefClient.createBrowser(
