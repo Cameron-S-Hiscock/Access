@@ -1,13 +1,11 @@
 plugins {
     kotlin("jvm")
-    kotlin("plugin.serialization")
 }
 
 group = "com.csh_s"
 version = "unspecified"
 
 dependencies {
-    testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.20")
     implementation("org.jetbrains.kotlin:kotlin-serialization:2.4.20")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
@@ -15,14 +13,16 @@ dependencies {
     implementation("org.graalvm.polyglot:js:24.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
 
-    testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
-    testImplementation("io.kotest:kotest-assertions-core:5.9.1")
+    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 kotlin {
     jvmToolchain(25)
 }
 
-tasks.test {
+tasks.named<Test>("test") {
     useJUnitPlatform()
 }
+

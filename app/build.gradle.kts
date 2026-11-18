@@ -1,7 +1,7 @@
 import sun.jvmstat.monitor.MonitoredVmUtil.mainClass
 
 plugins {
-    id("conventions")
+    id("access.core-convention")
     application
 }
 
@@ -11,7 +11,6 @@ dependencies {
     implementation(project(":ui"))
     implementation(project(":api"))
     implementation(project(":systems"))
-    implementation(project(":data"))
 }
 
 tasks.named<JavaExec>("run") {

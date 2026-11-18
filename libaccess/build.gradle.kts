@@ -1,5 +1,5 @@
 plugins {
-    id("conventions")
+    id("access.lib-convention")
 }
 
 dependencies {
@@ -7,7 +7,6 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":ui"))
     implementation(project(":systems"))
-    implementation(project(":data"))
 }
 
 tasks.register<Exec>("buildLibAccess") {
