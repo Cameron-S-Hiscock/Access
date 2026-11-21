@@ -1,4 +1,4 @@
-function accessCall(
+export function accessCall(
     request = "",
     success = () => {},
     failure = () => {},

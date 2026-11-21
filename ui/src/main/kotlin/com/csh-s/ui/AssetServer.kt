@@ -69,7 +69,7 @@ private class AssetHandler(private val classLoader: ClassLoader): HttpHandler {
         val mime = when(requested.substringAfterLast('.', "")) {
             "html" -> "text/html"
             "css" -> "text/css"
-            "js" -> "application/javascript"
+            "js", "mjs" -> "application/javascript"
             "wasm" -> "application/wasm"
             "json" -> "application/json"
             else -> "application/octet-stream"
